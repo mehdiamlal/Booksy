@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="83d2387c-029a-4a97-ac77-0598d606eb65" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="83d2387c-029a-4a97-ac77-0598d606eb65" name="Changes" comment="Aggiunti metodi per aggiunta / rimozione utenti e ottenimento di elenco utenti">
+      <change afterPath="$PROJECT_DIR$/src/dataModel/Utente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/progetto-TWeb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/progetto-TWeb.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataModel/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataModel/DAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,17 +33,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/heymehdi/Desktop/progetto-TWeb&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Francesco/IdeaProjects/SQL-LIB/mysql-connector-java-5.1.44-bin.jar",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Francesco\OneDrive - Università degli Studi di Torino\Materiali didattici\Tecnologie Web (TWEB)\Laboratorio TWEB\Esercizio DB\progetto-TWeb\src\dataModel" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -51,6 +69,7 @@
       <updated>1665737957528</updated>
       <workItem from="1665756097427" duration="1614000" />
       <workItem from="1665759242359" duration="807000" />
+      <workItem from="1665760355510" duration="2505000" />
     </task>
     <servers />
   </component>
@@ -67,5 +86,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Aggiunti metodi per aggiunta / rimozione utenti e ottenimento di elenco utenti" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunti metodi per aggiunta / rimozione utenti e ottenimento di elenco utenti" />
   </component>
 </project>
