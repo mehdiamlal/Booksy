@@ -1,12 +1,17 @@
 package businessLogic;
 import dataModel.DAO;
+import dataModel.Docente;
+
+import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
         DAO.registerDriver();
-        DAO.aggiungiDocente("Paolo", "Bianchi");
-        DAO.aggiungiDocente("Michele", "Santoro");
-        DAO.aggiungiDocente("Giovanni", "Antonucci");
-        DAO.rimuoviDocente("2");
+
+        ArrayList<Docente> listaDocenti = DAO.ottieniElencoDocenti();
+
+        for(Docente d : listaDocenti) {
+            System.out.println(d);
+        }
     }
 }

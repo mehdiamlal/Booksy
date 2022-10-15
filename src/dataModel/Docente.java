@@ -1,7 +1,6 @@
 package dataModel;
 
 public class Docente {
-    private String id;
     private String nome;
     private String cognome;
 
@@ -18,5 +17,13 @@ public class Docente {
         return cognome;
     }
 
-    public String getId() { return id; }
+
+
+    @Override
+    public String toString() {
+        return "Docente{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                '}';
+    }
 }

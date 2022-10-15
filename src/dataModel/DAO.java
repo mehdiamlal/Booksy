@@ -3,6 +3,7 @@ import javax.xml.transform.Result;
 import java.awt.desktop.SystemEventListener;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DAO {
     static String url = "jdbc:mysql://localhost:8889/test?useSSL=false"; //per MAMP (Mac OS)
@@ -72,5 +73,34 @@ public class DAO {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public static ArrayList<Docente> ottieniElencoDocenti() {
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Docente> list = new ArrayList<>();
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM docente";
+
+            st = conn.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                list.add(new Docente(rs.getString("nome"),
+                        rs.getString("cognome")));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                st.close();
+                conn.close();
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return list;
     }
 }

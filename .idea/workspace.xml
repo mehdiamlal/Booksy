@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/businessLogic/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/businessLogic/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dataModel/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataModel/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataModel/Docente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataModel/Docente.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +54,7 @@
       <updated>1665737957528</updated>
       <workItem from="1665756097427" duration="1614000" />
       <workItem from="1665759242359" duration="6478000" />
-      <workItem from="1665817787420" duration="1375000" />
+      <workItem from="1665817787420" duration="2892000" />
     </task>
     <servers />
   </component>
