@@ -18,7 +18,7 @@ public class DAO {
         }
     }
 
-
+    //Metodi per la gestione delle operazioni sulla tabella utente
     public static void aggiungiUtente(Utente u) {
 
         Connection conn = null;
@@ -123,7 +123,7 @@ public class DAO {
     }
 
 
-    //metodi che gestiscono la tabella docente
+    //Metodi per la gestione delle operazioni sulla tabella docente
     public static void aggiungiDocente(String nome, String cognome) {
         Connection conn = null;
         PreparedStatement st = null;
@@ -149,7 +149,6 @@ public class DAO {
             }
         }
     }
-
 
     public static void rimuoviDocente(String id) {
         Connection conn = null;
