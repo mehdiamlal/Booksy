@@ -19,7 +19,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella utente
-    public static void aggiungiUtente(Utente u) {
+    public static void aggiungiUtente(String username, String password, String ruolo) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -32,9 +32,9 @@ public class DAO {
                     "VALUES(?,?,?)";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, u.getUsername());
-            st.setString(2, u.getPassword());
-            st.setString(3, u.getRuolo());
+            st.setString(1, username);
+            st.setString(2, password);
+            st.setString(3, ruolo);
 
             st.executeUpdate();
 
@@ -49,7 +49,7 @@ public class DAO {
         }
     }
 
-    public static void rimuoviUtente(Utente u) {
+    public static void rimuoviUtente(String username) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -61,12 +61,10 @@ public class DAO {
             /* RIDONDANZA: è sufficiente usare la chiave primaria per
             identificare la tupla da rimuovere */
             String sql = "DELETE FROM Utente " +
-                    "WHERE username = ? AND password = ? AND ruolo = ?";
+                    "WHERE username = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, u.getUsername());
-            st.setString(2, u.getPassword());
-            st.setString(3, u.getRuolo());
+            st.setString(1, username);
 
             st.execute();
         } catch (SQLException e) {

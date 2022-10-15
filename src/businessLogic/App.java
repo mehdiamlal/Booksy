@@ -9,11 +9,7 @@ public class App {
     public static void main(String[] args) {
         DAO.registerDriver();
 
-        ArrayList<Utente> listaUtenti = DAO.ottieniElencoUtenti();
-
-        for(Utente u : listaUtenti) {
-            System.out.println(u);
-        }
+        DAO.aggiungiUtente("mimmino", "123456789", "amministatore");
 
     }
 }
