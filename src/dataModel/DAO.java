@@ -28,11 +28,11 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "INSERT INTO Utente(Account, Password, Ruolo)" +
+            String sql = "INSERT INTO Utente(username, password, ruolo)" +
                     "VALUES(?,?,?)";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, u.getNomeAccount());
+            st.setString(1, u.getUsername());
             st.setString(2, u.getPassword());
             st.setString(3, u.getRuolo());
 
@@ -61,10 +61,10 @@ public class DAO {
             /* RIDONDANZA: è sufficiente usare la chiave primaria per
             identificare la tupla da rimuovere */
             String sql = "DELETE FROM Utente " +
-                    "WHERE Account = ? AND Password = ? AND Ruolo = ?";
+                    "WHERE username = ? AND password = ? AND ruolo = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, u.getNomeAccount());
+            st.setString(1, u.getUsername());
             st.setString(2, u.getPassword());
             st.setString(3, u.getRuolo());
 
@@ -95,15 +95,15 @@ public class DAO {
 
             /* Creiamo un ResultSet per contenere il risultato della query
              * e un ArrayList per averlo in una struttura dati più approcciabile */
-            ResultSet rs = st.executeQuery("SELECT * FROM Utente");
+            ResultSet rs = st.executeQuery("SELECT * FROM utente");
             ArrayList<Utente> elencoUtenti = new ArrayList<>();
 
             /* Iteriamo sul ResultSet ottenuto dalla query, aggiungendo
             ogni elemento all'ArrayList contentente utenti */
             while(rs.next()) {
-                Utente u = new Utente(rs.getString("Account"),
-                        rs.getString("Password"),
-                        rs.getString("Ruolo"));
+                Utente u = new Utente(rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("ruolo"));
                 elencoUtenti.add(u);
             }
 

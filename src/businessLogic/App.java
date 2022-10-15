@@ -1,6 +1,7 @@
 package businessLogic;
 import dataModel.DAO;
 import dataModel.Docente;
+import dataModel.Utente;
 
 import java.util.ArrayList;
 
@@ -8,10 +9,11 @@ public class App {
     public static void main(String[] args) {
         DAO.registerDriver();
 
-        ArrayList<Docente> listaDocenti = DAO.ottieniElencoDocenti();
+        ArrayList<Utente> listaUtenti = DAO.ottieniElencoUtenti();
 
-        for(Docente d : listaDocenti) {
-            System.out.println(d);
+        for(Utente u : listaUtenti) {
+            System.out.println(u);
         }
+
     }
 }
