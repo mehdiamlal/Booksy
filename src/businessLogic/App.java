@@ -9,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         DAO.registerDriver();
 
-        DAO.aggiungiUtente("mimmino", "123456789", "amministatore");
+
 
     }
 }

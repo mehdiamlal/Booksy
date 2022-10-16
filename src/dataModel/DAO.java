@@ -140,8 +140,7 @@ public class DAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                st.close();
-                conn.close();
+                if(conn != null && st != null) {conn.close(); st.close();}
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -166,8 +165,7 @@ public class DAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                st.close();
-                conn.close();
+                if(conn != null && st != null) {conn.close(); st.close();}
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -194,12 +192,40 @@ public class DAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                st.close();
-                conn.close();
+                if(conn != null && st != null) {conn.close(); st.close();}
             } catch(SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
         return list;
     }
+
+    //Metodi per la gestione delle operazioni sulla tabella prenotazione
+    public static void aggiungiPrenotazione(String username, String idDocente, String idCorso, String data) {
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "INSERT INTO prenotazione (utente, docente, corso, data) VALUES (?, ?, ?, ?);";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, idDocente);
+            st.setString(3, idCorso);
+            st.setString(4, data);
+
+            st.executeUpdate();
+
+            System.out.println("Prenotazione aggiunta con successo.");
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }
