@@ -39,7 +39,6 @@ public class DAO {
             st.executeUpdate();
 
             System.out.println("Utente aggiunto con successo.");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -71,7 +70,6 @@ public class DAO {
             st.execute();
 
             System.out.println("Utente rimosso con successo.");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -138,7 +136,6 @@ public class DAO {
             st.executeUpdate();
 
             System.out.println("Corso aggiunto con successo.");
-
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -166,7 +163,6 @@ public class DAO {
             st.executeUpdate();
 
             System.out.println("Corso rimosso con successo");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -327,7 +323,7 @@ public class DAO {
     }
 
 
-    public static void eliminaPrenotazione(String idCorso, String data, String fasciaOraria) {
+    public static void rimuoviPrenotazione(String idCorso, String data, String fasciaOraria) {
 
         Connection conn = null;
         PreparedStatement st = null;
