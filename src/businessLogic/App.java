@@ -9,7 +9,8 @@ public class App {
     public static void main(String[] args) {
         DAO.registerDriver();
 
-        DAO.eliminaPrenotazione("mimmino", "3", "1", "24/02/2023");
+        DAO.aggiungiPrenotazione("blur89", "3", "28/09/2022", "15.00 - 16.00");
+        DAO.aggiungiPrenotazione("heymehdi", "3", "28/09/2022", "16.00 - 17.00");
 
     }
 }
