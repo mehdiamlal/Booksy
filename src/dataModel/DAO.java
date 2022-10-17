@@ -202,19 +202,20 @@ public class DAO {
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
 
-    public static void aggiungiPrenotazione(String username, String idCorso, String data) {
+    public static void aggiungiPrenotazione(String username, String idCorso, String data, String fasciaOraria) {
         //si presuppone che ciascuna prenotazione abbia un flag "attiva"
         //che viene settato a 1 di default quando viene creata
         Connection conn = null;
         PreparedStatement st = null;
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO prenotazione (utente, corso, data) VALUES (?, ?, ?);";
+            String sql = "INSERT INTO prenotazione (utente, corso, data, fasciaOraria) VALUES (?, ?, ?, ?);";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, idCorso);
             st.setString(3, data);
+            st.setString(4, fasciaOraria);
 
             st.executeUpdate();
 
@@ -231,17 +232,17 @@ public class DAO {
     }
 
 
-    public static void eliminaPrenotazione(String username, String idCorso, String data) {
+    public static void eliminaPrenotazione(String idCorso, String data, String fasciaOraria) {
         Connection conn = null;
         PreparedStatement st = null;
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE prenotazione SET attiva = 0 WHERE utente = ? AND corso = ? AND data = ?";
+            String sql = "UPDATE prenotazione SET attiva = 0 WHERE corso = ? AND data = ? AND fasciaOraria = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, username);
-            st.setString(2, idCorso);
-            st.setString(3, data);
+            st.setString(1, idCorso);
+            st.setString(2, data);
+            st.setString(3, fasciaOraria);
 
             st.executeUpdate();
 
