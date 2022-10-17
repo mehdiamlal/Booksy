@@ -202,20 +202,19 @@ public class DAO {
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
 
-    public static void aggiungiPrenotazione(String username, String idDocente, String idCorso, String data) {
+    public static void aggiungiPrenotazione(String username, String idCorso, String data) {
         //si presuppone che ciascuna prenotazione abbia un flag "attiva"
         //che viene settato a 1 di default quando viene creata
         Connection conn = null;
         PreparedStatement st = null;
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO prenotazione (utente, docente, corso, data) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO prenotazione (utente, corso, data) VALUES (?, ?, ?);";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
-            st.setString(2, idDocente);
-            st.setString(3, idCorso);
-            st.setString(4, data);
+            st.setString(2, idCorso);
+            st.setString(3, data);
 
             st.executeUpdate();
 
@@ -232,18 +231,17 @@ public class DAO {
     }
 
 
-    public static void eliminaPrenotazione(String username, String idDocente, String idCorso, String data) {
+    public static void eliminaPrenotazione(String username, String idCorso, String data) {
         Connection conn = null;
         PreparedStatement st = null;
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE prenotazione SET attiva = 0 WHERE utente = ? AND docente = ? AND corso = ? AND data = ?";
+            String sql = "UPDATE prenotazione SET attiva = 0 WHERE utente = ? AND corso = ? AND data = ?";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
-            st.setString(2, idDocente);
-            st.setString(3, idCorso);
-            st.setString(4, data);
+            st.setString(2, idCorso);
+            st.setString(3, data);
 
             st.executeUpdate();
 
