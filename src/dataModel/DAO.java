@@ -28,7 +28,7 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "INSERT INTO Utente(username, password, ruolo)" +
+            String sql = "INSERT INTO utente(username, password, ruolo)" +
                     "VALUES(?,?,?)";
 
             st = conn.prepareStatement(sql);
@@ -37,6 +37,8 @@ public class DAO {
             st.setString(3, ruolo);
 
             st.executeUpdate();
+
+            System.out.println("Utente aggiunto con successo.");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -60,13 +62,16 @@ public class DAO {
 
             /* RIDONDANZA: è sufficiente usare la chiave primaria per
             identificare la tupla da rimuovere */
-            String sql = "DELETE FROM Utente " +
+            String sql = "DELETE FROM utente " +
                     "WHERE username = ?";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
 
             st.execute();
+
+            System.out.println("Utente rimosso con successo.");
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -82,6 +87,7 @@ public class DAO {
 
         Connection conn = null;
         Statement st = null;
+        ArrayList<Utente> elencoUtenti = new ArrayList<>();
 
         try {
             /* Stabiliamo la connessione col database */
@@ -94,7 +100,6 @@ public class DAO {
             /* Creiamo un ResultSet per contenere il risultato della query
              * e un ArrayList per averlo in una struttura dati più approcciabile */
             ResultSet rs = st.executeQuery("SELECT * FROM utente");
-            ArrayList<Utente> elencoUtenti = new ArrayList<>();
 
             /* Iteriamo sul ResultSet ottenuto dalla query, aggiungendo
             ogni elemento all'ArrayList contentente utenti */
@@ -104,9 +109,6 @@ public class DAO {
                         rs.getString("ruolo"));
                 elencoUtenti.add(u);
             }
-
-            return elencoUtenti;
-
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -117,14 +119,102 @@ public class DAO {
             }
         }
 
-        return null;
+        return elencoUtenti;
     }
 
+    //Metodi per gestione delle operazioni sulla tabella corso
+    public static void aggiungiCorso(String nome) {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "INSERT INTO corso (nome) VALUES (?);";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, nome);
+
+            st.executeUpdate();
+
+            System.out.println("Corso aggiunto con successo.");
+
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static void rimuoviCorso(String nome) {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "DELETE FROM corso " +
+                        "WHERE nome = ?";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, nome);
+
+            st.executeUpdate();
+
+            System.out.println("Corso rimosso con successo");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static ArrayList<Corso> ottieniElencoCorsi() {
+
+        Connection conn = null;
+        Statement st = null;
+        ArrayList<Corso> elencoCorsi = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            System.out.println("Connesso al database locale.");
+
+            st = conn.createStatement();
+
+            ResultSet rs = st.executeQuery("SELECT * FROM utente");
+
+            while(rs.next()) {
+                Corso c = new Corso(rs.getString("nome"));
+                elencoCorsi.add(c);
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return elencoCorsi;
+    }
 
     //Metodi per la gestione delle operazioni sulla tabella docente
     public static void aggiungiDocente(String nome, String cognome) {
+
         Connection conn = null;
         PreparedStatement st = null;
+
         try {
             conn = DriverManager.getConnection(url, user, pw);
             String sql = "INSERT INTO docente (nome, cognome) VALUES (?, ?);";
@@ -148,6 +238,7 @@ public class DAO {
     }
 
     public static void rimuoviDocente(String id) {
+
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -173,9 +264,11 @@ public class DAO {
     }
 
     public static ArrayList<Docente> ottieniElencoDocenti() {
+
         Connection conn = null;
         PreparedStatement st = null;
-        ArrayList<Docente> list = new ArrayList<>();
+        ArrayList<Docente> elencoDocenti = new ArrayList<>();
+
         try {
             conn = DriverManager.getConnection(url, user, pw);
             String sql = "SELECT * FROM docente";
@@ -197,16 +290,18 @@ public class DAO {
                 System.out.println(e.getMessage());
             }
         }
-        return list;
+
+        return elencoDocenti;
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
-
     public static void aggiungiPrenotazione(String username, String idCorso, String data, String fasciaOraria) {
+
         //si presuppone che ciascuna prenotazione abbia un flag "attiva"
         //che viene settato a 1 di default quando viene creata
         Connection conn = null;
         PreparedStatement st = null;
+
         try {
             conn = DriverManager.getConnection(url, user, pw);
             String sql = "INSERT INTO prenotazione (utente, corso, data, fasciaOraria) VALUES (?, ?, ?, ?);";
@@ -233,8 +328,10 @@ public class DAO {
 
 
     public static void eliminaPrenotazione(String idCorso, String data, String fasciaOraria) {
+
         Connection conn = null;
         PreparedStatement st = null;
+
         try {
             conn = DriverManager.getConnection(url, user, pw);
             String sql = "UPDATE prenotazione SET attiva = 0 WHERE corso = ? AND data = ? AND fasciaOraria = ?";
