@@ -1,6 +1,8 @@
 package dataModel;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class DAO {
@@ -8,6 +10,13 @@ public class DAO {
     // inserire alternativamente l'url per XAMPP (Windows)
     static String user = "root";
     static String pw = "root";
+
+    //metodo di utility per generare la date odierna in formato dd/MM/yyyy
+    //NB: le lettere dei mesi devono essere in maiuscolo per evitare errori
+    private static String getDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(new Date());
+    }
 
     public static void registerDriver() {
         try {
@@ -19,7 +28,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella utente
-    public static void aggiungiUtente(String username, String password, String ruolo) {
+    public static void aggiungiUtente(String username, String password, String nome, String cognome, String ruolo) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -28,13 +37,16 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "INSERT INTO utente(username, password, ruolo)" +
-                    "VALUES(?,?,?)";
+            String sql = "INSERT INTO utente(username, password, nome, cognome, ruolo, dataCreazione)" +
+                    "VALUES(?,?,?,?,?,?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
-            st.setString(3, ruolo);
+            st.setString(3, nome);
+            st.setString(4, cognome);
+            st.setString(5, ruolo);
+            st.setString(6, getDate());
 
             st.executeUpdate();
 
@@ -59,13 +71,12 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            /* RIDONDANZA: è sufficiente usare la chiave primaria per
-            identificare la tupla da rimuovere */
-            String sql = "DELETE FROM utente " +
-                    "WHERE username = ?";
+
+            String sql = "UPDATE utente SET attivo = 0, dataCancellazione = ? WHERE username = ? AND attivo = 1";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, username);
+            st.setString(1, getDate());
+            st.setString(2, username);
 
             st.execute();
 
@@ -274,7 +285,7 @@ public class DAO {
             ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
-                list.add(new Docente(rs.getString("nome"),
+                elencoDocenti.add(new Docente(rs.getString("nome"),
                         rs.getString("cognome")));
             }
         } catch(SQLException e) {
