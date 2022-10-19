@@ -1,12 +1,24 @@
 package dataModel;
 
 public class Docente {
+    private String email;
+    private String password;
     private String nome;
     private String cognome;
 
-    public Docente(String nome, String cognome) {
+    public Docente(String email, String password, String nome, String cognome) {
+        this.email = email;
+        this.password = password;
         this.nome = nome;
         this.cognome = cognome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getNome() {
@@ -17,12 +29,12 @@ public class Docente {
         return cognome;
     }
 
-
-
     @Override
     public String toString() {
         return "Docente{" +
-                "nome='" + nome + '\'' +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 '}';
     }

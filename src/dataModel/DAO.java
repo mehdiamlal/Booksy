@@ -292,7 +292,9 @@ public class DAO {
             ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
-                elencoDocenti.add(new Docente(rs.getString("nome"),
+                elencoDocenti.add(new Docente(rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("nome"),
                         rs.getString("cognome")));
             }
         } catch(SQLException e) {
