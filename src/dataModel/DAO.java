@@ -41,7 +41,7 @@ public class DAO {
                     "VALUES(?,?,?,?,?,?)";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, username);
+            st.setString(1, username.toLowerCase());
             st.setString(2, password);
             st.setString(3, nome);
             st.setString(4, cognome);
