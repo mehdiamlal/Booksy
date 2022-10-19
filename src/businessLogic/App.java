@@ -9,7 +9,11 @@ public class App {
     public static void main(String[] args) {
         DAO.registerDriver();
 
-        DAO.aggiungiUtente("HEyMEHDI", "123456", "Amlal", "Amlal", "studente");
+        DAO.aggiungiDocente("michele@gmail.com", "123456", "Michele", "Mariucci");
+        DAO.aggiungiDocente("marco@gmail.com", "4312", "Marco", "Antonini");
+        DAO.rimuoviDocente("michele@gmail.com");
+        DAO.aggiungiDocente("michele@gmail.com", "123456", "Michele", "Mariucci");
+        DAO.rimuoviDocente("michele@gmail.com");
 
 
 

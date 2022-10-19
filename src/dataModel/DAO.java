@@ -115,6 +115,8 @@ public class DAO {
             while(rs.next()) {
                 Utente u = new Utente(rs.getString("username"),
                         rs.getString("password"),
+                        rs.getString("nome"),
+                        rs.getString("cognome"),
                         rs.getString("ruolo"));
                 elencoUtenti.add(u);
             }
@@ -217,18 +219,22 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella docente
-    public static void aggiungiDocente(String nome, String cognome) {
+    public static void aggiungiDocente(String email, String password, String nome, String cognome) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO docente (nome, cognome) VALUES (?, ?);";
+            String sql = "INSERT INTO docente (email, password, nome, cognome, dataCreazione) VALUES (?,?,?,?,?);";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, nome);
-            st.setString(2, cognome);
+            st.setString(1, email);
+            st.setString(2, password);
+            st.setString(3, nome);
+            st.setString(4, cognome);
+            st.setString(5, getDate());
+
 
             st.executeUpdate();
 
@@ -244,17 +250,18 @@ public class DAO {
         }
     }
 
-    public static void rimuoviDocente(String id) {
+    public static void rimuoviDocente(String email) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE docente SET attivo = 0 WHERE idDocente = ?";
+            String sql = "UPDATE docente SET attivo = 0, dataCancellazione = ? WHERE email = ? AND attivo = 1";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, id);
+            st.setString(1, getDate());
+            st.setString(2, email);
 
             st.executeUpdate();
 
