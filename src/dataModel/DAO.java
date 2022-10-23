@@ -235,7 +235,6 @@ public class DAO {
             st.setString(4, cognome);
             st.setString(5, getDate());
 
-
             st.executeUpdate();
 
             System.out.println("Docente aggiunto con successo.");
@@ -243,7 +242,8 @@ public class DAO {
             System.out.println(e.getMessage());
         } finally {
             try {
-                if(conn != null && st != null) {conn.close(); st.close();}
+                if(conn != null) {conn.close();}
+                if(st != null) {st.close();}
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -310,6 +310,60 @@ public class DAO {
         return elencoDocenti;
     }
 
+    //Metodi per la gestione delle operazioni sulla tabella insegnamento
+    public static void aggiungiInsegnamento(String docente, String corso) {
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "INSERT INTO insegnamento (docente, corso) VALUES (?,?);";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, docente);
+            st.setString(2, corso);
+
+            st.executeUpdate();
+
+            System.out.println("Insegnamento aggiunto con successo.");
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static void rimuoviInsegnamento(String emailDocente, String nomeCorso) {
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "DELETE FROM Corso" +
+                        "WHERE docente = ? AND corso = ?";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, emailDocente);
+            st.setString(2, nomeCorso);
+
+            st.executeUpdate();
+
+            System.out.println("Insegnamento rimosso con successo.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
     public static void aggiungiPrenotazione(String username, String idCorso, String data, String fasciaOraria) {
 
@@ -341,7 +395,6 @@ public class DAO {
             }
         }
     }
-
 
     public static void rimuoviPrenotazione(String idCorso, String data, String fasciaOraria) {
 
