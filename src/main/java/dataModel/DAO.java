@@ -114,7 +114,6 @@ public class DAO {
             ogni elemento all'ArrayList contentente utenti */
             while(rs.next()) {
                 Utente u = new Utente(rs.getString("username"),
-                        rs.getString("password"),
                         rs.getString("nome"),
                         rs.getString("cognome"),
                         rs.getString("ruolo"));
@@ -293,7 +292,6 @@ public class DAO {
 
             while(rs.next()) {
                 elencoDocenti.add(new Docente(rs.getString("email"),
-                        rs.getString("password"),
                         rs.getString("nome"),
                         rs.getString("cognome")));
             }
