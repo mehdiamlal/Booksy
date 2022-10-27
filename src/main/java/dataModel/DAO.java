@@ -401,12 +401,13 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE prenotazione SET attiva = 0 WHERE corso = ? AND data = ? AND fasciaOraria = ?";
+            String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = ? WHERE corso = ? AND data = ? AND fasciaOraria = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, idCorso);
-            st.setString(2, data);
-            st.setString(3, fasciaOraria);
+            st.setString(1, getDate());
+            st.setString(2, idCorso);
+            st.setString(3, data);
+            st.setString(4, fasciaOraria);
 
             st.executeUpdate();
 
