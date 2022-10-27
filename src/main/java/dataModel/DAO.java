@@ -108,7 +108,7 @@ public class DAO {
 
             /* Creiamo un ResultSet per contenere il risultato della query
              * e un ArrayList per averlo in una struttura dati più approcciabile */
-            ResultSet rs = st.executeQuery("SELECT * FROM utente");
+            ResultSet rs = st.executeQuery("SELECT * FROM utente WHERE attivo = 1");
 
             /* Iteriamo sul ResultSet ottenuto dalla query, aggiungendo
             ogni elemento all'ArrayList contentente utenti */
@@ -198,7 +198,7 @@ public class DAO {
 
             st = conn.createStatement();
 
-            ResultSet rs = st.executeQuery("SELECT * FROM utente");
+            ResultSet rs = st.executeQuery("SELECT * FROM corso");
 
             while(rs.next()) {
                 Corso c = new Corso(rs.getString("nome"));
@@ -284,7 +284,7 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "SELECT * FROM docente";
+            String sql = "SELECT * FROM docente WHERE attivo = 1";
 
             st = conn.prepareStatement(sql);
 
