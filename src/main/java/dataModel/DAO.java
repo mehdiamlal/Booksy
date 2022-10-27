@@ -229,7 +229,7 @@ public class DAO {
             String sql = "INSERT INTO docente (email, password, nome, cognome, dataCreazione) VALUES (?,?,?,?,?);";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, email);
+            st.setString(1, email.toLowerCase());
             st.setString(2, password);
             st.setString(3, nome);
             st.setString(4, cognome);

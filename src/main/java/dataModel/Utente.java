@@ -3,14 +3,12 @@ package dataModel;
 public class Utente {
 
     private String username;
-    private String password;
     private String nome;
     private String cognome;
     private String ruolo;
 
-    public Utente(String username, String password, String nome, String cognome, String ruolo) {
+    public Utente(String username, String nome, String cognome, String ruolo) {
         this.username = username;
-        this.password = password;
         this.nome = nome;
         this.cognome = cognome;
         this.ruolo = ruolo;
@@ -18,10 +16,6 @@ public class Utente {
 
     public String getUsername() {
         return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getNome() {
@@ -40,7 +34,6 @@ public class Utente {
     public String toString() {
         return "Utente{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", ruolo='" + ruolo + '\'' +
