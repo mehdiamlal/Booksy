@@ -132,6 +132,44 @@ public class DAO {
         return elencoUtenti;
     }
 
+    public static Utente autenticaUtente(String username, String password) {
+        //se il metodo ritorna un null, vuol dire che l'autenticazione è fallita
+        Connection conn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Utente res = null;
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            System.out.println("Connesso al database locale.");
+
+            String sql = "SELECT * FROM utente WHERE username = ? AND password = ? AND attivo = 1";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, password);
+
+            rs = st.executeQuery();
+
+            if(rs.next()) {  //se la query ha restituito un risultato...
+                res = new Utente(rs.getString("username"),
+                        rs.getString("nome"),
+                        rs.getString("cognome"),
+                        rs.getString("ruolo"));
+            }
+
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return res;
+    }
+
     //Metodi per gestione delle operazioni sulla tabella corso
     public static void aggiungiCorso(String nome) {
 
