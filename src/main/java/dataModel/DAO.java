@@ -363,7 +363,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
-    public static void aggiungiPrenotazione(String username, String idCorso, String data, String fasciaOraria) {
+    public static void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
 
         //si presuppone che ciascuna prenotazione abbia un flag "attiva"
         //che viene settato a 1 di default quando viene creata
@@ -372,13 +372,14 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO prenotazione (utente, corso, data, fasciaOraria) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO prenotazione (utente, corso, docente, data, fasciaOraria) VALUES (?, ?, ?, ?, ?);";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, idCorso);
-            st.setString(3, data);
-            st.setString(4, fasciaOraria);
+            st.setString(3, emailDocente);
+            st.setString(4, data);
+            st.setString(5, fasciaOraria);
 
             st.executeUpdate();
 
@@ -394,18 +395,18 @@ public class DAO {
         }
     }
 
-    public static void rimuoviPrenotazione(String idCorso, String data, String fasciaOraria) {
+    public static void rimuoviPrenotazione(String emailDocente, String data, String fasciaOraria) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = ? WHERE corso = ? AND data = ? AND fasciaOraria = ?";
+            String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = ? WHERE docente = ? AND data = ? AND fasciaOraria = ?";
 
             st = conn.prepareStatement(sql);
             st.setString(1, getDate());
-            st.setString(2, idCorso);
+            st.setString(2, emailDocente);
             st.setString(3, data);
             st.setString(4, fasciaOraria);
 
