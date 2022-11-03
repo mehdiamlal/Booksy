@@ -34,4 +34,15 @@ public class Prenotazione {
     public String getFasciaOraria() {
         return fasciaOraria;
     }
+
+    @Override
+    public String toString() {
+        return "Prenotazione{" +
+                "utente='" + utente + '\'' +
+                ", corso='" + corso + '\'' +
+                ", docente='" + docente + '\'' +
+                ", data='" + data + '\'' +
+                ", fasciaOraria='" + fasciaOraria + '\'' +
+                '}';
+    }
 }

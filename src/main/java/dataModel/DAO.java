@@ -425,4 +425,37 @@ public class DAO {
             }
         }
     }
+
+    public static ArrayList<Prenotazione> ottieniElencoPrenotazioni() {
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM prenotazione WHERE attiva = 1";
+
+            st = conn.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                elencoPrenotazioni.add(new Prenotazione(rs.getString("utente"),
+                        rs.getString("corso"),
+                        rs.getString("docente"),
+                        rs.getString("data"),
+                        rs.getString("fasciaOraria")));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return elencoPrenotazioni;
+    }
 }
