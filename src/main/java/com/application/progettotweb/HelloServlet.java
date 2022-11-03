@@ -1,5 +1,7 @@
 package com.application.progettotweb;
 
+import dataModel.DAO;
+
 import java.io.*;
 
 import javax.servlet.http.*;
@@ -10,7 +12,7 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "Hello World!";
+        DAO.registerDriver();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -21,6 +23,8 @@ public class HelloServlet extends HttpServlet {
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
+
+        System.out.println(DAO.ottieniElencoPrenotazioni());
     }
 
     public void destroy() {
