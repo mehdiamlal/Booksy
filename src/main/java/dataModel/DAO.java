@@ -6,19 +6,24 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class DAO {
-    static String url = "jdbc:mysql://localhost:8889/test?useSSL=false"; //per MAMP (Mac OS)
-    // inserire alternativamente l'url per XAMPP (Windows)
-    static String user = "root";
-    static String pw = "root";
+    String url;
+    String user;
+    String pw;
+
+    public DAO(String url, String user, String pw) {
+        this.url = url;
+        this.user = user;
+        this.pw = pw;
+    }
 
     //metodo di utility per generare la date odierna in formato dd/MM/yyyy
     //NB: le lettere dei mesi devono essere in maiuscolo per evitare errori
-    private static String getDate() {
+    private String getDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(new Date());
     }
 
-    public static void registerDriver() {
+    public void registerDriver() {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             System.out.println("Driver registrato con successo.");
@@ -28,7 +33,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella utente
-    public static void aggiungiUtente(String username, String password, String nome, String cognome, String ruolo) {
+    public void aggiungiUtente(String username, String password, String nome, String cognome, String ruolo) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -38,7 +43,7 @@ public class DAO {
             System.out.println("Connesso al database locale.");
 
             String sql = "INSERT INTO utente(username, password, nome, cognome, ruolo, dataCreazione)" +
-                    "VALUES(?,?,?,?,?,?)";
+                        "VALUES(?,?,?,?,?,?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username.toLowerCase());
@@ -62,7 +67,7 @@ public class DAO {
         }
     }
 
-    public static void rimuoviUtente(String username) {
+    public void rimuoviUtente(String username) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -92,7 +97,7 @@ public class DAO {
         }
     }
 
-    public static ArrayList<Utente> ottieniElencoUtenti() {
+    public ArrayList<Utente> ottieniElencoUtenti() {
 
         Connection conn = null;
         Statement st = null;
@@ -132,7 +137,7 @@ public class DAO {
         return elencoUtenti;
     }
 
-    public static Utente autenticaUtente(String username, String password) {
+    public Utente autenticaUtente(String username, String password) {
         //se il metodo ritorna un null, vuol dire che l'autenticazione è fallita
         Connection conn = null;
         PreparedStatement st = null;
@@ -171,7 +176,7 @@ public class DAO {
     }
 
     //Metodi per gestione delle operazioni sulla tabella corso
-    public static void aggiungiCorso(String nome) {
+    public void aggiungiCorso(String nome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -197,7 +202,7 @@ public class DAO {
         }
     }
 
-    public static void rimuoviCorso(String nome) {
+    public void rimuoviCorso(String nome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -224,7 +229,7 @@ public class DAO {
         }
     }
 
-    public static ArrayList<Corso> ottieniElencoCorsi() {
+    public ArrayList<Corso> ottieniElencoCorsi() {
 
         Connection conn = null;
         Statement st = null;
@@ -256,21 +261,20 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella docente
-    public static void aggiungiDocente(String email, String password, String nome, String cognome) {
+    public void aggiungiDocente(String email, String password, String nome, String cognome) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO docente (email, password, nome, cognome, dataCreazione) VALUES (?,?,?,?,?);";
+            String sql = "INSERT INTO docente (email, nome, cognome, dataCreazione) VALUES (?,?,?,?);";
 
             st = conn.prepareStatement(sql);
             st.setString(1, email.toLowerCase());
-            st.setString(2, password);
-            st.setString(3, nome);
-            st.setString(4, cognome);
-            st.setString(5, getDate());
+            st.setString(2, nome);
+            st.setString(3, cognome);
+            st.setString(4, getDate());
 
             st.executeUpdate();
 
@@ -287,22 +291,20 @@ public class DAO {
         }
     }
 
-    public static void rimuoviDocente(String email) {
+    private void rimuoviInsegnamentiDocente(String email) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE docente SET attivo = 0, dataCancellazione = ? WHERE email = ? AND attivo = 1";
+            String sql = "DELETE FROM insegnamento " +
+                        "WHERE docente = ?";
 
             st = conn.prepareStatement(sql);
             st.setString(1, getDate());
-            st.setString(2, email);
 
             st.executeUpdate();
-
-            System.out.println("Docente rimosso con successo.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -314,7 +316,36 @@ public class DAO {
         }
     }
 
-    public static ArrayList<Docente> ottieniElencoDocenti() {
+    public void rimuoviDocente(String email) {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        rimuoviInsegnamentiDocente(email);
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "UPDATE docente " +
+                        "SET attivo = 0, dataCancellazione = ? " +
+                        "WHERE email = ? AND attivo = 1";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, getDate());
+            st.setString(2, email);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public ArrayList<Docente> ottieniElencoDocenti() {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -347,7 +378,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella insegnamento
-    public static void aggiungiInsegnamento(String docente, String corso) {
+    public void aggiungiInsegnamento(String docente, String corso) {
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -373,14 +404,14 @@ public class DAO {
         }
     }
 
-    public static void rimuoviInsegnamento(String emailDocente, String nomeCorso) {
+    public void rimuoviInsegnamento(String emailDocente, String nomeCorso) {
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "DELETE FROM Corso" +
-                    "WHERE docente = ? AND corso = ?";
+            String sql = "DELETE FROM Corso " +
+                         "WHERE docente = ? AND corso = ?";
 
             st = conn.prepareStatement(sql);
             st.setString(1, emailDocente);
@@ -401,7 +432,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
-    public static void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
+    public void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
 
         //si presuppone che ciascuna prenotazione abbia un flag "attiva"
         //che viene settato a 1 di default quando viene creata
@@ -433,7 +464,7 @@ public class DAO {
         }
     }
 
-    public static void rimuoviPrenotazione(String emailDocente, String data, String fasciaOraria) {
+    public void rimuoviPrenotazione(String emailDocente, String data, String fasciaOraria) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -465,7 +496,7 @@ public class DAO {
         }
     }
 
-    public static ArrayList<Prenotazione> ottieniElencoPrenotazioni() {
+    public ArrayList<Prenotazione> ottieniElencoPrenotazioni() {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
