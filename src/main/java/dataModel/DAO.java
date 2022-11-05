@@ -302,7 +302,7 @@ public class DAO {
                         "WHERE docente = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, getDate());
+            st.setString(1, email);
 
             st.executeUpdate();
         } catch (SQLException e) {
