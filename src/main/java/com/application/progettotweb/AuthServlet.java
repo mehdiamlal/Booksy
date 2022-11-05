@@ -3,7 +3,6 @@ package com.application.progettotweb;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import java.io.IOException;
 
 import dataModel.DAO;
 
@@ -16,19 +15,12 @@ public class AuthServlet extends HttpServlet {
         super.init(config);
 
         ServletContext ctx = config.getServletContext();
-        Object res = ctx.getAttribute("datamodel");
-        if(res instanceof DAO) {
-            dataModel = (DAO) res;
-        }
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String URL = ctx.getInitParameter("DB-URL");
+        String user = ctx.getInitParameter("user");
+        String pwd = ctx.getInitParameter("pwd");
+        dataModel = new DAO(URL, user, pwd);
 
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        ctx.setAttribute("datamodel", dataModel);
     }
 }
