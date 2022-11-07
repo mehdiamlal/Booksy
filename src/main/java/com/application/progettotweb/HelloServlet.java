@@ -12,7 +12,7 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        DAO.registerDriver();
+
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -23,8 +23,6 @@ public class HelloServlet extends HttpServlet {
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
-
-        System.out.println(DAO.ottieniElencoPrenotazioni());
     }
 
     public void destroy() {

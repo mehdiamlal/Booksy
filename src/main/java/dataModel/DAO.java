@@ -1,5 +1,6 @@
 package dataModel;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -202,23 +203,95 @@ public class DAO {
         }
     }
 
-    public void rimuoviCorso(String nome) {
+    private void disattivaCorso(String nome) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "DELETE FROM corso " +
-                    "WHERE nome = ?";
+            conn.setAutoCommit(false);
+            String sql1 = "UPDATE corso SET attivo = 0 WHERE nome = ?"; //disattiva il corso
+            //elimina (logicamente) le prenotazioni attive per il corso disattivato
+            String sql2 = "UPDATE prenotazione SET attiva = 0, dataCancellazione = ? WHERE corso = ? AND attiva = 1";
 
-            st = conn.prepareStatement(sql);
+            st = conn.prepareStatement(sql1);
             st.setString(1, nome);
-
             st.executeUpdate();
 
-            System.out.println("Corso rimosso con successo");
+            st = conn.prepareStatement(sql2);
+            st.setString(1, getDate());
+            st.setString(2, nome);
+            st.executeUpdate();
+            conn.commit();
+            System.out.println("Corso disattivato con successo.");
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            if(conn != null) {
+                try {
+                    System.out.println("Rollback della transazione!");
+                    conn.rollback();
+                } catch (SQLException ex2) {  //la chiamo così per non creare ambiguità con l'eccezione e
+                    System.out.println(ex2.getMessage());
+                }
+            }
+        } finally {
+            try {
+                if(conn != null && st != null) {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                    st.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void attivaCorso(String corso) {
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "UPDATE corso SET attivo = 1 WHERE nome = ?";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, corso);
+
+            st.executeUpdate();
+            System.out.println("Corso attivato con successo.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void toggleCorso(String corso) {
+        Connection conn = null;
+        PreparedStatement st = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT attivo FROM corso WHERE nome = ?";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, corso);
+            ResultSet rs = st.executeQuery();
+
+            if(rs.next()) {
+                if(rs.getString("attivo").equals("1")) {
+                    this.disattivaCorso(corso);
+                } else {
+                    this.attivaCorso(corso);
+                }
+            }
+        } catch(SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             try {
@@ -242,9 +315,8 @@ public class DAO {
             st = conn.createStatement();
 
             ResultSet rs = st.executeQuery("SELECT * FROM corso");
-
             while(rs.next()) {
-                Corso c = new Corso(rs.getString("nome"));
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
                 elencoCorsi.add(c);
             }
         } catch(SQLException e) {
