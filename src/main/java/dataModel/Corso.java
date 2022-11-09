@@ -2,6 +2,7 @@ package dataModel;
 
 public class Corso {
     String nome;
+    boolean attivo = true;
 
     public Corso(String nome) {
         this.nome = nome;
@@ -9,6 +10,10 @@ public class Corso {
 
     public String getNome() {
         return this.nome;
+    }
+
+    public void cambiaStatoCorso() {
+        attivo = !attivo;
     }
 
     @Override

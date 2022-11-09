@@ -7,6 +7,10 @@ public class Prenotazione {
     private String data;
     private String fasciaOraria;
 
+    private String dataCancellazione;
+    private boolean attiva;
+    private boolean effettuata;
+
     public Prenotazione(String utente, String corso, String docente, String data, String fasciaOraria) {
         this.utente = utente;
         this.corso = corso;

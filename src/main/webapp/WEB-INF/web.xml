@@ -3,4 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+    <!-- Per MAMP (Mac OS) -->
+    <context-param>
+        <param-name>DB-URL</param-name>
+        <param-value>jdbc:mysql://localhost:8889/test?useSSL=false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>pwd</param-name>
+        <param-value>root</param-value>
+    </context-param>
 </web-app>
