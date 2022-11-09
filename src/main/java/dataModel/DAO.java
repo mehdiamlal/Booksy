@@ -1,6 +1,7 @@
 package dataModel;
 
-import jdk.internal.org.objectweb.asm.commons.Method;
+
+import javax.xml.transform.Result;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -270,12 +271,11 @@ public class DAO {
             System.out.println("Connesso al database locale.");
 
             String sql = "SELECT * FROM CORSO";
-
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
-                Corso c = new Corso(rs.getString("nome"));
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
                 elencoCorsi.add(c);
             }
         } catch(SQLException e) {
@@ -550,7 +550,42 @@ public class DAO {
         }
     }
 
-    public ArrayList<Prenotazione> ottieniStoricoPrenotazioni() {
+    public ArrayList<Prenotazione> ottieniPrenotazioniUtente(String utente) {
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM prenotazione WHERE utente = ?";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, utente);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                prenotazioniUtente.add(new Prenotazione(rs.getString("utente"),
+                        rs.getString("corso"),
+                        rs.getString("docente"),
+                        rs.getString("data"),
+                        rs.getString("fasciaOraria"),
+                        rs.getString("attiva").equals("1")));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return prenotazioniUtente;
+    }
+
+    public ArrayList<Prenotazione> ottieniElencoPrenotazioniAttive() {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
@@ -568,7 +603,8 @@ public class DAO {
                         rs.getString("corso"),
                         rs.getString("docente"),
                         rs.getString("data"),
-                        rs.getString("fasciaOraria")));
+                        rs.getString("fasciaOraria"),
+                        true));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());

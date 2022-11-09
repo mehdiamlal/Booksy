@@ -2,24 +2,27 @@ package dataModel;
 
 public class Corso {
     String nome;
-    boolean attivo = true;
+    boolean attivo;
 
-    public Corso(String nome) {
+    public Corso(String nome, boolean attivo) {
         this.nome = nome;
+        this.attivo = attivo;
     }
 
     public String getNome() {
         return this.nome;
     }
 
-    public void cambiaStatoCorso() {
-        attivo = !attivo;
+
+    public boolean getStatus() {
+        return this.attivo;
     }
 
     @Override
     public String toString() {
         return "Corso{" +
                 "nome='" + nome + '\'' +
+                ", attivo=" + attivo +
                 '}';
     }
 }

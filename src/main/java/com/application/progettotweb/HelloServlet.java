@@ -20,7 +20,6 @@ public class HelloServlet extends HttpServlet {
         if(tmpDAO instanceof DAO) {
             dataModel = (DAO) ctx.getAttribute("datamodel");
         }
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
