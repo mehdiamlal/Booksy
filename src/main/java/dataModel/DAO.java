@@ -1,6 +1,8 @@
 package dataModel;
 
+
 import javax.xml.transform.Result;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +26,16 @@ public class DAO {
         return dateFormat.format(new Date());
     }
 
+    public boolean allNotNull(Object... args) {
+        for(Object obj : args) {
+            if(obj == null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public void registerDriver() {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -31,6 +43,45 @@ public class DAO {
         } catch(SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public Utente autenticaUtente(String username, String password) {
+        //se il metodo ritorna un null, vuol dire che l'autenticazione è fallita
+        Connection conn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        Utente res = null;
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            System.out.println("Connesso al database locale.");
+
+            String sql = "SELECT * FROM utente WHERE username = ? AND password = ? AND attivo = 1";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, password);
+
+            rs = st.executeQuery();
+
+            if(rs.next()) {  //se la query ha restituito un risultato...
+                res = new Utente(rs.getString("username"),
+                        rs.getString("nome"),
+                        rs.getString("cognome"),
+                        rs.getString("ruolo"));
+            }
+
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return res;
     }
 
     //Metodi per la gestione delle operazioni sulla tabella utente
@@ -138,44 +189,6 @@ public class DAO {
         return elencoUtenti;
     }
 
-    public Utente autenticaUtente(String username, String password) {
-        //se il metodo ritorna un null, vuol dire che l'autenticazione è fallita
-        Connection conn = null;
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        Utente res = null;
-        try {
-            conn = DriverManager.getConnection(url, user, pw);
-            System.out.println("Connesso al database locale.");
-
-            String sql = "SELECT * FROM utente WHERE username = ? AND password = ? AND attivo = 1";
-
-            st = conn.prepareStatement(sql);
-            st.setString(1, username);
-            st.setString(2, password);
-
-            rs = st.executeQuery();
-
-            if(rs.next()) {  //se la query ha restituito un risultato...
-                res = new Utente(rs.getString("username"),
-                        rs.getString("nome"),
-                        rs.getString("cognome"),
-                        rs.getString("ruolo"));
-            }
-
-        } catch(SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if(conn != null && st != null) {conn.close(); st.close();}
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        return res;
-    }
-
     //Metodi per gestione delle operazioni sulla tabella corso
     public void aggiungiCorso(String nome) {
 
@@ -203,95 +216,40 @@ public class DAO {
         }
     }
 
-    private void disattivaCorso(String nome) {
+    public void cambiaStatoCorso(String nome) {
 
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            conn.setAutoCommit(false);
-            String sql1 = "UPDATE corso SET attivo = 0 WHERE nome = ?"; //disattiva il corso
-            //elimina (logicamente) le prenotazioni attive per il corso disattivato
-            String sql2 = "UPDATE prenotazione SET attiva = 0, dataCancellazione = ? WHERE corso = ? AND attiva = 1";
+            System.out.println("Connesso al database locale.");
 
-            st = conn.prepareStatement(sql1);
-            st.setString(1, nome);
-            st.executeUpdate();
+            String sql = "UPDATE corso " +
+                        "SET attivo = ?" +
+                        "WHERE nome = ? AND ATTIVO = ?";
 
-            st = conn.prepareStatement(sql2);
-            st.setString(1, getDate());
+            /* Provo ad eseguire la query sui corsi con nome "nome" inattivi */
+            String setActive, whereActive;
+
+            st = conn.prepareStatement(sql);
+            setActive = "1"; st.setString(1, setActive);
             st.setString(2, nome);
-            st.executeUpdate();
-            conn.commit();
-            System.out.println("Corso disattivato con successo.");
+            whereActive = "0"; st.setString(3, whereActive);
+
+            /* Se non trovo corsi con titolo "nome" inattivi, faccio la query inversa
+            * impostando come inattivi i corsi con titolo "nome" attivi */
+            if(st.executeUpdate() == 0) {
+                rimuoviPrenotazioni(null, null, null, nome);
+                rimuoviInsegnamenti(null, nome);
+
+                setActive = "0"; st.setString(1, setActive);
+                whereActive = "1"; st.setString(3, whereActive);
+                st.executeUpdate();
+            }
+
+            System.out.println("Stato del corso aggiornato.");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            if(conn != null) {
-                try {
-                    System.out.println("Rollback della transazione!");
-                    conn.rollback();
-                } catch (SQLException ex2) {  //la chiamo così per non creare ambiguità con l'eccezione e
-                    System.out.println(ex2.getMessage());
-                }
-            }
-        } finally {
-            try {
-                if(conn != null && st != null) {
-                    conn.setAutoCommit(true);
-                    conn.close();
-                    st.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private void attivaCorso(String corso) {
-        Connection conn = null;
-        PreparedStatement st = null;
-
-        try {
-            conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE corso SET attivo = 1 WHERE nome = ?";
-
-            st = conn.prepareStatement(sql);
-            st.setString(1, corso);
-
-            st.executeUpdate();
-            System.out.println("Corso attivato con successo.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if(conn != null && st != null) {conn.close(); st.close();}
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    public void toggleCorso(String corso) {
-        Connection conn = null;
-        PreparedStatement st = null;
-
-        try {
-            conn = DriverManager.getConnection(url, user, pw);
-            String sql = "SELECT attivo FROM corso WHERE nome = ?";
-
-            st = conn.prepareStatement(sql);
-            st.setString(1, corso);
-            ResultSet rs = st.executeQuery();
-
-            if(rs.next()) {
-                if(rs.getString("attivo").equals("1")) {
-                    this.disattivaCorso(corso);
-                } else {
-                    this.attivaCorso(corso);
-                }
-            }
-        } catch(SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             try {
@@ -312,9 +270,10 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
+            String sql = "SELECT * FROM CORSO";
             st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
 
-            ResultSet rs = st.executeQuery("SELECT * FROM corso");
             while(rs.next()) {
                 Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
                 elencoCorsi.add(c);
@@ -363,37 +322,12 @@ public class DAO {
         }
     }
 
-    private void rimuoviInsegnamentiDocente(String email) {
-
+    public void rimuoviDocente(String docente) {
         Connection conn = null;
         PreparedStatement st = null;
 
-        try {
-            conn = DriverManager.getConnection(url, user, pw);
-            String sql = "DELETE FROM insegnamento " +
-                        "WHERE docente = ?";
-
-            st = conn.prepareStatement(sql);
-            st.setString(1, email);
-
-            st.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if(conn != null && st != null) {conn.close(); st.close();}
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    public void rimuoviDocente(String email) {
-
-        Connection conn = null;
-        PreparedStatement st = null;
-
-        rimuoviInsegnamentiDocente(email);
+        rimuoviInsegnamenti(docente, null);
+        rimuoviPrenotazioni(docente, null, null, null);
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
@@ -403,7 +337,7 @@ public class DAO {
 
             st = conn.prepareStatement(sql);
             st.setString(1, getDate());
-            st.setString(2, email);
+            st.setString(2, docente);
 
             st.executeUpdate();
         } catch (SQLException e) {
@@ -433,6 +367,7 @@ public class DAO {
 
             while(rs.next()) {
                 elencoDocenti.add(new Docente(rs.getString("email"),
+                        rs.getString("password"),
                         rs.getString("nome"),
                         rs.getString("cognome")));
             }
@@ -476,19 +411,32 @@ public class DAO {
         }
     }
 
-    public void rimuoviInsegnamento(String emailDocente, String nomeCorso) {
+    public void rimuoviInsegnamenti(String docente, String corso) {
         Connection conn = null;
         PreparedStatement st = null;
+        String sql = "DELETE FROM insegnamento";
+
+        /* Tutti i parametri sono null */
+        if(allNotNull(docente, corso) == false) {
+            return;
+        }
+
+        /* Rimozione di tutti gli insegnamenti tenuti da un certo docente */
+        if(docente != null && corso == null) {
+            sql.concat("WHERE docente = " + docente);
+        }
+
+        /* Rimozione di tutti gli insegnamenti di un certo corso */
+        if(docente == null && corso != null) {
+            sql.concat("WHERE corso = " + corso);
+        }
+
+        /* Rimozione dell'insegnamento di un certo corso tenuto da un certo docente */
+        sql.concat("WHERE docente = " + docente + " AND corso " + corso);
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "DELETE FROM Corso " +
-                         "WHERE docente = ? AND corso = ?";
-
             st = conn.prepareStatement(sql);
-            st.setString(1, emailDocente);
-            st.setString(2, nomeCorso);
-
             st.executeUpdate();
 
             System.out.println("Insegnamento rimosso con successo.");
@@ -536,24 +484,58 @@ public class DAO {
         }
     }
 
-    public void rimuoviPrenotazione(String emailDocente, String data, String fasciaOraria) {
-
+    public void impostaPrenotazioneEffettuata(String docente, String data, String fasciaOraria) {
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = ? WHERE docente = ? AND data = ? AND fasciaOraria = ?";
+            String sql = "UPDATE prenotazione " +
+                        "SET attiva = 1 " +
+                        "WHERE docente = ? AND data = ? AND fasciaOraria = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, getDate());
-            st.setString(2, emailDocente);
-            st.setString(3, data);
-            st.setString(4, fasciaOraria);
+            st.setString(1, docente);
+            st.setString(2, data);
+            st.setString(3, fasciaOraria);
 
             st.executeUpdate();
 
-            System.out.println("Prenotazione eliminata con successo.");
+            System.out.println("Prenotazione impostata come effettuata.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void rimuoviPrenotazioni(String docente, String data, String fasciaOraria, String corso) {
+
+        Connection conn = null;
+        PreparedStatement st = null;
+        String sql = "UPDATE prenotazione" +
+                    "SET attiva = 0, dataCancellazione = " + getDate();
+
+        if(docente != null && data == null && fasciaOraria == null && corso == null) {
+            sql.concat("WHERE docente = " + docente + " AND attivo = 1");
+        }
+
+        if(corso != null && docente == null && data == null && fasciaOraria == null) {
+            sql.concat("WHERE corso = " + corso + " AND attivo = 1");
+        }
+
+        sql.concat("WHERE docente = ? AND data = ? AND fasciaOraria = ? AND corso = ?");
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            st = conn.prepareStatement(sql);
+            st.executeUpdate();
+
+            System.out.println("Prenotazioni eliminate con successo.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -610,7 +592,7 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "SELECT * FROM prenotazione WHERE attiva = 1";
+            String sql = "SELECT * FROM prenotazione";
 
             st = conn.prepareStatement(sql);
 

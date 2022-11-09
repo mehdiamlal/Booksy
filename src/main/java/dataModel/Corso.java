@@ -13,6 +13,7 @@ public class Corso {
         return this.nome;
     }
 
+
     public boolean getStatus() {
         return this.attivo;
     }
