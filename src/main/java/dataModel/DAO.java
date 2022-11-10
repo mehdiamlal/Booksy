@@ -672,11 +672,11 @@ public class DAO {
 
         //Si presuppone che il formato delle date che vengono passate sia dd/MM/yyyy
         DateTime inizio = new DateTime(Integer.parseInt(dataInizio.substring(6)),
-                                        Integer.parseInt(dataInizio.substring(3, 4)),
-                                        Integer.parseInt(dataInizio.substring(0, 1)), 0, 0);
+                                        Integer.parseInt(dataInizio.substring(3, 5)),
+                                        Integer.parseInt(dataInizio.substring(0, 2)), 0, 0);
         DateTime fine = new DateTime(Integer.parseInt(dataFine.substring(6)),
-                                    Integer.parseInt(dataFine.substring(3, 4)),
-                                    Integer.parseInt(dataFine.substring(0, 1)), 0, 0);
+                                    Integer.parseInt(dataFine.substring(3, 5)),
+                                    Integer.parseInt(dataFine.substring(0, 2)), 0, 0);
 
         ArrayList<String> totalSlots = getTotalSlots(inizio, fine);
         HashMap<String, ArrayList<String>> ris = new HashMap<>();

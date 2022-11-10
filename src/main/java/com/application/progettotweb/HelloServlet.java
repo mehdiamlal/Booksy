@@ -17,22 +17,23 @@ public class HelloServlet extends HttpServlet {
         ServletContext ctx = config.getServletContext();
         Object tmpDAO = ctx.getAttribute("datamodel");
 
-        if(tmpDAO instanceof DAO) {
+        if (tmpDAO instanceof DAO) {
             dataModel = (DAO) ctx.getAttribute("datamodel");
         }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + "prova" + "</h1>");
-        out.println("</body></html>");
-
-        System.out.println(dataModel.ottieniStoricoPrenotazioni());
     }
 
-    public void destroy() {
-    }
+//    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        response.setContentType("text/html");
+//
+//        // Hello
+//        PrintWriter out = response.getWriter();
+//        out.println("<html><body>");
+//        out.println("<h1>" + "prova" + "</h1>");
+//        out.println("</body></html>");
+//
+//        System.out.println(dataModel.ottieniStoricoPrenotazioni());
+//    }
+
+//    public void destroy() {
+//    }
 }
