@@ -1,12 +1,17 @@
 package dataModel;
 
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import javax.xml.transform.Result;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DAO {
     String url;
@@ -617,5 +622,73 @@ public class DAO {
         }
 
         return elencoPrenotazioni;
+    }
+
+    private String getDateSlotPair(String date, String slot) {
+        return "(" + date + ", " + slot +")";
+    }
+
+    //ritorna un'arraylist di slot nel formato (gg/MM/aaa, oraInizio - oraFine)
+    //per tutte le date tra star e end (estremi compresi)
+    private ArrayList<String> getTotalSlots(DateTime start, DateTime end) {
+        ArrayList<String> ret = new ArrayList<>();
+        int nOfDays = 0;
+
+        // calcola range di date e le mette in lista
+        DateTime tmp = start;
+        while(tmp.isBefore(end) || tmp.equals(end)) {
+            //formatta la data nel formato specificato
+            DateTimeFormatter dtfOut = DateTimeFormat.forPattern("dd/MM/yyyy");
+            ret.add(dtfOut.print(tmp));
+            tmp = tmp.plusDays(1);
+        }
+
+        nOfDays = ret.size();
+
+        //associa le fosce orarie alle date
+        for(int i = 0; i < nOfDays; i++) {
+            String slot1 = getDateSlotPair(ret.get(i), "15.00 - 16.00");
+            ret.add(slot1);
+            String slot2 = getDateSlotPair(ret.get(i), "16.00 - 17.00");
+            ret.add(slot2);
+            String slot3 = getDateSlotPair(ret.get(i), "17.00 - 18.00");
+            ret.add(slot3);
+            String slot4 = getDateSlotPair(ret.get(i), "18.00 - 19.00");
+            ret.add(slot4);
+        }
+
+        //togli le date presenti nelle prime posizioni
+        for(int i = 0; i < nOfDays; i++) {
+            ret.remove(0);
+        }
+
+        return ret;
+    }
+
+    public HashMap<String, ArrayList<String>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
+        ArrayList<Prenotazione> listaPrenotazioni = ottieniElencoPrenotazioniAttive();
+        ArrayList<Docente> listaDocenti = ottieniElencoDocenti();  //prendo i docenti attivi
+
+
+        //Si presuppone che il formato delle date che vengono passate sia dd/MM/yyyy
+        DateTime inizio = new DateTime(Integer.parseInt(dataInizio.substring(6)),
+                                        Integer.parseInt(dataInizio.substring(3, 5)),
+                                        Integer.parseInt(dataInizio.substring(0, 2)), 0, 0);
+        DateTime fine = new DateTime(Integer.parseInt(dataFine.substring(6)),
+                                    Integer.parseInt(dataFine.substring(3, 5)),
+                                    Integer.parseInt(dataFine.substring(0, 2)), 0, 0);
+
+        ArrayList<String> totalSlots = getTotalSlots(inizio, fine);
+        HashMap<String, ArrayList<String>> ris = new HashMap<>();
+
+        for(Docente d : listaDocenti) {
+            ris.put(d.getEmail(), totalSlots);
+        }
+
+        for(Prenotazione p : listaPrenotazioni) {
+            ris.get(p.getDocente()).remove(getDateSlotPair(p.getData(), p.getFasciaOraria()));
+        }
+
+        return ris;
     }
 }
