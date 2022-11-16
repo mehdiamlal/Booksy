@@ -456,6 +456,40 @@ public class DAO {
         }
     }
 
+    public HashMap<String, ArrayList<String>> ottieniElencoInsegnamenti() {
+        Connection conn = null;
+        PreparedStatement st = null;
+        HashMap<String, ArrayList<String>> elencoInsegnamenti = new HashMap<String, ArrayList<String>>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM insegnamento";
+
+            st = conn.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                if(!elencoInsegnamenti.containsKey(rs.getString("docente"))) {
+                    elencoInsegnamenti.put(rs.getString("docente"), new ArrayList<String>());
+                    elencoInsegnamenti.get(rs.getString("docente")).add(rs.getString("corso"));
+                } else {
+                    elencoInsegnamenti.get(rs.getString("docente")).add(rs.getString("corso"));
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return elencoInsegnamenti;
+    }
+
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
     public void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
 
