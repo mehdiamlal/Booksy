@@ -7,7 +7,7 @@ import javax.servlet.annotation.*;
 import dataModel.DAO;
 
 @WebServlet(name = "auth-servlet", value = "/auth-servlet")
-public class AuthServlet extends HttpServlet {
+public class InitServlet extends HttpServlet {
     DAO dataModel;
 
     @Override
