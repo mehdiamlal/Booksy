@@ -2,16 +2,15 @@ package dataModel;
 
 public class Docente {
     private String email;
-    private String password;
     private String nome;
     private String cognome;
     private boolean attivo = true;
 
-    public Docente(String email, String password, String nome, String cognome) {
+    public Docente(String email, String nome, String cognome, boolean attivo) {
         this.email = email;
-        this.password = password;
         this.nome = nome;
         this.cognome = cognome;
+        this.attivo = attivo;
     }
 
     public String getEmail() {
@@ -24,6 +23,10 @@ public class Docente {
 
     public String getCognome() {
         return cognome;
+    }
+
+    public boolean isAttivo() {
+        return attivo;
     }
 
     @Override

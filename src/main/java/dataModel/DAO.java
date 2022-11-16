@@ -372,9 +372,9 @@ public class DAO {
 
             while(rs.next()) {
                 elencoDocenti.add(new Docente(rs.getString("email"),
-                        rs.getString("password"),
                         rs.getString("nome"),
-                        rs.getString("cognome")));
+                        rs.getString("cognome"),
+                        rs.getBoolean("attivo")));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -488,6 +488,42 @@ public class DAO {
         }
 
         return elencoInsegnamenti;
+    }
+
+    public ArrayList<Docente> filtraDocentePerCorso(String corso) {
+        //ritorna la lista di docenti (attivi) che insegnano corso
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Docente> listaDocenti = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM insegnamento WHERE corso = ?";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, corso);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                ArrayList<Docente> elencoTuttiDocenti = ottieniElencoDocenti(); //tutti docenti attivi
+                for(Docente d : elencoTuttiDocenti) {
+                    if(d.getEmail().equals(rs.getString("docente"))) {
+                        listaDocenti.add(d);
+                    }
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return listaDocenti;
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
