@@ -61,19 +61,20 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "SELECT * FROM utente WHERE username = ? AND password = ? AND attivo = 1";
+            String sql = "SELECT * FROM utente WHERE username = ? AND attivo = 1";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
-            st.setString(2, password);
 
             rs = st.executeQuery();
 
             if(rs.next()) {  //se la query ha restituito un risultato...
-                res = new Utente(rs.getString("username"),
-                        rs.getString("nome"),
-                        rs.getString("cognome"),
-                        rs.getString("ruolo"));
+                if(Service.checkSHA2(rs.getString("password"), password)) { //se la password è corretta
+                    res = new Utente(rs.getString("username"),
+                            rs.getString("nome"),
+                            rs.getString("cognome"),
+                            rs.getString("ruolo"));
+                }
             }
 
         } catch(SQLException e) {
@@ -104,7 +105,7 @@ public class DAO {
 
             st = conn.prepareStatement(sql);
             st.setString(1, username.toLowerCase());
-            st.setString(2, password);
+            st.setString(2, Service.encryptSHA2(password));
             st.setString(3, nome);
             st.setString(4, cognome);
             st.setString(5, ruolo);
