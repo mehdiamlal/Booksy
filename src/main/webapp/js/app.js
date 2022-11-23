@@ -1,4 +1,4 @@
-import {loginForm} from "./login-form.js";
+import {loginForm} from "./components/login-form.js";
 const app = Vue.createApp({
         data: function () {
             return {
