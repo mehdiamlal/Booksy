@@ -14,24 +14,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DAO {
-    String url;
-    String user;
-    String pw;
+    static String url;
+    static String user;
+    static String pw;
 
-    public DAO(String url, String user, String pw) {
-        this.url = url;
-        this.user = user;
-        this.pw = pw;
-    }
+//    public DAO(String url, String user, String pw) {
+//        this.url = url;
+//        this.user = user;
+//        this.pw = pw;
+//    }
 
     //metodo di utility per generare la date odierna in formato dd/MM/yyyy
     //NB: le lettere dei mesi devono essere in maiuscolo per evitare errori
-    private String getDate() {
+    private static String getDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(new Date());
     }
 
-    public boolean allNotNull(Object... args) {
+    public static boolean allNotNull(Object... args) {
         for(Object obj : args) {
             if(obj == null) {
                 return false;
@@ -41,7 +41,7 @@ public class DAO {
         return true;
     }
 
-    public void registerDriver() {
+    public static void registerDriver() {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             System.out.println("Driver registrato con successo.");
@@ -50,7 +50,7 @@ public class DAO {
         }
     }
 
-    public Utente autenticaUtente(String username, String password) {
+    public static Utente autenticaUtente(String username, String password) {
         //se il metodo ritorna un null, vuol dire che l'autenticazione è fallita
         Connection conn = null;
         PreparedStatement st = null;
@@ -91,7 +91,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella utente
-    public void aggiungiUtente(String username, String password, String nome, String cognome, String ruolo) {
+    public static void aggiungiUtente(String username, String password, String nome, String cognome, String ruolo) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -125,7 +125,7 @@ public class DAO {
         }
     }
 
-    public void rimuoviUtente(String username) {
+    public static void rimuoviUtente(String username) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -155,7 +155,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Utente> ottieniElencoUtenti() {
+    public static ArrayList<Utente> ottieniElencoUtenti() {
 
         Connection conn = null;
         Statement st = null;
@@ -196,7 +196,7 @@ public class DAO {
     }
 
     //Metodi per gestione delle operazioni sulla tabella corso
-    public void aggiungiCorso(String nome) {
+    public static void aggiungiCorso(String nome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -222,7 +222,7 @@ public class DAO {
         }
     }
 
-    public void cambiaStatoCorso(String nome) {
+    public static void cambiaStatoCorso(String nome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -266,7 +266,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Corso> ottieniElencoCorsi() {
+    public static ArrayList<Corso> ottieniElencoCorsi() {
 
         Connection conn = null;
         Statement st = null;
@@ -298,7 +298,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella docente
-    public void aggiungiDocente(String email, String password, String nome, String cognome) {
+    public static void aggiungiDocente(String email, String password, String nome, String cognome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -328,7 +328,7 @@ public class DAO {
         }
     }
 
-    public void rimuoviDocente(String docente) {
+    public static void rimuoviDocente(String docente) {
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -357,7 +357,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Docente> ottieniElencoDocenti() {
+    public static ArrayList<Docente> ottieniElencoDocenti() {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -391,7 +391,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella insegnamento
-    public void aggiungiInsegnamento(String docente, String corso) {
+    public static void aggiungiInsegnamento(String docente, String corso) {
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -417,7 +417,7 @@ public class DAO {
         }
     }
 
-    public void rimuoviInsegnamenti(String docente, String corso) {
+    public static void rimuoviInsegnamenti(String docente, String corso) {
         Connection conn = null;
         PreparedStatement st = null;
         String sql = "DELETE FROM insegnamento";
@@ -457,7 +457,7 @@ public class DAO {
         }
     }
 
-    public HashMap<String, ArrayList<String>> ottieniElencoInsegnamenti() {
+    public static HashMap<String, ArrayList<String>> ottieniElencoInsegnamenti() {
         Connection conn = null;
         PreparedStatement st = null;
         HashMap<String, ArrayList<String>> elencoInsegnamenti = new HashMap<String, ArrayList<String>>();
@@ -491,7 +491,7 @@ public class DAO {
         return elencoInsegnamenti;
     }
 
-    public ArrayList<Docente> filtraDocentePerCorso(String corso) {
+    public static ArrayList<Docente> filtraDocentePerCorso(String corso) {
         //ritorna la lista di docenti (attivi) che insegnano corso
         Connection conn = null;
         PreparedStatement st = null;
@@ -528,7 +528,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
-    public void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
+    public static void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
 
         //si presuppone che ciascuna prenotazione abbia un flag "attiva"
         //che viene settato a 1 di default quando viene creata
@@ -560,7 +560,7 @@ public class DAO {
         }
     }
 
-    public void impostaPrenotazioneEffettuata(String docente, String data, String fasciaOraria) {
+    public static void impostaPrenotazioneEffettuata(String docente, String data, String fasciaOraria) {
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -589,7 +589,7 @@ public class DAO {
         }
     }
 
-    public void rimuoviPrenotazioni(String docente, String data, String fasciaOraria, String corso) {
+    public static void rimuoviPrenotazioni(String docente, String data, String fasciaOraria, String corso) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -626,7 +626,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Prenotazione> ottieniPrenotazioniUtente(String utente) {
+    public static ArrayList<Prenotazione> ottieniPrenotazioniUtente(String utente) {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<>();
@@ -661,7 +661,7 @@ public class DAO {
         return prenotazioniUtente;
     }
 
-    public ArrayList<Prenotazione> ottieniElencoPrenotazioniAttive() {
+    public static ArrayList<Prenotazione> ottieniElencoPrenotazioniAttive() {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
@@ -695,13 +695,13 @@ public class DAO {
         return elencoPrenotazioni;
     }
 
-    private String getDateSlotPair(String date, String slot) {
+    private static String getDateSlotPair(String date, String slot) {
         return "(" + date + ", " + slot +")";
     }
 
     //ritorna un'arraylist di slot nel formato (gg/MM/aaa, oraInizio - oraFine)
     //per tutte le date tra star e end (estremi compresi)
-    private ArrayList<String> getTotalSlots(DateTime start, DateTime end) {
+    private static ArrayList<String> getTotalSlots(DateTime start, DateTime end) {
         ArrayList<String> ret = new ArrayList<>();
         int nOfDays = 0;
 
@@ -736,7 +736,7 @@ public class DAO {
         return ret;
     }
 
-    public HashMap<String, ArrayList<String>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
+    public static HashMap<String, ArrayList<String>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
         ArrayList<Prenotazione> listaPrenotazioni = ottieniElencoPrenotazioniAttive();
         ArrayList<Docente> listaDocenti = ottieniElencoDocenti();  //prendo i docenti attivi
 
