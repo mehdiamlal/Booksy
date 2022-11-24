@@ -72,8 +72,7 @@ export var loginForm = {
                                 
                                     <!-- Submit button -->
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" 
-                                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Accedi</button>
+                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event">Accedi</button>
                                         <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="#">Registrati</a></p>
                                     </div>
                             </div>
@@ -82,6 +81,6 @@ export var loginForm = {
                 </div>
             </div>
         </div>         
-    </div>
+</div>
 `
 };
