@@ -47,40 +47,39 @@ export var loginForm = {
             <div class="col-md-6 offset-md-3 border p-4 shadow bg-light">
                 <form action="">
                     <div class="row g-3">
-                            <div class="col-12">
-                                    <!-- username input -->
-                                    <div class="form-outline mb-4" v-if="!usernameMissing">
-                                        <label class="text-secondary" for="username">Username</label>
-                                        <input v-model="username" type="text" id="username" name="username" class="form-control"/>
-                                    </div>
-                                    <div class="form-outline mb-4" v-else>
-                                        <label class="text-secondary" for="username">Username</label>
-                                        <input v-model="username" type="text" id="username" name="username" class="form-control is-invalid"/>
-                                        <div id="invalidPasswordFeedback" class="invalid-feedback">Il campo username non può essere vuoto.</div>
-                                    </div>
-                                
-                                    <!-- Password input -->
-                                    <div class="form-outline mb-4" v-if="!passwordMissing">
-                                        <label class="text-secondary" for="password">Password</label>
-                                        <input v-model="password" type="password" id="password" name="password" class="form-control"/>
-                                    </div>
-                                    <div class="form-outline mb-4" v-else>
-                                        <label class="text-secondary" for="password">Password</label>
-                                        <input v-model="password" type="password" id="password" name="password" class="form-control is-invalid"/>
-                                        <div id="invalidPasswordFeedback" class="invalid-feedback">Il campo password non può essere vuoto.</div>
-                                    </div>
-                                
-                                    <!-- Submit button -->
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event">Accedi</button>
-                                        <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="#">Registrati</a></p>
-                                    </div>
-                            </div>
+                        <div class="col-12">
+                                <!-- username input -->
+                                <div class="form-outline mb-4" v-if="!usernameMissing">
+                                    <label class="text-secondary" for="username">Username</label>
+                                    <input v-model="username" type="text" id="username" name="username" class="form-control"/>
+                                </div>
+                                <div class="form-outline mb-4" v-else>
+                                    <label class="text-secondary" for="username">Username</label>
+                                    <input v-model="username" type="text" id="username" name="username" class="form-control is-invalid"/>
+                                    <div id="invalidPasswordFeedback" class="invalid-feedback">Il campo username non può essere vuoto.</div>
+                                </div>
+                            
+                                <!-- Password input -->
+                                <div class="form-outline mb-4" v-if="!passwordMissing">
+                                    <label class="text-secondary" for="password">Password</label>
+                                    <input v-model="password" type="password" id="password" name="password" class="form-control"/>
+                                </div>
+                                <div class="form-outline mb-4" v-else>
+                                    <label class="text-secondary" for="password">Password</label>
+                                    <input v-model="password" type="password" id="password" name="password" class="form-control is-invalid"/>
+                                    <div id="invalidPasswordFeedback" class="invalid-feedback">Il campo password non può essere vuoto.</div>
+                                </div>
+                            
+                                <!-- Submit button -->
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event">Accedi</button>
+                                    <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="#">Registrati</a></p>
+                                </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
-        </div>         
-</div>
+        </div>
+    </div>
 `
 };

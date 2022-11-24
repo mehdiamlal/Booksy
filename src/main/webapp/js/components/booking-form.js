@@ -8,7 +8,8 @@ export var bookingForm = {
             selectedDocente: "",
             selectedData: "",
             selectedFascia: "",
-            fact: ""
+            fact: "",
+            slotAvailable: true
         }
     },
     methods: {
@@ -24,6 +25,10 @@ export var bookingForm = {
             /* chiamata http per ottenere fasce orarie per il docente selezionato e la data
             selezionata, i risultati vanno aggiunti a self.listaFasceOrarie
             */
+            
+            if(self.listaFasceOrarie.length == 0) {
+                self.slotAvailable = false;
+            }
         }
     },
     template: `
@@ -53,6 +58,10 @@ export var bookingForm = {
                                 <select id="selezionaSlot" class="form-select" name="fasciaOraria" v-model="selectedFascia">
                                     <option v-for="fascia in listaFasceOrarie">{{fascia}}</option>
                                 </select>
+                                <div v-if="!slotAvailable" id="noSlotAvailable" class="text-secondary text-danger text-center">
+                                    <p></p>
+                                    Nessuna fascia oraria disponibile in data selezionata.
+                                </div>
                             </div>
                         </div>
                     </form>
