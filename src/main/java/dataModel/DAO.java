@@ -668,7 +668,7 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "SELECT * FROM prenotazione";
+            String sql = "SELECT * FROM prenotazione WHERE attiva = 1";
 
             st = conn.prepareStatement(sql);
 
@@ -701,42 +701,29 @@ public class DAO {
 
     //ritorna un'arraylist di slot nel formato (gg/MM/aaa, oraInizio - oraFine)
     //per tutte le date tra star e end (estremi compresi)
-    private ArrayList<String> getTotalSlots(DateTime start, DateTime end) {
-        ArrayList<String> ret = new ArrayList<>();
-        int nOfDays = 0;
+    private HashMap<String, ArrayList<String>> getTotalSlots(DateTime start, DateTime end) {
+        HashMap<String, ArrayList<String>> ret = new HashMap<>();
 
         // calcola range di date e le mette in lista
         DateTime tmp = start;
         while(tmp.isBefore(end) || tmp.equals(end)) {
             //formatta la data nel formato specificato
             DateTimeFormatter dtfOut = DateTimeFormat.forPattern("dd/MM/yyyy");
-            ret.add(dtfOut.print(tmp));
+            ret.put(dtfOut.print(tmp), new ArrayList<>());
             tmp = tmp.plusDays(1);
         }
 
-        nOfDays = ret.size();
-
-        //associa le fosce orarie alle date
-        for(int i = 0; i < nOfDays; i++) {
-            String slot1 = getDateSlotPair(ret.get(i), "15.00 - 16.00");
-            ret.add(slot1);
-            String slot2 = getDateSlotPair(ret.get(i), "16.00 - 17.00");
-            ret.add(slot2);
-            String slot3 = getDateSlotPair(ret.get(i), "17.00 - 18.00");
-            ret.add(slot3);
-            String slot4 = getDateSlotPair(ret.get(i), "18.00 - 19.00");
-            ret.add(slot4);
-        }
-
-        //togli le date presenti nelle prime posizioni
-        for(int i = 0; i < nOfDays; i++) {
-            ret.remove(0);
-        }
+        ret.forEach((k, v) -> {
+            v.add("15.00 - 16.00");
+            v.add("16.00 - 17.00");
+            v.add("17.00 - 18.00");
+            v.add("18.00 - 19.00");
+        });
 
         return ret;
     }
 
-    public HashMap<String, ArrayList<String>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
+    public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
         ArrayList<Prenotazione> listaPrenotazioni = ottieniElencoPrenotazioniAttive();
         ArrayList<Docente> listaDocenti = ottieniElencoDocenti();  //prendo i docenti attivi
 
@@ -749,15 +736,18 @@ public class DAO {
                                     Integer.parseInt(dataFine.substring(3, 5)),
                                     Integer.parseInt(dataFine.substring(0, 2)), 0, 0);
 
-        ArrayList<String> totalSlots = getTotalSlots(inizio, fine);
-        HashMap<String, ArrayList<String>> ris = new HashMap<>();
+//        HashMap<String, ArrayList<String>> totalSlots = getTotalSlots(inizio, fine);
+        HashMap<String, HashMap<String, ArrayList<String>>> ris = new HashMap<>();
 
         for(Docente d : listaDocenti) {
-            ris.put(d.getEmail(), totalSlots);
+            ris.put(d.getEmail(), getTotalSlots(inizio, fine));
         }
 
         for(Prenotazione p : listaPrenotazioni) {
-            ris.get(p.getDocente()).remove(getDateSlotPair(p.getData(), p.getFasciaOraria()));
+            if(ris.get(p.getDocente()).get(p.getData()) != null) {
+                ris.get(p.getDocente()).get(p.getData()).remove(p.getFasciaOraria());
+                System.out.println("Ho tolto a " + p.getDocente() + " la fascia delle: " + p.getFasciaOraria());
+            }
         }
 
         return ris;
