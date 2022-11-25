@@ -5,8 +5,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import javax.xml.transform.Result;
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +17,7 @@ public class DAO {
     String pw;
 
     public DAO(String url, String user, String pw) {
+        registerDriver();
         this.url = url;
         this.user = user;
         this.pw = pw;
@@ -31,7 +30,7 @@ public class DAO {
         return dateFormat.format(new Date());
     }
 
-    public boolean allNotNull(Object... args) {
+    private boolean allNotNull(Object... args) {
         for(Object obj : args) {
             if(obj == null) {
                 return false;
@@ -41,7 +40,7 @@ public class DAO {
         return true;
     }
 
-    public void registerDriver() {
+    private void registerDriver() {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             System.out.println("Driver registrato con successo.");
@@ -423,22 +422,22 @@ public class DAO {
         String sql = "DELETE FROM insegnamento";
 
         /* Tutti i parametri sono null */
-        if(allNotNull(docente, corso) == false) {
+        if(!allNotNull(docente, corso)) {
             return;
         }
 
         /* Rimozione di tutti gli insegnamenti tenuti da un certo docente */
         if(docente != null && corso == null) {
-            sql.concat("WHERE docente = " + docente);
+            sql = sql.concat("WHERE docente = " + docente);
         }
 
         /* Rimozione di tutti gli insegnamenti di un certo corso */
         if(docente == null && corso != null) {
-            sql.concat("WHERE corso = " + corso);
+            sql = sql.concat("WHERE corso = " + corso);
         }
 
         /* Rimozione dell'insegnamento di un certo corso tenuto da un certo docente */
-        sql.concat("WHERE docente = " + docente + " AND corso " + corso);
+        sql = sql.concat("WHERE docente = " + docente + " AND corso " + corso);
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
@@ -460,7 +459,7 @@ public class DAO {
     public HashMap<String, ArrayList<String>> ottieniElencoInsegnamenti() {
         Connection conn = null;
         PreparedStatement st = null;
-        HashMap<String, ArrayList<String>> elencoInsegnamenti = new HashMap<String, ArrayList<String>>();
+        HashMap<String, ArrayList<String>> elencoInsegnamenti = new HashMap<>();
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
@@ -472,7 +471,7 @@ public class DAO {
 
             while(rs.next()) {
                 if(!elencoInsegnamenti.containsKey(rs.getString("docente"))) {
-                    elencoInsegnamenti.put(rs.getString("docente"), new ArrayList<String>());
+                    elencoInsegnamenti.put(rs.getString("docente"), new ArrayList<>());
                     elencoInsegnamenti.get(rs.getString("docente")).add(rs.getString("corso"));
                 } else {
                     elencoInsegnamenti.get(rs.getString("docente")).add(rs.getString("corso"));
@@ -597,14 +596,14 @@ public class DAO {
                     "SET attiva = 0, dataCancellazione = " + getDate();
 
         if(docente != null && data == null && fasciaOraria == null && corso == null) {
-            sql.concat("WHERE docente = " + docente + " AND attivo = 1");
+            sql = sql.concat("WHERE docente = " + docente + " AND attivo = 1");
         }
 
         if(corso != null && docente == null && data == null && fasciaOraria == null) {
-            sql.concat("WHERE corso = " + corso + " AND attivo = 1");
+            sql = sql.concat("WHERE corso = " + corso + " AND attivo = 1");
         }
 
-        sql.concat("WHERE docente = ? AND data = ? AND fasciaOraria = ? AND corso = ?");
+        sql = sql.concat("WHERE docente = ? AND data = ? AND fasciaOraria = ? AND corso = ?");
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
