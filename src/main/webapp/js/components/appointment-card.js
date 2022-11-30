@@ -38,7 +38,7 @@ export var appointmentCard = {
                     <div class="dropdown open" v-if="activeData">
                         <a href="#!" class="px-2" id="triggerId1" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
+                            <i class="fa fa-ellipsis-v" style="color: #5E17EB !important;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId1">
                             <a class="dropdown-item text-danger" @click="change_status"><i
