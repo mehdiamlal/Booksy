@@ -154,7 +154,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Utente> ottieniElencoUtenti() {
+    public ArrayList<Utente> ottieniUtenti() {
 
         Connection conn = null;
         Statement st = null;
@@ -265,7 +265,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Corso> ottieniElencoCorsi() {
+    public ArrayList<Corso> ottieniCorsi() {
 
         Connection conn = null;
         Statement st = null;
@@ -356,7 +356,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Docente> ottieniElencoDocenti() {
+    public ArrayList<Docente> ottieniDocenti() {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -456,7 +456,7 @@ public class DAO {
         }
     }
 
-    public HashMap<String, ArrayList<String>> ottieniElencoInsegnamenti() {
+    public HashMap<String, ArrayList<String>> ottieniInsegnamenti() {
         Connection conn = null;
         PreparedStatement st = null;
         HashMap<String, ArrayList<String>> elencoInsegnamenti = new HashMap<>();
@@ -506,7 +506,7 @@ public class DAO {
             ResultSet rs = st.executeQuery();
 
             while(rs.next()) {
-                ArrayList<Docente> elencoTuttiDocenti = ottieniElencoDocenti(); //tutti docenti attivi
+                ArrayList<Docente> elencoTuttiDocenti = ottieniDocenti(); //tutti docenti attivi
                 for(Docente d : elencoTuttiDocenti) {
                     if(d.getEmail().equals(rs.getString("docente"))) {
                         listaDocenti.add(d);
@@ -660,7 +660,7 @@ public class DAO {
         return prenotazioniUtente;
     }
 
-    public ArrayList<Prenotazione> ottieniElencoPrenotazioniAttive() {
+    public ArrayList<Prenotazione> ottieniPrenotazioniAttive() {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
@@ -723,8 +723,8 @@ public class DAO {
     }
 
     public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
-        ArrayList<Prenotazione> listaPrenotazioni = ottieniElencoPrenotazioniAttive();
-        ArrayList<Docente> listaDocenti = ottieniElencoDocenti();  //prendo i docenti attivi
+        ArrayList<Prenotazione> listaPrenotazioni = ottieniPrenotazioniAttive();
+        ArrayList<Docente> listaDocenti = ottieniDocenti();  //prendo i docenti attivi
 
 
         //Si presuppone che il formato delle date che vengono passate sia dd/MM/yyyy
