@@ -5,7 +5,7 @@ export var navbar = {
     data: function() {
         var self = this;
         return {
-            loggedData: !(self.logged)
+            loggedData: self.logged
         }
     },
     template: `
