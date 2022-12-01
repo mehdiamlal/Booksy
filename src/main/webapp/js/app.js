@@ -6,6 +6,7 @@ import {appointmentCard} from "./components/appointment-card.js";
 import {bookingView} from "./views/booking-view.js";
 import {coursesView} from "./views/courses-view.js";
 import { landingView } from "./views/landing-view.js";
+import { loginView } from "./views/login-view.js";
 
 const app = Vue.createApp({
         data: function () {
@@ -23,6 +24,7 @@ app.component("appointment-card", appointmentCard);
 app.component("booking-view", bookingView);
 app.component("courses-view", coursesView);
 app.component("landing-view", landingView);
+app.component("login-view", loginView);
 
 app.mount("#app");
 

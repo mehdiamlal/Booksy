@@ -48,6 +48,9 @@ export var loginForm = {
                 <form action="">
                     <div class="row g-3">
                         <div class="col-12">
+                                <div class="text-center">
+                                    <img src="./img/favicon.png" alt="logo Booksy" width="60" height="60" style="margin-bottom: 2em">
+                                </div>
                                 <!-- username input -->
                                 <div class="form-outline mb-4" v-if="!usernameMissing">
                                     <label class="text-secondary" for="username">Username</label>
@@ -72,7 +75,7 @@ export var loginForm = {
                             
                                 <!-- Submit button -->
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event">Accedi</button>
+                                    <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Accedi</button>
                                     <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <a href="#">Registrati</a></p>
                                 </div>
                         </div>
