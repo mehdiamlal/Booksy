@@ -9,7 +9,7 @@ export var navbar = {
         }
     },
     template: `
-        <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #3BF6FE;">
+        <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #fff;">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <img src="./img/logo.png" alt="Logo" width="166" height="32.3">

@@ -27,8 +27,9 @@ export var courseCard = {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <h6 v-for="docente in listaDocenti">{{docente.nome}} {{docente.cognome}} | 
-                <span class="text-muted">{{docente.email}}</span></h6>
+<!--                <h6 v-for="docente in listaDocenti">{{docente.nome}} {{docente.cognome}} | -->
+<!--                <span class="text-muted">{{docente.email}}</span></h6>-->
+                    <h6 v-for="docente in listaDocenti">{{docente}}</h6>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -38,23 +39,28 @@ export var courseCard = {
         </div>
     `,
     beforeMount: function() {
+        var self = this;
         //chiamata http per ottenere la lista dicenti che insegnano il corso 'title'
-        this.listaDocenti = [
-            {
-                "nome": "Marco",
-                "cognome": "Alvaro",
-                "email": "malvaro@gmail.com"
-            },
-            {
-                "nome": "Marco",
-                "cognome": "Alvaro",
-                "email": "malvaro@gmail.com"
-            },
-            {
-                "nome": "Marco",
-                "cognome": "Alvaro",
-                "email": "malvaro@gmail.com"
-            }
-        ];
+        var url = "https://api.agify.io/?name=" + self.title.toLowerCase();
+        $.get(url, function(data) {
+            self.listaDocenti.push(data.name);
+        });
+        // this.listaDocenti = [
+        //     {
+        //         "nome": "Marco",
+        //         "cognome": "Alvaro",
+        //         "email": "malvaro@gmail.com"
+        //     },
+        //     {
+        //         "nome": "Marco",
+        //         "cognome": "Alvaro",
+        //         "email": "malvaro@gmail.com"
+        //     },
+        //     {
+        //         "nome": "Marco",
+        //         "cognome": "Alvaro",
+        //         "email": "malvaro@gmail.com"
+        //     }
+        // ];
     }
 }
