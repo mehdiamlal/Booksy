@@ -297,7 +297,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella docente
-    public void aggiungiDocente(String email, String password, String nome, String cognome) {
+    public void aggiungiDocente(String email, String nome, String cognome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -692,10 +692,6 @@ public class DAO {
         }
 
         return elencoPrenotazioni;
-    }
-
-    private String getDateSlotPair(String date, String slot) {
-        return "(" + date + ", " + slot +")";
     }
 
     //ritorna un'arraylist di slot nel formato (gg/MM/aaa, oraInizio - oraFine)
