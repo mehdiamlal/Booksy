@@ -51,7 +51,7 @@ export var bookingListView = {
                 <div class="col"></div>
             </div>
             <hr>
-            <div class="row">
+            <div class="row" style="margin-bottom: 7em">
                 <appointment-card v-for="prenotazione in listaPrenotazioni" 
                 :tutor="prenotazione.tutor"
                 :email="prenotazione.email"
@@ -61,6 +61,7 @@ export var bookingListView = {
                 active v-show="prenotazione.show"></appointment-card>
             </div>
             <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione trovata.</h5>
+            <button class="btn btn-primary shadow add-btn"><i class="fas fa-plus"></i></button>
         </div>
     `,
     created: function() {
@@ -93,6 +94,41 @@ export var bookingListView = {
             course: "Informatica",
             day: "26/01/2023",
             timeSlot: "16:00 - 17:00",
+            show: true
+        },{
+            tutor: "Mehdi Amlal",
+            email: "mehdi@gmail.com",
+            course: "Informatica",
+            day: "27/01/2023",
+            timeSlot: "16:00 - 17:00",
+            show: true
+        },{
+            tutor: "Mehdi Amlal",
+            email: "mehdi@gmail.com",
+            course: "Informatica",
+            day: "27/01/2023",
+            timeSlot: "15:00 - 16:00",
+            show: true
+        },{
+            tutor: "Mehdi Amlal",
+            email: "mehdi@gmail.com",
+            course: "Informatica",
+            day: "28/01/2023",
+            timeSlot: "16:00 - 17:00",
+            show: true
+        },{
+            tutor: "Mehdi Amlal",
+            email: "mehdi@gmail.com",
+            course: "Informatica",
+            day: "29/01/2023",
+            timeSlot: "16:00 - 17:00",
+            show: true
+        },{
+            tutor: "Mehdi Amlal",
+            email: "mehdi@gmail.com",
+            course: "Informatica",
+            day: "26/01/2023",
+            timeSlot: "18:00 - 19:00",
             show: true
         }]
     }
