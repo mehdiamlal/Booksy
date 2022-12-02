@@ -11,6 +11,7 @@ import {loginView} from "./views/login-view.js";
 import {addTutorView} from "./views/add-tutor-view.js";
 import {bookingListView} from "./views/booking-list-view.js";
 import {studentHomeView} from "./views/student-home-view.js";
+import {adminHomeView} from "./views/admin-home-view.js";
 
 const app = Vue.createApp();
 
@@ -27,6 +28,7 @@ app.component("login-view", loginView);
 app.component("add-tutor-view", addTutorView);
 app.component("booking-list-view", bookingListView);
 app.component("student-home-view", studentHomeView);
+app.component("admin-home-view", adminHomeView);
 
 app.mount("#app");
 
