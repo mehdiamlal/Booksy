@@ -13,7 +13,31 @@ import {addTutorView} from "./views/add-tutor-view.js";
 const app = Vue.createApp({
         data: function () {
             return {
-                message: "hello world!"
+                bookings: [{
+                    "tutor": "Mehdi Amlal",
+                    "email": "mehdi@gmail.com",
+                    "course": "Informatica",
+                    "day": "23/01/2023",
+                    "timeSlot": "16:00 - 17:00"
+                }, {
+                    "tutor": "Mehdi Amlal",
+                    "email": "mehdi@gmail.com",
+                    "course": "Informatica",
+                    "day": "23/01/2023",
+                    "timeSlot": "16:00 - 17:00"
+                }, {
+                    "tutor": "Mehdi Amlal",
+                    "email": "mehdi@gmail.com",
+                    "course": "Informatica",
+                    "day": "23/01/2023",
+                    "timeSlot": "16:00 - 17:00"
+                },{
+                    "tutor": "Mehdi Amlal",
+                    "email": "mehdi@gmail.com",
+                    "course": "Informatica",
+                    "day": "23/01/2023",
+                    "timeSlot": "16:00 - 17:00"
+                }]
             }
         }
 });
