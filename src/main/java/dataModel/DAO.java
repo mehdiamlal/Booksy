@@ -30,14 +30,14 @@ public class DAO {
         return dateFormat.format(new Date());
     }
 
-    private boolean allNotNull(Object... args) {
+    private boolean allNull(Object... args) {
         for(Object obj : args) {
             if(obj == null) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     private void registerDriver() {
@@ -422,7 +422,7 @@ public class DAO {
         String sql = "DELETE FROM insegnamento";
 
         /* Tutti i parametri sono null */
-        if(!allNotNull(docente, corso)) {
+        if(allNull(docente, corso)) {
             return;
         }
 
@@ -595,11 +595,11 @@ public class DAO {
         String sql = "UPDATE prenotazione" +
                     "SET attiva = 0, dataCancellazione = " + getDate();
 
-        if(docente != null && data == null && fasciaOraria == null && corso == null) {
+        if(docente != null && allNull(data, fasciaOraria, corso)) {
             sql = sql.concat("WHERE docente = " + docente + " AND attivo = 1");
         }
 
-        if(corso != null && docente == null && data == null && fasciaOraria == null) {
+        if(corso != null && allNull(docente, data, fasciaOraria)) {
             sql = sql.concat("WHERE corso = " + corso + " AND attivo = 1");
         }
 
