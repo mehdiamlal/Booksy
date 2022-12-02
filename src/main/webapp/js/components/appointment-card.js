@@ -25,11 +25,13 @@ export var appointmentCard = {
             var self = this;
             /* Chiamata HTTP che imposta prenotazione come attiva = 0 sul DB */
             self.activeData = !self.activeData;
+            console.log("Cancellata prenotazione del: " + self.dayData);
         },
         completeBooking: function() {
             var self = this;
             /* Chiamata HTTP che imposta prenotazione come completata = 1 sul DB */
             self.completedData = !this.completedData;
+            console.log("Completata prenotazione del: " + self.dayData);
         }
     },
     template: `
