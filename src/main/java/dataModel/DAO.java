@@ -566,7 +566,7 @@ public class DAO {
         try {
             conn = DriverManager.getConnection(url, user, pw);
             String sql = "UPDATE prenotazione " +
-                        "SET effettuata = 1, attiva = 0 " +
+                        "SET effettuata = 1 " +
                         "WHERE docente = ? AND data = ? AND fasciaOraria = ? AND attiva = 1";
 
             st = conn.prepareStatement(sql);
