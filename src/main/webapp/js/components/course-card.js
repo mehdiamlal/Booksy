@@ -4,8 +4,19 @@ export var courseCard = {
     },
     data: function() {
         return {
-            listaDocenti: []
+            listaDocenti: [],
+            modalID: "#" + this.title,
+            modalLabel: this.title + "Label"
         }
+    },
+    methods: {
+        displayList() {
+            var self = this;
+            self.listaDocenti.forEach((value) => {
+                console.log(value);
+            });
+            
+        }      
     },
     template: `
         <div class="col-sm-6 col-md-6 col-lg-4">
@@ -13,54 +24,35 @@ export var courseCard = {
                 <h3 class="text-center">{{title}}</h3>
                 <p></p>
                 <div class="text-center">
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Lista Docenti</button>
+                    <button class="btn btn-primary btn-sm" @click="displayList" data-bs-toggle="modal" :data-bs-target="modalID">Lista Docenti</button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" :id="title" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" :aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" :id="modalLabel">Docenti che insegnano {{title}}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{listaDocenti[0]}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-primary">Prenota ripetizione</button>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Lista Docenti</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-<!--                <h6 v-for="docente in listaDocenti">{{docente.nome}} {{docente.cognome}} | -->
-<!--                <span class="text-muted">{{docente.email}}</span></h6>-->
-                    <h6 v-for="docente in listaDocenti">{{docente}}</h6>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-              </div>
-            </div>
-          </div>
-        </div>
     `,
-    beforeMount: function() {
+    mounted() {
         var self = this;
-        //chiamata http per ottenere la lista dicenti che insegnano il corso 'title'
-        var url = "https://api.agify.io/?name=" + self.title.toLowerCase();
-        $.get(url, function(data) {
-            self.listaDocenti.push(data.name);
+        //chiamata http che ottiene la lista dei docenti di quel corso e li mette nella lista docenti
+        $.get("https://catfact.ninja/fact", function(data) {
+            self.listaDocenti.push(data.fact)
+            console.log("data fetched correctly");
         });
-        // this.listaDocenti = [
-        //     {
-        //         "nome": "Marco",
-        //         "cognome": "Alvaro",
-        //         "email": "malvaro@gmail.com"
-        //     },
-        //     {
-        //         "nome": "Marco",
-        //         "cognome": "Alvaro",
-        //         "email": "malvaro@gmail.com"
-        //     },
-        //     {
-        //         "nome": "Marco",
-        //         "cognome": "Alvaro",
-        //         "email": "malvaro@gmail.com"
-        //     }
-        // ];
     }
 }
