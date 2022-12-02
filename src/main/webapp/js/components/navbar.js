@@ -14,32 +14,34 @@ export var navbar = {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto">
-                <li class="nav-item" v-if="logged">
-                    <div class="nav-link">
-                        <router-link to="/">Home</router-link>
-                    </div>
-                </li>
-                <li class="nav-item" v-if="logged">
-                    <div class="nav-link">
-                        <router-link to="/corsi">Corsi</router-link>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="nav-link" v-if="logged">
-                        <router-link to="/prenotazioni">Prenotazioni</router-link>
-                    </div>
-                </li>
-                <li>
-                    <div class="nav-link" v-if="!logged">
-                        <router-link to="/login">Login</router-link>
-                    </div>
-                </li>
-                <li>
-                    <div class="nav-link" v-if="!logged">
-                        <router-link to="/register">Registrati</router-link>
-                    </div>
-                </li>
+                <ul class="navbar-nav ms-auto" v-if="logged">
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <router-link to="/">Home</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <router-link to="/corsi">Corsi</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <router-link to="/prenotazioni">Prenotazioni</router-link>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" v-else>
+                    <li>
+                        <div class="nav-link">
+                            <router-link to="/login">Login</router-link>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="nav-link">
+                            <router-link to="/register">Registrati</router-link>
+                        </div>
+                    </li>
                 </ul>
             </div>
             </div>
