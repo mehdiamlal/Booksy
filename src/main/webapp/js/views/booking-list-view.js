@@ -24,9 +24,7 @@ export var bookingListView = {
                 }
             });
 
-            if(contatorePrenotazioni === 0) {
-                self.nessunaPrenotazione = true;
-            }
+            self.nessunaPrenotazione = contatorePrenotazioni === 0;
         },
         clearFilter() {
             var self = this;
@@ -34,6 +32,7 @@ export var bookingListView = {
             self.listaPrenotazioni.forEach((prenotazione) => {
                 prenotazione.show = true;
             });
+            self.nessunaPrenotazione = self.listaPrenotazioni.length === 0;
         }
     },
     template: `
