@@ -6,7 +6,7 @@ export var coursesView = {
         };
     },
     methods: {
-        showSearch() {
+        filterCourses() {
             var self = this;
             self.listaCorsi.forEach((corso) => {
                 if(corso.nome.toLowerCase().includes(self.search.toLowerCase())) {
@@ -22,7 +22,7 @@ export var coursesView = {
         <div class="container">
             <h1 class="text-center" style="margin-bottom: 1.5em">Lista Corsi</h1>
             <div class="form-group">
-                <input type="text" class="form-control shadow" v-model="search" placeholder="Cerca corsi" @input="showSearch">
+                <input type="text" class="form-control shadow" v-model="search" placeholder="Cerca corsi" @input="filterCourses">
             </div>
             <hr>
             <div class="row">
