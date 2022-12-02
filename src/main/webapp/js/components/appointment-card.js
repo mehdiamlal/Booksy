@@ -6,6 +6,7 @@ export var appointmentCard = {
         day: String,
         timeSlot: String,
         active: Boolean,
+        completed: Boolean
     },
     data: function() {
             var self = this;
@@ -15,14 +16,20 @@ export var appointmentCard = {
                 courseData: self.course,
                 dayData: self.day,
                 timeSlotData: self.timeSlot,
-                activeData: self.active
+                activeData: self.active,
+                completedData: self.completed
             }
     },
     methods: {
-        change_status: function() {
+        deleteBooking: function() {
             var self = this;
-            /* Chiamata HTTP che modificherà il dato (stato della prenotazione) sul DB */
+            /* Chiamata HTTP che imposta prenotazione come attiva = 0 sul DB */
             self.activeData = !self.activeData;
+        },
+        completeBooking: function() {
+            var self = this;
+            /* Chiamata HTTP che imposta prenotazione come completata = 1 sul DB */
+            self.completedData = !this.completedData;
         }
     },
     template: `
@@ -35,14 +42,15 @@ export var appointmentCard = {
                             <p class="text-muted mb-0">{{emailData}}</p>
                         </div>
                     </div>
-                    <div class="dropdown open" v-if="activeData">
+                    <div class="dropdown open" v-if="activeData && !completedData">
                         <a href="#!" class="px-2" id="triggerId1" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">
                             <i class="fa fa-ellipsis-v" style="color: #5E17EB !important;"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId1">
-                            <a class="dropdown-item text-danger" @click="change_status"><i
+                            <a class="dropdown-item text-danger" @click="deleteBooking"><i
                                 class="fa fa-trash mr-1"></i> Cancella</a>
+                            <a class="dropdown-item text-success" @click="completeBooking"><i class="fas fa-check-circle"></i> Effettua</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +61,8 @@ export var appointmentCard = {
                             <small class="ml-1 text-muted">{{dayData}}</small>
                         </h5>
                     </div>
-                    <span class="text-success fw-bold" v-if="activeData">Attiva</span>
+                    <span class="text-primary fw-bold" v-if="!completedData && activeData">Attiva</span>
+                    <span class="text-success fw-bold" v-else-if="completedData">Effettuata</span>
                     <span class="text-danger fw-bold" v-else>Cancellata</span> 
                 </div>
             </div>

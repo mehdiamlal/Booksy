@@ -297,7 +297,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella docente
-    public void aggiungiDocente(String email, String password, String nome, String cognome) {
+    public void aggiungiDocente(String email, String nome, String cognome) {
 
         Connection conn = null;
         PreparedStatement st = null;
@@ -529,8 +529,8 @@ public class DAO {
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
     public void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
 
-        //si presuppone che ciascuna prenotazione abbia un flag "attiva"
-        //che viene settato a 1 di default quando viene creata
+        //si presuppone che ciascuna prenotazione abbia un flag "attiva" e uno "effettuata"
+        //che vengono settati rispettivamente a 1 e 0 di default quando viene creata
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -566,8 +566,8 @@ public class DAO {
         try {
             conn = DriverManager.getConnection(url, user, pw);
             String sql = "UPDATE prenotazione " +
-                        "SET attiva = 1 " +
-                        "WHERE docente = ? AND data = ? AND fasciaOraria = ?";
+                        "SET effettuata = 1 " +
+                        "WHERE docente = ? AND data = ? AND fasciaOraria = ? AND attiva = 1";
 
             st = conn.prepareStatement(sql);
             st.setString(1, docente);
@@ -692,10 +692,6 @@ public class DAO {
         }
 
         return elencoPrenotazioni;
-    }
-
-    private String getDateSlotPair(String date, String slot) {
-        return "(" + date + ", " + slot +")";
     }
 
     //ritorna un'arraylist di slot nel formato (gg/MM/aaa, oraInizio - oraFine)
