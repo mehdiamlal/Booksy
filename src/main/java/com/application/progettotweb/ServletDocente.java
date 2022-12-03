@@ -70,16 +70,15 @@ public class ServletDocente extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String tipoRichiesta = req.getParameter("action");
 
-        String mail, password, nome, cognome;
+        String mail, nome, cognome;
 
         mail = req.getParameter("mail");
-        password = req.getParameter("password");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
 
         switch(tipoRichiesta) {
             case "aggiungiDocente":
-                dataModel.aggiungiDocente(mail, password, nome, cognome);
+                dataModel.aggiungiDocente(mail, nome, cognome);
                 break;
 
             case "rimuoviDocente":
