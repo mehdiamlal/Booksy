@@ -32,12 +32,12 @@ public class DAO {
 
     private boolean allNull(Object... args) {
         for(Object obj : args) {
-            if(obj == null) {
-                return true;
+            if(obj != null) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     private void registerDriver() {
