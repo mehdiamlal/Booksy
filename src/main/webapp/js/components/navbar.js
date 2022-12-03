@@ -6,10 +6,14 @@ export var navbar = {
     template: `
         <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #fff;">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <router-link class="navbar-brand" to="/home" v-if="logged">
                     <img src="./img/logo.png" alt="Logo" width="166" height="32.3">
                     <span v-if=admin> admin</admin>
-                </a>
+                </router-link>
+                <router-link class="navbar-brand" to="/" v-else>
+                    <img src="./img/logo.png" alt="Logo" width="166" height="32.3">
+                    <span v-if=admin> admin</admin>
+                </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -17,29 +21,29 @@ export var navbar = {
                 <ul class="navbar-nav ms-auto" v-if="logged">
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/">Home</router-link>
+                            <router-link to="/home" class="nav-link">Home</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/corsi">Corsi</router-link>
+                            <router-link to="/courses" class="nav-link">Corsi</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/prenotazioni">Prenotazioni</router-link>
+                            <router-link to="/bookings" class="nav-link">Prenotazioni</router-link>
                         </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto" v-else>
                     <li>
                         <div class="nav-link">
-                            <router-link to="/login">Login</router-link>
+                            <router-link to="/login" class="nav-link">Login</router-link>
                         </div>
                     </li>
                     <li>
                         <div class="nav-link">
-                            <router-link to="/register">Registrati</router-link>
+                            <router-link to="/register" class="nav-link">Registrati</router-link>
                         </div>
                     </li>
                 </ul>

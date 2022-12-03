@@ -65,8 +65,10 @@ export var bookingForm = {
                             </div>
                         </div>
                     </form>
-                    <div class="col-12 mt-5 text-center">                        
-                        <button type="button" class="btn btn-outline-secondary me-2">Annulla</button>
+                    <div class="col-12 mt-5 text-center">
+                            <router-link class="navbar-brand" to="/home">
+                                <button type="button" class="btn btn-outline-secondary me-2">Annulla</button>
+                            </router-link>                        
                         <button type="submit" class="btn btn-primary">Prenota</button>
                     </div>
                 </div>

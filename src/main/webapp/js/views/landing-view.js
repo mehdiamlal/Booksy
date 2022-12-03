@@ -9,8 +9,12 @@ export var landingView = {
                     <h1><strong>Dai un boost alla tua carriera scolastica o universitaria &#128640;</strong></h1>
                     <h4 class="text-secondary" style="margin-bottom: 2em">Inizia adesso e prenota la tua prima ripetizione</h4>
                     <div class="btn-group-lg btn-group-horizontal">
-                        <button class="btn btn-outline-primary btn-block shadow" style="margin: .5em; width: 10em">Accedi</button>
-                        <button class="btn btn-primary btn-block shadow" style="margin: .5em; width: 10em">Registrati</button>
+                        <router-link to="/login">
+                            <button class="btn btn-outline-primary btn-block shadow" style="margin: .5em; width: 10em; height: 3em">Accedi</button>
+                        </router-link>
+                        <router-link to="/register">
+                            <button class="btn btn-primary btn-block shadow" style="margin: .5em; width: 10em; height: 3em">Registrati</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="col-md"></div>
