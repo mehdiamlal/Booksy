@@ -30,6 +30,23 @@ app.component("booking-list-view", bookingListView);
 app.component("student-home-view", studentHomeView);
 app.component("admin-home-view", adminHomeView);
 
+const routes = [
+    {path: "/", component: landingView},
+    {path: "/login", component: loginView},
+    {path: "/home", component: studentHomeView},
+    {path: "/courses", component: coursesView},
+    {path: "/bookings", component: bookingListView},
+    {path: "/book", component: bookingView}
+]
+
+const router = VueRouter.createRouter({
+    // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
+    history: VueRouter.createWebHashHistory(),
+    routes, // short for `routes: routes`
+})
+
+app.use(router);
+
 app.mount("#app");
 
 

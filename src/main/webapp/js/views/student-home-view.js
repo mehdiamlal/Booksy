@@ -42,10 +42,18 @@ export var studentHomeView = {
             <div class="row text-center" style="margin-top: 2em">
                 <div class="col"></div>
                 <div class="col">
-                    <button class="btn btn-primary shadow home-btn">Prenota una ripetizione</button>
-                    <button class="btn btn-primary shadow home-btn">Le tue prenotazioni</button>
-                    <button class="btn btn-primary shadow home-btn">Lista corsi</button>
-                    <button class="btn btn-primary shadow home-btn">Controlla disponibilità</button>
+                    <router-link to="/book">
+                        <button class="btn btn-primary shadow home-btn">Prenota una ripetizione</button>
+                    </router-link>
+                    <router-link to="/bookings">
+                        <button class="btn btn-primary shadow home-btn">Le tue prenotazioni</button>
+                    </router-link>
+                    <router-link to="/courses">
+                        <button class="btn btn-primary shadow home-btn">Lista corsi</button>
+                    </router-link>
+                    <router-link to="/home">
+                        <button class="btn btn-primary shadow home-btn">Controlla disponibilità</button>
+                    </router-link>
                 </div>
                 <div class="col"></div>
             </div>
