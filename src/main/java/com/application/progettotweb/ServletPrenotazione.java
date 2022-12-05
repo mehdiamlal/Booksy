@@ -7,6 +7,7 @@ import dataModel.Prenotazione;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+@WebServlet(name = "servletPrenotazione", value = "/servlet-prenotazione")
 public class ServletPrenotazione extends HttpServlet {
     DAO dataModel;
 
@@ -38,6 +40,10 @@ public class ServletPrenotazione extends HttpServlet {
         resp.setContentType("application/json");
 
         String tipoRichiesta = req.getParameter("action");
+        if(tipoRichiesta == null) {
+            tipoRichiesta = "";
+        }
+
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
 
         switch(tipoRichiesta) {
@@ -52,7 +58,7 @@ public class ServletPrenotazione extends HttpServlet {
 
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo di operazione non valida. Riprovare.");
-                break;
+                return;
         }
 
         PrintWriter out = resp.getWriter();
@@ -69,6 +75,9 @@ public class ServletPrenotazione extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String tipoRichiesta = req.getParameter("action");
+        if(tipoRichiesta == null) {
+            tipoRichiesta = "";
+        }
 
         String username, idCorso, emailDocente, data, fasciaOraria;
 

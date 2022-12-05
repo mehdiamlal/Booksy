@@ -3,6 +3,7 @@ package com.application.progettotweb;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 import dataModel.DAO;
 
+@WebServlet(name = "servletInsegnamento", value = "/servlet-insegnamento")
 public class ServletInsegnamento extends HttpServlet {
     DAO dataModel;
 
@@ -37,6 +39,10 @@ public class ServletInsegnamento extends HttpServlet {
         resp.setContentType("application/json");
 
         String tipoRichiesta = req.getParameter("action");
+        if(tipoRichiesta == null) {
+            tipoRichiesta = "";
+        }
+
         HashMap<String, ArrayList<String>> elencoInsegnamenti = new HashMap<>();
 
         switch (tipoRichiesta) {
@@ -46,7 +52,7 @@ public class ServletInsegnamento extends HttpServlet {
 
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo di operazione non valida. Riprovare.");
-                break;
+                return;
         }
 
         PrintWriter out = resp.getWriter();
@@ -63,13 +69,16 @@ public class ServletInsegnamento extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String tipoRichiesta = req.getParameter("action");
+        if(tipoRichiesta == null) {
+            tipoRichiesta = "";
+        }
 
         String docente, corso;
 
         docente = req.getParameter("docente");
         corso = req.getParameter("corso");
 
-        switch(tipoRichiesta) {
+        switch (tipoRichiesta) {
             case "aggiungiInsegnamento":
                 dataModel.aggiungiInsegnamento(docente, corso);
                 break;

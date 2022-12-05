@@ -7,13 +7,16 @@ import dataModel.Docente;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
+@WebServlet(name = "servletDocente", value = "/servlet-docente")
 public class ServletDocente extends HttpServlet {
     DAO dataModel;
 
@@ -38,6 +41,10 @@ public class ServletDocente extends HttpServlet {
         resp.setContentType("application/json");
 
         String tipoRichiesta = req.getParameter("action");
+        if(tipoRichiesta == null) {
+            tipoRichiesta = "";
+        }
+
         ArrayList<Docente> elencoDocenti = new ArrayList<>();
 
         switch(tipoRichiesta) {
@@ -51,8 +58,8 @@ public class ServletDocente extends HttpServlet {
                 break;
 
             default:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo di operazione non valida. Riprovare.");
-                break;
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo , operazione non valida. Riprovare.");
+                return;
         }
 
         PrintWriter out = resp.getWriter();
@@ -60,6 +67,21 @@ public class ServletDocente extends HttpServlet {
 
         String risposta = gson.toJson(elencoDocenti);
         out.print(risposta);
+    }
+
+    private boolean controllaMail(String s) {
+        String[] senders = s.split( "[\\s,]+" );
+
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+        Pattern pattern = Pattern.compile(regex);
+
+        for (String sender : senders) {
+            if (!pattern.matcher(sender).matches()){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /* Possibili richieste POST relative ai docenti:
@@ -75,6 +97,11 @@ public class ServletDocente extends HttpServlet {
         mail = req.getParameter("mail");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
+
+        boolean richiestaNonValida = tipoRichiesta == null || !controllaMail(mail);
+        if(richiestaNonValida) {
+            tipoRichiesta = "";
+        }
 
         switch(tipoRichiesta) {
             case "aggiungiDocente":
