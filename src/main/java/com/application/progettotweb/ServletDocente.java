@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "servletDocente", value = "/servlet-docente")
 public class ServletDocente extends HttpServlet {
@@ -68,6 +69,21 @@ public class ServletDocente extends HttpServlet {
         out.print(risposta);
     }
 
+    private boolean controllaMail(String s) {
+        String[] senders = s.split( "[\\s,]+" );
+
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+        Pattern pattern = Pattern.compile(regex);
+
+        for (String sender : senders) {
+            if (!pattern.matcher(sender).matches()){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /* Possibili richieste POST relative ai docenti:
      * - aggiunta docente
      * - rimozione docente
@@ -75,15 +91,17 @@ public class ServletDocente extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String tipoRichiesta = req.getParameter("action");
-        if(tipoRichiesta == null) {
-            tipoRichiesta = "";
-        }
 
         String mail, nome, cognome;
 
         mail = req.getParameter("mail");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
+
+        boolean richiestaNonValida = tipoRichiesta == null || !controllaMail(mail);
+        if(richiestaNonValida) {
+            tipoRichiesta = "";
+        }
 
         switch(tipoRichiesta) {
             case "aggiungiDocente":
