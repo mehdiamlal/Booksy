@@ -53,7 +53,7 @@ public class ServletDocente extends HttpServlet {
                 break;
 
             case "filtraDocentePerCorso":
-                String filtro = req.getParameter("docente");
+                String filtro = req.getParameter("corso");
                 elencoDocenti.addAll(dataModel.filtraDocentePerCorso(filtro));
                 break;
 
