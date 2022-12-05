@@ -26,12 +26,22 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/courses" class="nav-link">Corsi</router-link>
+                            <router-link to="/book" class="nav-link">Prenota</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/bookings" class="nav-link">Prenotazioni</router-link>
+                            <router-link to="/courses" class="nav-link">Lista Corsi</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <router-link to="/bookings" class="nav-link">Lista Prenotazioni</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <router-link to="/" class="nav-link">Logout</router-link>
                         </div>
                     </li>
                 </ul>
