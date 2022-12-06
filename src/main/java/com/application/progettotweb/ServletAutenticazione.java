@@ -31,7 +31,7 @@ public class ServletAutenticazione extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         resp.addHeader("Access-Control-Allow-Origin", "*");
 
@@ -44,24 +44,42 @@ public class ServletAutenticazione extends HttpServlet {
         username = req.getParameter("username");
         password = req.getParameter("password");
 
+        Utente daAutenticare;
+
         switch(tipoRichiesta) {
-            case "aggiungiUtente":
-                String nome, cognome, ruolo;
-                nome = req.getParameter("nome");
-                cognome = req.getParameter("cognome");
-                ruolo = req.getParameter("ruolo");
-                dataModel.aggiungiUtente(username, password, nome, cognome, ruolo);
+            case "autenticaUtente":
+                daAutenticare = dataModel.autenticaUtente(username, password);
                 break;
 
-            case "autenticaUtente":
-                Utente utente;
-                utente = dataModel.autenticaUtente(username, password);
+            default:
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo di operazione non valida. Riprovare.");
+                return;
+        }
 
-                Gson gson = new Gson();
-                String risposta = gson.toJson(utente);
+        Gson gson = new Gson();
+        String risposta = gson.toJson(daAutenticare);
 
-                PrintWriter out = resp.getWriter();
-                out.print(risposta);
+        PrintWriter out = resp.getWriter();
+        out.print(risposta);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String tipoRichiesta = req.getParameter("action");
+        if(tipoRichiesta == null) {
+            tipoRichiesta = "";
+        }
+
+        String username, password, nome, cognome, ruolo;
+        username = req.getParameter("username");
+        password = req.getParameter("password");
+        nome = req.getParameter("nome");
+        cognome = req.getParameter("cognome");
+        ruolo = req.getParameter("ruolo");
+
+        switch(tipoRichiesta) {
+            case "aggiungiUtente":
+                dataModel.aggiungiUtente(username, password, nome, cognome, ruolo);
                 break;
 
             default:
