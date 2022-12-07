@@ -65,6 +65,11 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
+                            <router-link to="/add_tutor" class="nav-link">Aggiungi Docente</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link">
                             <router-link to="/" class="nav-link">Logout</router-link>
                         </div>
                     </li>

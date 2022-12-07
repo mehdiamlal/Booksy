@@ -1,4 +1,7 @@
 export var newTutorForm = {
+    props: {
+        listaDocenti: Array
+    },
     data: function() {
         return {
             nome: "",
@@ -8,20 +11,17 @@ export var newTutorForm = {
             email: "",
             emailMissing: false,
             emailNotValid: false,
-            docenteExists: false
-
+            docenteExists: false,
+            addedSuccess: false
         }
     },
     methods: {
         add_tutor_event: function() {
             var self = this;
-            if(self.valid_input()) {
-                this.$emit("add-tutor-event", {
-                    nome: self.nome,
-                    cognome: self.cognome,
-                    email: self.email
-                });
-
+            if(self.valid_input() && !(self.docente_esistente())) {
+                //http post per aggiungere il docente al db
+                self.addedSuccess = true;
+                self.docente_esistente = false;
             }
         },
         valid_email: function(email) {
@@ -69,6 +69,17 @@ export var newTutorForm = {
                 res = false;
             }
 
+            return res;
+        },
+        docente_esistente: function() {
+            var self = this;
+            var res = false;
+            if(self.listaDocenti.includes(self.email)) {
+                self.docenteExists = true;
+                res = true;
+            } else {
+                self.docenteExists = false;
+            }
             return res;
         }
     },
@@ -121,6 +132,13 @@ export var newTutorForm = {
                                     <div v-if="docenteExists" id="docenteExists" class="text-secondary text-danger text-center">
                                         <p></p>
                                         Attenzione! Un docente con la stessa email è già esistente.
+                                        <p></p>
+                                    </div>
+
+                                    <!-- messaggio docente aggiunto con successo -->
+                                    <div v-if="addedSuccess" id="docenteExists" class="text-secondary text-success text-center">
+                                        <p></p>
+                                        Docente aggiunto con successo.
                                         <p></p>
                                     </div>
                                 
