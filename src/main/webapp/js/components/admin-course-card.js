@@ -45,9 +45,9 @@ export var adminCourseCard = {
             //chiamata http per attivare il corso da DB
             self.activeData = true;
         },
-        aggiungiDocente() {
+        rimuoviDocente() {
             var self = this;
-            //chiamata http per rimuovere il docente selezionato dallínsegnamento del corso
+            //chaiamata http per rimuovere il docente selezionato dall'insegnamento del corso
         }
 
     },
