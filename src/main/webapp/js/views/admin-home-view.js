@@ -9,7 +9,7 @@ export var adminHomeView = {
                 <div class="col">
                     <button class="btn btn-primary shadow home-btn">Lista corsi</button>
                     <button class="btn btn-primary shadow home-btn">Lista prenotazioni</button>
-                    <button class="btn btn-primary shadow home-btn">Lista docenti</button>
+                    <button class="btn btn-primary shadow home-btn">Aggiungi docente</button>
                 </div>
                 <div class="col"></div>
             </div>
