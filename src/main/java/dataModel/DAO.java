@@ -450,7 +450,7 @@ public class DAO {
     public void rimuoviInsegnamenti(String docente, String corso) {
         Connection conn = null;
         PreparedStatement st = null;
-        String sql = "DELETE FROM insegnamento";
+        String sql = "DELETE FROM insegnamento ";
 
         /* Tutti i parametri sono null */
         if(allNull(docente, corso)) {
@@ -459,16 +459,16 @@ public class DAO {
 
         /* Rimozione di tutti gli insegnamenti tenuti da un certo docente */
         if(docente != null && corso == null) {
-            sql = sql.concat("WHERE docente = " + docente);
+            sql = sql.concat("WHERE docente = '" + docente + "'");
         }
 
         /* Rimozione di tutti gli insegnamenti di un certo corso */
         if(docente == null && corso != null) {
-            sql = sql.concat("WHERE corso = " + corso);
+            sql = sql.concat("WHERE corso = '" + corso + "'");
         }
 
         /* Rimozione dell'insegnamento di un certo corso tenuto da un certo docente */
-        sql = sql.concat("WHERE docente = " + docente + " AND corso " + corso);
+        sql = sql.concat("WHERE docente = '" + docente + "' AND corso = '" + corso + "'");
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
@@ -555,6 +555,27 @@ public class DAO {
         }
 
         return listaDocenti;
+    }
+
+    public ArrayList<Docente> ottieniDocentiLiberi(String corso) {
+        //ritorna la lista di docenti (attivi) che non insegnano corso
+        ArrayList<Docente> listaDocentiAttivi = this.ottieniDocenti();
+        ArrayList<Docente> listaDocentiCheInsegnano = this.filtraDocentePerCorso(corso);
+
+        ArrayList<Docente> duplicates = new ArrayList<>();
+        for(Docente d1 : listaDocentiAttivi) {
+            for(Docente d2 : listaDocentiCheInsegnano) {
+                if(d1.getEmail().equals(d2.getEmail())) {
+                    duplicates.add(d1);
+                }
+            }
+        }
+
+        for(Docente d : duplicates) {
+            listaDocentiAttivi.remove(d);
+        }
+
+        return listaDocentiAttivi;
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
