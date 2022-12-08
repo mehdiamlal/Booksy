@@ -49,7 +49,7 @@ export var loginForm = {
                         <div class="row g-3">
                             <div class="col-12">
                                     <div class="text-center">
-                                        <img src="./webapp/img/favicon.png" alt="logo Booksy" width="60" height="60" style="margin-bottom: 2em">
+                                        <img src="./img/favicon.png" alt="logo Booksy" width="60" height="60" style="margin-bottom: 2em">
                                     </div>
                                     <!-- username input -->
                                     <div class="form-outline mb-4" v-if="!usernameMissing">
