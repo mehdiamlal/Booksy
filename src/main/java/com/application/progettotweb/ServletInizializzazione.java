@@ -6,7 +6,7 @@ import javax.servlet.annotation.*;
 
 import dataModel.DAO;
 
-@WebServlet(name = "servlet-inizializzazione", value = "/inizializzazione", loadOnStartup = 0)
+@WebServlet(name = "servletInizializzazione", value = "/inizializzazione", loadOnStartup = 0)
 public class ServletInizializzazione extends HttpServlet {
     DAO dataModel;
 
