@@ -35,7 +35,7 @@ export var adminCoursesView = {
                         action: "aggiungiCorso",
                         corso: self.newCourse
                     });
-                
+
                 self.listaCorsi.push({
                     nome: self.newCourse,
                     attivo: true,
