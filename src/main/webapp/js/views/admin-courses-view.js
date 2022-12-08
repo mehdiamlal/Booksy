@@ -22,7 +22,7 @@ export var adminCoursesView = {
         },
         aggiungiCorso() {
             var self = this;
-            self.newCourse = self.newCourse.replace(/\s/g, ''); //togli spazi da stringa
+            self.newCourse = self.newCourse.trim();
             self.addedSuccess = false;
             if(!self.controllaCorso()) {
                 self.notValidInput = true;
