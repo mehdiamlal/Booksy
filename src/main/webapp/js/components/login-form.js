@@ -75,7 +75,7 @@ export var loginForm = {
                                 
                                     <!-- Submit button -->
                                     <div class="text-center">
-                                        <router-link to="/admin">
+                                        <router-link to="/home">
                                             <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Accedi</button>
                                         </router-link>  
                                         <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <router-link to="/register" style="color: #5E17EB">Registrati</router-link></p>
