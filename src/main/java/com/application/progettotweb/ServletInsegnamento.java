@@ -15,7 +15,7 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 import dataModel.DAO;
 
-@WebServlet(name = "servletInsegnamento", value = "/servlet-insegnamento")
+@WebServlet(name = "servletInsegnamento", value = "/insegnamenti")
 public class ServletInsegnamento extends HttpServlet {
     DAO dataModel;
 

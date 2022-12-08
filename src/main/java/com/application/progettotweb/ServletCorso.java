@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import dataModel.DAO;
 import dataModel.Corso;
 
-@WebServlet(name = "servletCorso", value = "/servlet-corso")
+@WebServlet(name = "servletCorsi", value = "/corsi")
 public class ServletCorso extends HttpServlet {
     DAO dataModel;
 
