@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -49,6 +50,11 @@ public class ServletAutenticazione extends HttpServlet {
         switch(tipoRichiesta) {
             case "autenticaUtente":
                 daAutenticare = dataModel.autenticaUtente(username, password);
+                if(daAutenticare != null) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("username", daAutenticare.getUsername());
+                    session.setAttribute("ruolo", daAutenticare.getRuolo());
+                }
                 break;
 
             default:
@@ -80,6 +86,11 @@ public class ServletAutenticazione extends HttpServlet {
         switch(tipoRichiesta) {
             case "aggiungiUtente":
                 dataModel.aggiungiUtente(username, password, nome, cognome, ruolo);
+                break;
+
+            case "scollegaUtente":
+                HttpSession session = req.getSession();
+                session.invalidate();
                 break;
 
             default:
