@@ -71,6 +71,7 @@ public class ServletPrenotazione extends HttpServlet {
 
     /* Possibili richieste POST relative ai prenotazioni
      * - aggiunta prenotazione
+     * - imposta prenotazione come effettuata
      * - rimozione prenotazione
      */
     @Override
@@ -91,6 +92,10 @@ public class ServletPrenotazione extends HttpServlet {
         switch(tipoRichiesta) {
             case "aggiungiPrenotazione":
                 dataModel.aggiungiPrenotazione(username, emailDocente, idCorso, data, fasciaOraria);
+                break;
+
+            case "impostaPrenotazioneEffettuata":
+                dataModel.impostaPrenotazioneEffettuata(emailDocente, data, fasciaOraria);
                 break;
 
             case "rimuoviPrenotazione":
