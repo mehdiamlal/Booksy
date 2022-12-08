@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "servletAutenticazione", value = "/servlet-autenticazione")
+@WebServlet(name = "servletCorso", value = "/autentica")
 public class ServletAutenticazione extends HttpServlet {
     DAO dataModel;
 

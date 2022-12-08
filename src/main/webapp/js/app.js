@@ -45,7 +45,11 @@ const routes = [
     {path: "/home", component: studentHomeView},
     {path: "/courses", component: coursesView},
     {path: "/bookings", component: bookingListView},
-    {path: "/book", component: bookingView}
+    {path: "/book", component: bookingView},
+    {path: "/admin", component: adminHomeView},
+    {path: "/admin_courses", component: adminCoursesView},
+    {path: "/admin_bookings", component: adminBookingListView},
+    {path: "/add_tutor", component: addTutorView}
 ]
 
 const router = VueRouter.createRouter({

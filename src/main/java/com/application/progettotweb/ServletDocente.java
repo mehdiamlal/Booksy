@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "servletDocente", value = "/servlet-docente")
+@WebServlet(name = "servletDocente", value = "/docenti")
 public class ServletDocente extends HttpServlet {
     DAO dataModel;
 

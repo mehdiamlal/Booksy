@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(name = "servletPrenotazione", value = "/servlet-prenotazione")
+@WebServlet(name = "servletPrenotazione", value = "/prenotazioni")
 public class ServletPrenotazione extends HttpServlet {
     DAO dataModel;
 
