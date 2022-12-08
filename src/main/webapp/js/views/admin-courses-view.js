@@ -30,6 +30,12 @@ export var adminCoursesView = {
                 self.notValidInput = false;
 
                 //chiamata http post per aggiungere il corso
+                $.post("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
+                    {
+                        action: "aggiungiCorso",
+                        corso: self.newCourse
+                    });
+                
                 self.listaCorsi.push({
                     nome: self.newCourse,
                     attivo: true,
@@ -94,35 +100,18 @@ export var adminCoursesView = {
     `,
     created: function() {
         var self = this;
-        //chiamata HTTP per ottenere lista corsi attivi, che verranno aggiunti a lista corsi secondo lo schema
-        // {
-        //     nome: "nome corso",
-        //     show: true
-        // }
-        self.listaCorsi = [{
-                nome: "Informatica",
-                attivo: true,
-                show: true
-            },
-            {
-                nome: "Matematica",
-                attivo: true,
-                show: true
-            },
-            {
-                nome: "Geometria",
-                attivo: true,
-                show: true
-            },
-            {
-                nome: "Arabo",
-                attivo: true,
-                show: true
-            },
-            {
-                nome: "Scienze",
-                attivo: false,
-                show: true
-            }];
+
+        var self = this;
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
+            {action: "ottieniCorsi"},
+            function(data) {
+                data.forEach(function(c) {
+                    self.listaCorsi.push({
+                        nome: c.nome,
+                        attivo: c.attivo,
+                        show: true
+                    });
+                });
+            });
     }
 }
