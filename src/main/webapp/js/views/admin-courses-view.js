@@ -61,6 +61,11 @@ export var adminCoursesView = {
             }
             
             return ris;
+        },
+        resetFlags() {
+            var self = this;
+            self.addedSuccess = false;
+            self.notValidInput = false;
         }
     },
     template: `
@@ -74,7 +79,7 @@ export var adminCoursesView = {
             <div class="row">
                 <admin-course-card v-for="corso in listaCorsi" :title="corso.nome" :active="corso.attivo" v-show="corso.show"></admin-course-card>
             </div>
-            <button class="btn btn-primary shadow add-btn" data-bs-toggle="modal" data-bs-target="#aggiungiCorso"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-primary shadow add-btn" data-bs-toggle="modal" data-bs-target="#aggiungiCorso" @click="resetFlags"><i class="fas fa-plus"></i></button>
 
             <div class="modal fade" id="aggiungiCorso" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="aggiungiCorsoLabel" aria-hidden="true">
                 <div class="modal-dialog">
