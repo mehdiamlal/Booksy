@@ -6,7 +6,7 @@ export var loginView = {
             <div class="col"></div>
             <div class="col text-center">
                 <a href="https://play.google.com/">
-                    <img src="./img/android.png" alt="android-store" width="160" height="52">
+                    <img src="./webapp/img/android.png" alt="android-store" width="160" height="52">
                 </a>
             </div>
             <div class="col"></div>

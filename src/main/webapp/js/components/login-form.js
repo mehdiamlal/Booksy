@@ -49,7 +49,7 @@ export var loginForm = {
                         <div class="row g-3">
                             <div class="col-12">
                                     <div class="text-center">
-                                        <img src="./img/favicon.png" alt="logo Booksy" width="60" height="60" style="margin-bottom: 2em">
+                                        <img src="./webapp/img/favicon.png" alt="logo Booksy" width="60" height="60" style="margin-bottom: 2em">
                                     </div>
                                     <!-- username input -->
                                     <div class="form-outline mb-4" v-if="!usernameMissing">
@@ -78,7 +78,7 @@ export var loginForm = {
                                         <router-link to="/admin">
                                             <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Accedi</button>
                                         </router-link>  
-                                        <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <router-link to="/register">Registrati</router-link></p>
+                                        <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <router-link to="/register" style="color: #5E17EB">Registrati</router-link></p>
                                     </div>
                             </div>
                         </div>

@@ -7,14 +7,14 @@ export var navbar = {
         <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #fff;">
             <div class="container">
                 <router-link class="navbar-brand" to="/admin" v-if="logged && admin">
-                    <img src="./img/logo.png" alt="Logo" width="166" height="32.3">
-                    <span v-if=admin> admin</span>
+                    <img src="./webapp/img/logo.png" alt="Logo" width="166" height="32.3">
+                    <span v-if=admin style="color: #5E17EB"> admin</span>
                 </router-link>
                 <router-link class="navbar-brand" to="/home" v-if="logged && !admin">
-                    <img src="./img/logo.png" alt="Logo" width="166" height="32.3">
+                    <img src="./webapp/img/logo.png" alt="Logo" width="166" height="32.3">
                 </router-link>
                 <router-link class="navbar-brand" to="/" v-if="!logged">
-                    <img src="./img/logo.png" alt="Logo" width="166" height="32.3">
+                    <img src="./webapp/img/logo.png" alt="Logo" width="166" height="32.3">
                 </router-link>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
