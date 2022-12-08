@@ -37,21 +37,15 @@ export var coursesView = {
         //     nome: "nome corso",
         //     show: true
         // }
-        self.listaCorsi = [{
-                nome: "Informatica",
-                show: true
-            },
-            {
-                nome: "Matematica",
-                show: true
-            },
-            {
-                nome: "Geometria",
-                show: true
-            },
-            {
-                nome: "Arabo",
-                show: true
-            }];
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
+            {action: "ottieniCorsiAttivi"},
+            function(data) {
+                data.forEach(function(c) {
+                    self.listaCorsi.push({
+                        nome: c.nome,
+                        show: true
+                    });
+                });
+            });
     }
 };

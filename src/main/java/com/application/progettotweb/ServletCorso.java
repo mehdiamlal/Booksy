@@ -49,6 +49,9 @@ public class ServletCorso extends HttpServlet {
         ArrayList<Corso> elencoCorsi;
 
         switch(tipoRichiesta) {
+            case "ottieniCorsiAttivi":
+                elencoCorsi = new ArrayList<>(dataModel.ottieniCorsiAttivi());
+                break;
             case "ottieniCorsi":
                 elencoCorsi = new ArrayList<>(dataModel.ottieniCorsi());
                 break;

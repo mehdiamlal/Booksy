@@ -265,6 +265,37 @@ public class DAO {
         }
     }
 
+    public ArrayList<Corso> ottieniCorsiAttivi() {
+
+        Connection conn = null;
+        Statement st = null;
+        ArrayList<Corso> elencoCorsi = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            System.out.println("Connesso al database locale.");
+
+            String sql = "SELECT * FROM CORSO WHERE attivo = 1";
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while(rs.next()) {
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
+                elencoCorsi.add(c);
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return elencoCorsi;
+    }
+
     public ArrayList<Corso> ottieniCorsi() {
 
         Connection conn = null;
