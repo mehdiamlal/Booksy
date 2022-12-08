@@ -70,19 +70,11 @@ public class ServletDocente extends HttpServlet {
         out.print(risposta);
     }
 
-    private boolean controllaMail(String s) {
-        String[] senders = s.split( "[\\s,]+" );
-
+    private boolean controllaMail(String indirizzoMail) {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
         Pattern pattern = Pattern.compile(regex);
 
-        for (String sender : senders) {
-            if (!pattern.matcher(sender).matches()){
-                return false;
-            }
-        }
-
-        return true;
+        return pattern.matcher(indirizzoMail).matches();
     }
 
     /* Possibili richieste POST relative ai docenti:
