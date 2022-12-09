@@ -9,22 +9,13 @@ export var courseCard = {
             modalLabel: this.title + "Label"
         }
     },
-    methods: {
-        displayList() {
-            var self = this;
-            self.listaDocenti.forEach((value) => {
-                console.log(value);
-            });
-            
-        }      
-    },
     template: `
         <div class="col-sm-6 col-md-6 col-lg-4">
             <div class="card bg-white p-3 mb-4 shadow">
                 <h3 class="text-center">{{title}}</h3>
                 <p></p>
                 <div class="text-center">
-                    <button class="btn btn-primary btn-sm" @click="displayList" data-bs-toggle="modal" :data-bs-target="modalID">Lista Docenti</button>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" :data-bs-target="modalID">Lista Docenti</button>
                 </div>
             </div>
             <!-- Modal -->
@@ -36,7 +27,9 @@ export var courseCard = {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        {{listaDocenti[0]}}
+                        <ul>
+                            <li v-for="docente in listaDocenti">{{docente.nome}} {{docente.cognome}} | <span class="text-muted">{{docente.email}}</span></li>
+                        </ul>   
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -50,9 +43,19 @@ export var courseCard = {
     mounted() {
         var self = this;
         //chiamata http che ottiene la lista dei docenti di quel corso e li mette nella lista docenti
-        $.get("https://catfact.ninja/fact", function(data) {
-            self.listaDocenti.push(data.fact)
-            console.log("data fetched correctly");
-        });
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti",
+            {
+                action: "filtraDocentePerCorso",
+                corso: self.title
+            },
+            function(data) {
+                data.forEach(function(docente) {
+                    self.listaDocenti.push({
+                        nome: docente.nome,
+                        cognome: docente.cognome,
+                        email: docente.email
+                    });
+                });
+            });
     }
 }

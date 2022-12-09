@@ -15,9 +15,14 @@ export var bookingForm = {
     methods: {
         getDocenti() {
             var self = this;
-            
             /*chiamata http per ottenere i docenti che insegnano il corso self.selectedCorso
             i dati vanno aggiunti a self.listaDocenti*/
+            $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti", {
+                action: "filtraDocentePerCorso",
+                corso: self.selectedCorso
+            }, function(data) {
+                self.listaDocenti = data;
+            });
         },
         getFasceOrarie() {
             var self = this;
@@ -40,13 +45,13 @@ export var bookingForm = {
                             <div class="col-12">
                                 <label for="selezionaCorso" class="text-secondary">Corso</label>
                                 <select id="selezionaCorso" class="form-select" name="corso" v-model="selectedCorso" @change="getDocenti">
-                                    <option v-for="corso in listaCorsi">{{corso}}</option>
+                                    <option v-for="corso in listaCorsi" :value="corso">{{corso}}</option>
                                 </select>
                             </div>
                             <div class="col-12">
                                 <label for="selezionaDocente" class="text-secondary">Docente</label>
                                 <select id="selezionaDocente" class="form-select" name="docente" v-model="selectedDocente">
-                                    <option v-for="d in listaDocenti">{{d}}</option>
+                                    <option v-for="docente in listaDocenti" :value="docente">{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
                                 </select>
                             </div>
                             <div class="col-12">
@@ -75,12 +80,18 @@ export var bookingForm = {
             </div>
         </div>
     `,
-    beforeMount() {
+    created() {
         var self = this;
-
+        self.listaCorsi = [];
         /*HTTP request per ottenere lista corsi
         i dati li aggiungiamo a self.listaCorsi*/
-
-        
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/corsi", {
+            action: "ottieniCorsiAttivi"
+        }, function(data) {
+            data.forEach(function(corso) {
+                self.listaCorsi.push(corso.nome);
+            });
+        });
+        console.log(self.listaCorsi);
     }
 }

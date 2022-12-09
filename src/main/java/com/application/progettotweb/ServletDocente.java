@@ -35,6 +35,7 @@ public class ServletDocente extends HttpServlet {
     /* Possibili richieste GET relative ai docenti:
     * - elenco docenti
     * - elenco docenti che insegnano un determinato corso
+    * - elenco docenti che non insegnano un determinato corso
     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -56,6 +57,11 @@ public class ServletDocente extends HttpServlet {
             case "filtraDocentePerCorso":
                 String filtro = req.getParameter("corso");
                 elencoDocenti.addAll(dataModel.filtraDocentePerCorso(filtro));
+                break;
+
+            case "ottieniDocentiLiberi":
+                String corso = req.getParameter("corso");
+                elencoDocenti.addAll(dataModel.ottieniDocentiLiberi(corso));
                 break;
 
             default:
@@ -85,24 +91,24 @@ public class ServletDocente extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String tipoRichiesta = req.getParameter("action");
 
-        String mail, nome, cognome;
+        String email, nome, cognome;
 
-        mail = req.getParameter("mail");
+        email = req.getParameter("email");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
 
-        boolean richiestaNonValida = tipoRichiesta == null || !controllaMail(mail);
+        boolean richiestaNonValida = tipoRichiesta == null || !controllaMail(email);
         if(richiestaNonValida) {
             tipoRichiesta = "";
         }
 
         switch(tipoRichiesta) {
             case "aggiungiDocente":
-                dataModel.aggiungiDocente(mail, nome, cognome);
+                dataModel.aggiungiDocente(email, nome, cognome);
                 break;
 
             case "rimuoviDocente":
-                dataModel.rimuoviDocente(mail);
+                dataModel.rimuoviDocente(email);
                 break;
 
             default:

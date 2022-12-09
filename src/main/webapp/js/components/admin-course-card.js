@@ -7,6 +7,8 @@ export var adminCourseCard = {
         return {
             listaDocenti: [],
             listaDocentiDaAggiungere: [],
+            docenteDaAggiungere: {},
+            docenteDaRimuovere: {},
             modalIDHash1: "#" + this.title + "1",
             modalID1: this.title + "1",
             modalLabel1: this.title + "Label",
@@ -16,7 +18,9 @@ export var adminCourseCard = {
             modalIDHash3: "#" + this.title + "3",
             modalID3: this.title + "3",
             modalLabel3: this.title + "Label3",
-            activeData: this.active
+            activeData: this.active,
+            addedSuccess: false,
+            removedSuccess: false
         }
     },
     methods: {
@@ -29,25 +33,75 @@ export var adminCourseCard = {
         },
         getDocentiDisponibili() {
             var self = this;
+            self.listaDocentiDaAggiungere = [];
             //chiamata http get per ottenere i docenti (attivi) che non insegnano il corso
+            $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti",
+                {
+                    action: "ottieniDocentiLiberi",
+                    corso: self.title
+                },
+                function(data) {
+                    data.forEach(function(docente) {
+                        self.listaDocentiDaAggiungere.push({
+                            nome: docente.nome,
+                            cognome: docente.cognome,
+                            email: docente.email
+                        });
+                    });
+                });
+
         },
         aggiungiDocente() {
             var self = this;
             //chiamata http post per aggiungere il docente selezionato nella select
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/insegnamenti",
+                {
+                    action: "aggiungiInsegnamento",
+                    docente: self.docenteDaAggiungere.email,
+                    corso: self.title
+                });
+            self.listaDocenti.push(self.docenteDaAggiungere);
+            self.listaDocentiDaAggiungere = self.listaDocentiDaAggiungere.filter(function(docente){
+                return docente.email !== self.docenteDaAggiungere.email;
+            });
+            self.addedSuccess = true;
         },
         disattivaCorso() {
             var self = this;
             //chiamata http per disattivare il corso da DB
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
+                {
+                    action: "cambiaStatoCorso",
+                    corso: self.title
+                });
             self.activeData = false;
         },
         attivaCorso() {
             var self = this;
             //chiamata http per attivare il corso da DB
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
+                {
+                    action: "cambiaStatoCorso",
+                    corso: self.title
+                });
             self.activeData = true;
         },
         rimuoviDocente() {
             var self = this;
             //chaiamata http per rimuovere il docente selezionato dall'insegnamento del corso
+            console.log(self.docenteDaRimuovere.email);
+            console.log(self.title);
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/insegnamenti",
+                {
+                    action: "rimuoviInsegnamenti",
+                    docente: self.docenteDaRimuovere.email,
+                    corso: self.title
+                });
+            self.listaDocentiDaAggiungere.push(self.docenteDaRimuovere);
+            self.listaDocenti = self.listaDocenti.filter(function(docente){
+                return docente.email !== self.docenteDaRimuovere.email;
+            });
+            self.removedSuccess = true;
         }
 
     },
@@ -83,7 +137,10 @@ export var adminCourseCard = {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        {{listaDocenti[0]}}
+                        <ul>
+                            <li v-for="docente in listaDocenti">{{docente.nome}} {{docente.cognome}} | <span class="text-muted">{{docente.email}}</span></li>
+                        </ul> 
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
@@ -101,13 +158,13 @@ export var adminCourseCard = {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <select class="form-select" aria-label="Default select example">
-                            <option v-for="docente in listaDocentiDaAggiungere" :value=docente.email>{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
+                        <select class="form-select" aria-label="Default select example" v-model="docenteDaAggiungere" @click="addedSuccess = false">
+                            <option v-for="docente in listaDocentiDaAggiungere" :value="docente">{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
                         </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary" @click="aggiungiDocente">Salva</button>
+                        <button type="button" class="btn btn-primary" @click="aggiungiDocente" data-bs-dismiss="modal">Salva</button>
                     </div>
                     </div>
                 </div>
@@ -121,13 +178,13 @@ export var adminCourseCard = {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <select class="form-select" aria-label="Default select example">
-                            <option v-for="docente in listaDocentiDaAggiungere" :value=docente.email>{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
+                        <select class="form-select" aria-label="Default select example" v-model="docenteDaRimuovere" @click="removedSuccess = false">
+                            <option v-for="docente in listaDocenti" :value=docente>{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
                         </select>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary" @click="rimuoviDocente">Salva</button>
+                        <button type="button" class="btn btn-primary" @click="rimuoviDocente" data-bs-dismiss="modal">Salva</button>
                     </div>
                     </div>
                 </div>
@@ -137,9 +194,19 @@ export var adminCourseCard = {
     mounted() {
         var self = this;
         //chiamata http che ottiene la lista dei docenti di quel corso e li mette nella lista docenti
-        $.get("https://catfact.ninja/fact", function(data) {
-            self.listaDocenti.push(data.fact)
-            console.log("data fetched correctly");
-        });
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti",
+            {
+                action: "filtraDocentePerCorso",
+                corso: self.title
+            },
+            function(data) {
+                data.forEach(function(docente) {
+                    self.listaDocenti.push({
+                        nome: docente.nome,
+                        cognome: docente.cognome,
+                        email: docente.email
+                    });
+                });
+            });
     }
 }
