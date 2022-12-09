@@ -14,6 +14,16 @@ export var addTutorView = {
     created() {
         var self = this;
         //chiamata http per ottenere i docenti attivi
-        self.listaDocenti = ["mario@gmail.com"];
+        self.listaDocenti = [];
+        var tmp;
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti",{
+            action: "ottieniElencoDocenti"
+        }, function(data) {
+            data.forEach(function(docente) {
+                tmp = docente.email;
+                self.listaDocenti.push(tmp);
+            });
+        });
+        console.log(self.listaDocenti);
     }
 };

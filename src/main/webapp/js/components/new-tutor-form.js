@@ -4,6 +4,7 @@ export var newTutorForm = {
     },
     data: function() {
         return {
+            listaDocentiData: this.listaDocenti,
             nome: "",
             nomeMissing: false,
             cognome: "",
@@ -18,10 +19,20 @@ export var newTutorForm = {
     methods: {
         add_tutor_event: function() {
             var self = this;
+            self.addedSuccess = false;
+            self.docenteExists = false;
             if(self.valid_input() && !(self.docente_esistente())) {
                 //http post per aggiungere il docente al db
+                $.post("http://localhost:8080/progetto_TWeb_war_exploded/docenti",
+                    {
+                        action: "aggiungiDocente",
+                        nome: self.nome,
+                        cognome: self.cognome,
+                        email: self.email
+                    });
                 self.addedSuccess = true;
-                self.docente_esistente = false;
+                self.docenteExists = false;
+                self.listaDocentiData.push(self.email);
             }
         },
         valid_email: function(email) {
@@ -74,7 +85,7 @@ export var newTutorForm = {
         docente_esistente: function() {
             var self = this;
             var res = false;
-            if(self.listaDocenti.includes(self.email)) {
+            if(self.listaDocentiData.includes(self.email)) {
                 self.docenteExists = true;
                 res = true;
             } else {
@@ -129,14 +140,14 @@ export var newTutorForm = {
                                     </div>
 
                                     <!-- warning docente duplicato -->
-                                    <div v-if="docenteExists" id="docenteExists" class="text-secondary text-danger text-center">
+                                    <div v-if="docenteExists" class="text-secondary text-danger text-center">
                                         <p></p>
                                         Attenzione! Un docente con la stessa email è già esistente.
                                         <p></p>
                                     </div>
 
                                     <!-- messaggio docente aggiunto con successo -->
-                                    <div v-if="addedSuccess" id="docenteExists" class="text-secondary text-success text-center">
+                                    <div v-if="addedSuccess" class="text-secondary text-success text-center">
                                         <p></p>
                                         Docente aggiunto con successo.
                                         <p></p>
