@@ -91,7 +91,7 @@ public class ServletPrenotazione extends HttpServlet {
 
         switch(tipoRichiesta) {
             case "aggiungiPrenotazione":
-                dataModel.aggiungiPrenotazione(username, emailDocente, idCorso, data, fasciaOraria);
+                dataModel.aggiungiPrenotazione(username, idCorso, emailDocente, data, fasciaOraria);
                 break;
 
             case "impostaPrenotazioneEffettuata":
