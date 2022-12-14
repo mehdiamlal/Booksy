@@ -2,7 +2,6 @@ export var adminBookingCard = {
     props: {
         user: String,
         tutor: String,
-        email: String,
         course: String,
         day: String,
         timeSlot: String,
@@ -14,7 +13,6 @@ export var adminBookingCard = {
             return {
                 userData: self.user,
                 tutorData: self.tutor,
-                emailData: self.email,
                 courseData: self.course,
                 dayData: self.day,
                 timeSlotData: self.timeSlot,
@@ -41,7 +39,7 @@ export var adminBookingCard = {
                         </div>
                         <div class="user-info__basic">
                             <h4 class="mb-0">Docente:</h4> 
-                            <h6 class="text-muted mb-0">{{emailData}}</h6>
+                            <h6 class="text-muted mb-0">{{tutorData}}</h6>
                         </div>
                     </div>
                     <div class="dropdown open" v-if="activeData && !completedData">

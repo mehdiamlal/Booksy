@@ -34,6 +34,7 @@ public class ServletPrenotazione extends HttpServlet {
     /* Possibili richieste GET relative ai prenotazioni
     * - elenco prenotazioni attive
     * - elenco prenotazioni utente
+    * - elenco tutte le prenotazioni
     * */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -50,6 +51,10 @@ public class ServletPrenotazione extends HttpServlet {
         switch(tipoRichiesta) {
             case "ottieniPrenotazioniAttive":
                 elencoPrenotazioni.addAll(dataModel.ottieniPrenotazioniAttive());
+                break;
+
+            case "ottieniTuttePrenotazioni":
+                elencoPrenotazioni.addAll(dataModel.ottieniTuttePrenotazioni());
                 break;
 
             case "ottieniPrenotazioniUtente":
