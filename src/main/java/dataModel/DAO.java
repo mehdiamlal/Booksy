@@ -16,6 +16,15 @@ public class DAO {
     String user;
     String pw;
 
+    private void registerDriver() {
+        try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            System.out.println("Driver registrato con successo.");
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public DAO(String url, String user, String pw) {
         registerDriver();
         this.url = url;
@@ -38,15 +47,6 @@ public class DAO {
         }
 
         return true;
-    }
-
-    private void registerDriver() {
-        try {
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            System.out.println("Driver registrato con successo.");
-        } catch(SQLException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public Utente autenticaUtente(String username, String password) {
@@ -99,8 +99,7 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "INSERT INTO utente(username, password, nome, cognome, ruolo, dataCreazione)" +
-                        "VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO utente(username, password, nome, cognome, ruolo, dataCreazione) VALUES(?,?,?,?,?,?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username.toLowerCase());
@@ -125,14 +124,12 @@ public class DAO {
     }
 
     public void rimuoviUtente(String username) {
-
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
-
 
             String sql = "UPDATE utente SET attivo = 0, dataCancellazione = ? WHERE username = ? AND attivo = 1";
 
@@ -202,7 +199,7 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO corso (nome) VALUES (?);";
+            String sql = "INSERT INTO corso (nome) VALUES (?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, nome);
@@ -222,7 +219,6 @@ public class DAO {
     }
 
     public void cambiaStatoCorso(String nome) {
-
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -230,9 +226,7 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "UPDATE corso " +
-                        "SET attivo = ?" +
-                        "WHERE nome = ? AND ATTIVO = ?";
+            String sql = "UPDATE corso SET attiva = ? WHERE nome = ? AND attiva = ?";
 
             /* Provo ad eseguire la query sui corsi con nome "nome" inattivi */
             String setActive, whereActive;
@@ -275,12 +269,12 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "SELECT * FROM CORSO WHERE attivo = 1";
+            String sql = "SELECT * FROM corso WHERE attiva = 1";
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
-                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attiva").equals("1"));
                 elencoCorsi.add(c);
             }
         } catch(SQLException e) {
@@ -297,7 +291,6 @@ public class DAO {
     }
 
     public ArrayList<Corso> ottieniCorsi() {
-
         Connection conn = null;
         Statement st = null;
         ArrayList<Corso> elencoCorsi = new ArrayList<>();
@@ -306,12 +299,12 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "SELECT * FROM CORSO";
+            String sql = "SELECT * FROM corso";
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
-                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attiva").equals("1"));
                 elencoCorsi.add(c);
             }
         } catch(SQLException e) {
@@ -329,19 +322,17 @@ public class DAO {
 
     //Metodi per la gestione delle operazioni sulla tabella docente
     public void aggiungiDocente(String email, String nome, String cognome) {
-
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO docente (email, nome, cognome, dataCreazione) VALUES (?,?,?,?);";
+            String sql = "INSERT INTO docente (email, nome, cognome) VALUES (?,?,?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, email.toLowerCase());
             st.setString(2, nome);
             st.setString(3, cognome);
-            st.setString(4, getDate());
 
             st.executeUpdate();
 
@@ -358,22 +349,19 @@ public class DAO {
         }
     }
 
-    public void rimuoviDocente(String docente) {
+    public void rimuoviDocente(String email) {
         Connection conn = null;
         PreparedStatement st = null;
 
-        rimuoviInsegnamenti(docente, null);
-        rimuoviPrenotazioni(docente, null, null, null);
+        rimuoviInsegnamenti(email, null);
+        rimuoviPrenotazioni(email, null, null, null);
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "UPDATE docente " +
-                        "SET attivo = 0, dataCancellazione = ? " +
-                        "WHERE email = ? AND attivo = 1";
+            String sql = "UPDATE docente SET attivo = 0 WHERE email = ? AND attivo = 1";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, getDate());
-            st.setString(2, docente);
+            st.setString(1, email);
 
             st.executeUpdate();
         } catch (SQLException e) {
@@ -421,17 +409,17 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella insegnamento
-    public void aggiungiInsegnamento(String docente, String corso) {
+    public void aggiungiInsegnamento(String nomeCorso, String emailDocente) {
         Connection conn = null;
         PreparedStatement st = null;
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO insegnamento (docente, corso) VALUES (?,?);";
+            String sql = "INSERT INTO insegnamento (corso, docente) VALUES (?,?)";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, docente);
-            st.setString(2, corso);
+            st.setString(1, nomeCorso);
+            st.setString(2, emailDocente);
 
             st.executeUpdate();
 
@@ -447,28 +435,28 @@ public class DAO {
         }
     }
 
-    public void rimuoviInsegnamenti(String docente, String corso) {
+    public void rimuoviInsegnamenti(String nomeCorso, String emailDocente) {
         Connection conn = null;
         PreparedStatement st = null;
         String sql = "DELETE FROM insegnamento ";
 
         /* Tutti i parametri sono null */
-        if(allNull(docente, corso)) {
+        if(allNull(emailDocente, nomeCorso)) {
             return;
         }
 
         /* Rimozione di tutti gli insegnamenti tenuti da un certo docente */
-        if(docente != null && corso == null) {
-            sql = sql.concat("WHERE docente = '" + docente + "'");
+        if(emailDocente != null && nomeCorso == null) {
+            sql = sql.concat("WHERE docente = '" + emailDocente + "'");
         }
 
         /* Rimozione di tutti gli insegnamenti di un certo corso */
-        if(docente == null && corso != null) {
-            sql = sql.concat("WHERE corso = '" + corso + "'");
+        if(nomeCorso != null && emailDocente == null) {
+            sql = sql.concat("WHERE corso = '" + nomeCorso + "'");
         }
 
         /* Rimozione dell'insegnamento di un certo corso tenuto da un certo docente */
-        sql = sql.concat("WHERE docente = '" + docente + "' AND corso = '" + corso + "'");
+        sql = sql.concat("WHERE docente = '" + emailDocente + "' AND corso = '" + nomeCorso + "'");
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
@@ -579,8 +567,7 @@ public class DAO {
     }
 
     //Metodi per la gestione delle operazioni sulla tabella prenotazione
-    public void aggiungiPrenotazione(String username, String idCorso, String emailDocente, String data, String fasciaOraria) {
-
+    public void aggiungiPrenotazione(String username, String nomeCorso, String emailDocente, String data, String fasciaOraria) {
         //si presuppone che ciascuna prenotazione abbia un flag "attiva" e uno "effettuata"
         //che vengono settati rispettivamente a 1 e 0 di default quando viene creata
         Connection conn = null;
@@ -588,11 +575,11 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO prenotazione (utente, corso, docente, data, fasciaOraria) VALUES (?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO prenotazione (utente, corso, docente, data, fasciaOraria) VALUES (?, ?, ?, ?, ?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
-            st.setString(2, idCorso);
+            st.setString(2, nomeCorso);
             st.setString(3, emailDocente);
             st.setString(4, data);
             st.setString(5, fasciaOraria);
@@ -640,22 +627,21 @@ public class DAO {
         }
     }
 
-    public void rimuoviPrenotazioni(String docente, String data, String fasciaOraria, String corso) {
+    public void rimuoviPrenotazioni(String emailDocente, String data, String fasciaOraria, String nomeCorso) {
 
         Connection conn = null;
         PreparedStatement st = null;
-        String sql = "UPDATE prenotazione" +
-                    "SET attiva = 0, dataCancellazione = " + getDate();
+        String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = '" + getDate() + "'";
 
-        if(docente != null && allNull(data, fasciaOraria, corso)) {
-            sql = sql.concat("WHERE docente = " + docente + " AND attivo = 1");
+        if(emailDocente != null && allNull(data, fasciaOraria, nomeCorso)) {
+            sql = sql.concat("WHERE docente = '" + emailDocente + "' AND attivo = 1");
         }
 
-        if(corso != null && allNull(docente, data, fasciaOraria)) {
-            sql = sql.concat("WHERE corso = " + corso + " AND attivo = 1");
+        if(nomeCorso != null && allNull(emailDocente, data, fasciaOraria)) {
+            sql = sql.concat("WHERE corso = '" + nomeCorso + "' AND attivo = 1");
         }
 
-        sql = sql.concat("WHERE docente = ? AND data = ? AND fasciaOraria = ? AND corso = ?");
+        sql = sql.concat("WHERE docente = '" + emailDocente + "' AND data = '" + data + "' AND fasciaOraria = '" + fasciaOraria + "' AND corso = '" + nomeCorso + "'");
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
