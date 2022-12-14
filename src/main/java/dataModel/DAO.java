@@ -53,7 +53,6 @@ public class DAO {
         //se il metodo ritorna un null, vuol dire che l'autenticazione è fallita
         Connection conn = null;
         PreparedStatement st = null;
-        ResultSet rs = null;
         Utente res = null;
 
         try {
@@ -65,7 +64,7 @@ public class DAO {
             st = conn.prepareStatement(sql);
             st.setString(1, username);
 
-            rs = st.executeQuery();
+            ResultSet rs = st.executeQuery();
 
             if(rs.next()) {  //se la query ha restituito un risultato...
                 if(Service.checkSHA2(rs.getString("password"), password)) { //se la password è corretta
@@ -598,7 +597,7 @@ public class DAO {
         }
     }
 
-    public void impostaPrenotazioneEffettuata(String docente, String data, String fasciaOraria) {
+    public void impostaPrenotazioneEffettuata(String emailDocente, String data, String fasciaOraria) {
         Connection conn = null;
         PreparedStatement st = null;
 
@@ -609,7 +608,7 @@ public class DAO {
                         "WHERE docente = ? AND data = ? AND fasciaOraria = ? AND attiva = 1";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, docente);
+            st.setString(1, emailDocente);
             st.setString(2, data);
             st.setString(3, fasciaOraria);
 
@@ -663,7 +662,7 @@ public class DAO {
         }
     }
 
-    public ArrayList<Prenotazione> ottieniPrenotazioniUtente(String utente) {
+    public ArrayList<Prenotazione> ottieniPrenotazioniUtente(String username) {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<>();
@@ -673,7 +672,7 @@ public class DAO {
             String sql = "SELECT * FROM prenotazione WHERE utente = ?";
 
             st = conn.prepareStatement(sql);
-            st.setString(1, utente);
+            st.setString(1, username);
 
             ResultSet rs = st.executeQuery();
 
