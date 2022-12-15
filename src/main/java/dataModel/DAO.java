@@ -629,11 +629,11 @@ public class DAO {
         String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = '" + getDate() + "'";
 
         if(emailDocente != null && allNull(data, fasciaOraria, nomeCorso)) {
-            sql = sql.concat("WHERE docente = '" + emailDocente + "' AND attivo = 1");
+            sql = sql.concat("WHERE docente = '" + emailDocente + "' AND attiva = 1");
         } else if (nomeCorso != null && allNull(emailDocente, data, fasciaOraria)) {
-            sql = sql.concat("WHERE corso = '" + nomeCorso + "' AND attivo = 1");
+            sql = sql.concat("WHERE corso = '" + nomeCorso + "' AND attiva = 1");
         } else {
-            sql = sql.concat("WHERE docente = '" + emailDocente + "' AND data = '" + data + "' AND fasciaOraria = '" + fasciaOraria + "' AND corso = '" + nomeCorso + "' AND attivo = 1");
+            sql = sql.concat("WHERE docente = '" + emailDocente + "' AND data = '" + data + "' AND fasciaOraria = '" + fasciaOraria + "' AND corso = '" + nomeCorso + "' AND attiva = 1");
         }
 
         try {
