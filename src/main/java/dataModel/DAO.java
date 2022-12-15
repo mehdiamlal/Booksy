@@ -626,8 +626,7 @@ public class DAO {
         }
     }
 
-    public void rimuoviPrenotazioni(String emailDocente, String data, String fasciaOraria, String nomeCorso) {
-
+    public void rimuoviPrenotazioni(String emailDocente, String nomeCorso, String data, String fasciaOraria) {
         Connection conn = null;
         PreparedStatement st = null;
         String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = '" + getDate() + "'";
