@@ -84,14 +84,14 @@ public class ServletPrenotazione extends HttpServlet {
         String username, idCorso, emailDocente, data, fasciaOraria;
 
         username = req.getParameter("username");
-        emailDocente = req.getParameter("emailDocente");
         idCorso = req.getParameter("idCorso");
+        emailDocente = req.getParameter("emailDocente");
         data = req.getParameter("data");
         fasciaOraria = req.getParameter("fasciaOraria");
 
         switch(tipoRichiesta) {
             case "aggiungiPrenotazione":
-                dataModel.aggiungiPrenotazione(username, emailDocente, idCorso, data, fasciaOraria);
+                dataModel.aggiungiPrenotazione(username, idCorso, emailDocente, data, fasciaOraria);
                 break;
 
             case "impostaPrenotazioneEffettuata":
