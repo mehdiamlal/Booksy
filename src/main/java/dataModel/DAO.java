@@ -238,8 +238,8 @@ public class DAO {
             /* Se non trovo corsi con titolo "nome" inattivi, faccio la query inversa
             * impostando come inattivi i corsi con titolo "nome" attivi */
             if(st.executeUpdate() == 0) {
-                rimuoviPrenotazioni(null, null, null, nome);
-                rimuoviInsegnamenti(null, nome);
+                rimuoviPrenotazioni(nome, null, null, null);
+                rimuoviInsegnamenti(nome, null);
 
                 setActive = "0"; st.setString(1, setActive);
                 whereActive = "1"; st.setString(3, whereActive);
@@ -352,8 +352,8 @@ public class DAO {
         Connection conn = null;
         PreparedStatement st = null;
 
-        rimuoviInsegnamenti(email, null);
-        rimuoviPrenotazioni(email, null, null, null);
+        rimuoviInsegnamenti(null, email);
+        rimuoviPrenotazioni(null, email, null, null);
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
