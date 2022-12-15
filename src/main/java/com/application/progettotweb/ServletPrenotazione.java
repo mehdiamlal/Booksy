@@ -99,7 +99,7 @@ public class ServletPrenotazione extends HttpServlet {
                 break;
 
             case "rimuoviPrenotazione":
-                dataModel.rimuoviPrenotazioni(emailDocente, idCorso, data, fasciaOraria);
+                dataModel.rimuoviPrenotazioni(idCorso, emailDocente, data, fasciaOraria);
                 break;
 
             default:
