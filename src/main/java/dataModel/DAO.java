@@ -1,6 +1,5 @@
 package dataModel;
 
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -352,8 +351,8 @@ public class DAO {
         Connection conn = null;
         PreparedStatement st = null;
 
-        rimuoviInsegnamenti(null, email);
         rimuoviPrenotazioni(null, email, null, null);
+        rimuoviInsegnamenti(null, email);
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
@@ -444,18 +443,16 @@ public class DAO {
             return;
         }
 
-        /* Rimozione di tutti gli insegnamenti tenuti da un certo docente */
         if(emailDocente != null && nomeCorso == null) {
+            /* Rimozione di tutti gli insegnamenti tenuti da un certo docente */
             sql = sql.concat("WHERE docente = '" + emailDocente + "'");
-        }
-
-        /* Rimozione di tutti gli insegnamenti di un certo corso */
-        if(nomeCorso != null && emailDocente == null) {
+        } else if(nomeCorso != null && emailDocente == null) {
+            /* Rimozione di tutti gli insegnamenti di un certo corso */
             sql = sql.concat("WHERE corso = '" + nomeCorso + "'");
+        } else {
+            /* Rimozione dell'insegnamento di un certo corso tenuto da un certo docente */
+            sql = sql.concat("WHERE docente = '" + emailDocente + "' AND corso = '" + nomeCorso + "'");
         }
-
-        /* Rimozione dell'insegnamento di un certo corso tenuto da un certo docente */
-        sql = sql.concat("WHERE docente = '" + emailDocente + "' AND corso = '" + nomeCorso + "'");
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
