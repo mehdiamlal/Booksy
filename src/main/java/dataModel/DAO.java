@@ -694,6 +694,45 @@ public class DAO {
         return prenotazioniUtente;
     }
 
+    public ArrayList<Prenotazione> ottieniPrenotazioniUtenteImminenti(String username) {
+        //ritorna le 3 prenotazioni (attive) più imminenti
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM prenotazione WHERE utente = ? AND attiva = 1 AND effettuata = 0 ORDER BY data";
+            int i = 0;
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, username);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next() && i < 3) {
+                prenotazioniUtente.add(new Prenotazione(rs.getString("utente"),
+                        rs.getString("corso"),
+                        rs.getString("docente"),
+                        rs.getString("data"),
+                        rs.getString("fasciaOraria"),
+                        rs.getString("attiva").equals("1"),
+                        rs.getString("effettuata").equals("1")));
+                i++;
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return prenotazioniUtente;
+    }
+
     public ArrayList<Prenotazione> ottieniPrenotazioniAttive() {
         Connection conn = null;
         PreparedStatement st = null;

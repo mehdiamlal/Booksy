@@ -1,25 +1,7 @@
 export var studentHomeView = {
     data: function() {
         return {
-            prenotImminenti: [{
-                tutor: "Mehdi Amlal",
-                email: "mehdi@gmail.com",
-                course: "Informatica",
-                day: "23/01/2023",
-                timeSlot: "16:00 - 17:00",
-            },{
-                tutor: "Mehdi Amlal",
-                email: "mehdi@gmail.com",
-                course: "Informatica",
-                day: "24/01/2023",
-                timeSlot: "16:00 - 17:00",
-            },{
-                tutor: "Mehdi Amlal",
-                email: "mehdi@gmail.com",
-                course: "Informatica",
-                day: "25/01/2023",
-                timeSlot: "16:00 - 17:00",
-            }]
+            prenotImminenti: []
         }
     },
     template: `
@@ -30,12 +12,14 @@ export var studentHomeView = {
             <h3 class="text-center" style="margin: 1em">Le tue prenotazioni più imminenti</h3>
             <div class="row">
                 <appointment-card v-for="prenotazione in prenotImminenti" 
-                    :tutor="prenotazione.tutor"
-                    :email="prenotazione.email"
-                    :course="prenotazione.course"
-                    :day="prenotazione.day"
-                    :timeSlot="prenotazione.timeSlot"
-                    active v-if="prenotImminenti.length > 0"></appointment-card>
+                    :user="prenotazione.utente" 
+                    :tutor="prenotazione.docente"
+                    :course="prenotazione.corso"
+                    :day="prenotazione.data"
+                    :timeSlot="prenotazione.fasciaOraria"
+                    :active="prenotazione.attiva"
+                    :completed="prenotazione.effettuata"
+                     v-if="prenotImminenti.length > 0"></appointment-card>
                 <h5 class="text-center text-muted" v-else >Nessuna prenotazione imminente.</h5>
             </div>
             <hr>
@@ -58,5 +42,19 @@ export var studentHomeView = {
                 <div class="col"></div>
             </div>
         </div>
-    `
+    `,
+    created() {
+        var self = this;
+        self.prenotImminenti = [];
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
+            action: "ottieniPrenotazioniUtenteImminenti",
+            utente: "heymehdi"
+        }, function(data) {
+            data.forEach(function(prenotazione) {
+                var tmp = prenotazione;
+                self.prenotImminenti.push(tmp);
+                console.log(tmp);
+            });
+        });
+    }
 }

@@ -35,6 +35,7 @@ public class ServletPrenotazione extends HttpServlet {
     * - elenco prenotazioni attive
     * - elenco prenotazioni utente
     * - elenco tutte le prenotazioni
+    * - elenco (3) prenotazioni utente più imminenti
     * */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -47,6 +48,7 @@ public class ServletPrenotazione extends HttpServlet {
         }
 
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
+        String filtro = req.getParameter("utente");
 
         switch(tipoRichiesta) {
             case "ottieniPrenotazioniAttive":
@@ -58,8 +60,12 @@ public class ServletPrenotazione extends HttpServlet {
                 break;
 
             case "ottieniPrenotazioniUtente":
-                String filtro = req.getParameter("utente");
+
                 elencoPrenotazioni.addAll(dataModel.ottieniPrenotazioniUtente(filtro));
+                break;
+
+            case "ottieniPrenotazioniUtenteImminenti":
+                elencoPrenotazioni.addAll(dataModel.ottieniPrenotazioniUtenteImminenti(filtro));
                 break;
 
             default:
