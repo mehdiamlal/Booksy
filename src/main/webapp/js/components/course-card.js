@@ -33,7 +33,9 @@ export var courseCard = {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary">Prenota ripetizione</button>
+                        <router-link to="/book">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Prenota ripetizione</button>
+                        </router-link>
                     </div>
                     </div>
                 </div>
