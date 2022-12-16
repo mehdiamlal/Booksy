@@ -2,7 +2,6 @@ export var adminBookingCard = {
     props: {
         user: String,
         tutor: String,
-        email: String,
         course: String,
         day: String,
         timeSlot: String,
@@ -14,7 +13,6 @@ export var adminBookingCard = {
             return {
                 userData: self.user,
                 tutorData: self.tutor,
-                emailData: self.email,
                 courseData: self.course,
                 dayData: self.day,
                 timeSlotData: self.timeSlot,
@@ -26,6 +24,14 @@ export var adminBookingCard = {
         deleteBooking: function() {
             var self = this;
             /* Chiamata HTTP che imposta prenotazione come attiva = 0 sul DB */
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
+                action: "rimuoviPrenotazione",
+                username: self.userData,
+                emailDocente: self.tutorData,
+                idCorso: self.courseData,
+                data: self.dayData,
+                fasciaOraria: self.timeSlotData
+            });
             self.activeData = !self.activeData;
             console.log("Cancellata prenotazione del: " + self.dayData);
         }
@@ -41,7 +47,7 @@ export var adminBookingCard = {
                         </div>
                         <div class="user-info__basic">
                             <h4 class="mb-0">Docente:</h4> 
-                            <h6 class="text-muted mb-0">{{emailData}}</h6>
+                            <h6 class="text-muted mb-0">{{tutorData}}</h6>
                         </div>
                     </div>
                     <div class="dropdown open" v-if="activeData && !completedData">

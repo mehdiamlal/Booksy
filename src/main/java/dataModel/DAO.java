@@ -626,7 +626,9 @@ public class DAO {
     public void rimuoviPrenotazioni(String nomeCorso, String emailDocente, String data, String fasciaOraria) {
         Connection conn = null;
         PreparedStatement st = null;
-        String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = '" + getDate() + "'";
+
+        String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = '" + getDate() + "' ";
+
 
         if(emailDocente != null && allNull(data, fasciaOraria, nomeCorso)) {
             sql = sql.concat("WHERE docente = '" + emailDocente + "' AND attiva = 1");
@@ -639,6 +641,10 @@ public class DAO {
         try {
             conn = DriverManager.getConnection(url, user, pw);
             st = conn.prepareStatement(sql);
+            st.setString(1, docente);
+            st.setString(2, data);
+            st.setString(3, fasciaOraria);
+            st.setString(4, corso);
             st.executeUpdate();
 
             System.out.println("Prenotazioni eliminate con successo.");
@@ -711,6 +717,40 @@ public class DAO {
                         rs.getString("data"),
                         rs.getString("fasciaOraria"),
                         true));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return elencoPrenotazioni;
+    }
+
+    public ArrayList<Prenotazione> ottieniTuttePrenotazioni() {
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM prenotazione";
+
+            st = conn.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                elencoPrenotazioni.add(new Prenotazione(rs.getString("utente"),
+                        rs.getString("corso"),
+                        rs.getString("docente"),
+                        rs.getString("data"),
+                        rs.getString("fasciaOraria"),
+                        rs.getString("attiva").equals("1")));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());

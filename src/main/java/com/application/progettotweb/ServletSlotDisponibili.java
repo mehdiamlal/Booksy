@@ -42,10 +42,14 @@ public class ServletSlotDisponibili extends HttpServlet {
         }
 
         HashMap<String, HashMap<String, ArrayList<String>>> slotDisponbili = new HashMap<>();
+        String dataInizio, dataFine;
+
+        dataInizio = req.getParameter("dataInizio");
+        dataFine = req.getParameter("dataFine");
 
         switch (tipoRichiesta) {
             case "ottieniSlotDisponibili":
-                slotDisponbili.putAll(dataModel.ottieniSlotDisponibili("12/12/2022", "16/12/2022"));
+                slotDisponbili.putAll(dataModel.ottieniSlotDisponibili(dataInizio, dataFine));
                 break;
 
             default:
