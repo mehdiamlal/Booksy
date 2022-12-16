@@ -50,7 +50,7 @@ public class ServletDocente extends HttpServlet {
         ArrayList<Docente> elencoDocenti = new ArrayList<>();
 
         switch(tipoRichiesta) {
-            case "ottieniElencoDocenti":
+            case "ottieniDocenti":
                 elencoDocenti.addAll(dataModel.ottieniDocenti());
                 break;
 
@@ -65,7 +65,7 @@ public class ServletDocente extends HttpServlet {
                 break;
 
             default:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo , operazione non valida. Riprovare.");
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo di operazione non valida. Riprovare.");
                 return;
         }
 
