@@ -644,8 +644,10 @@ public class DAO {
 
         Connection conn = null;
         PreparedStatement st = null;
-        String sql = "UPDATE prenotazione" +
-                    "SET attiva = 0, dataCancellazione = " + getDate();
+        String sql = "UPDATE prenotazione " +
+                    "SET attiva = 0, dataCancellazione = '" + getDate() + "' ";
+
+        System.out.println(sql);
 
         if(docente != null && allNull(data, fasciaOraria, corso)) {
             sql = sql.concat("WHERE docente = " + docente + " AND attivo = 1");
@@ -660,6 +662,10 @@ public class DAO {
         try {
             conn = DriverManager.getConnection(url, user, pw);
             st = conn.prepareStatement(sql);
+            st.setString(1, docente);
+            st.setString(2, data);
+            st.setString(3, fasciaOraria);
+            st.setString(4, corso);
             st.executeUpdate();
 
             System.out.println("Prenotazioni eliminate con successo.");
@@ -765,7 +771,7 @@ public class DAO {
                         rs.getString("docente"),
                         rs.getString("data"),
                         rs.getString("fasciaOraria"),
-                        true));
+                        rs.getString("attiva").equals("1")));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());

@@ -24,6 +24,14 @@ export var adminBookingCard = {
         deleteBooking: function() {
             var self = this;
             /* Chiamata HTTP che imposta prenotazione come attiva = 0 sul DB */
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
+                action: "rimuoviPrenotazione",
+                username: self.userData,
+                emailDocente: self.tutorData,
+                idCorso: self.courseData,
+                data: self.dayData,
+                fasciaOraria: self.timeSlotData
+            });
             self.activeData = !self.activeData;
             console.log("Cancellata prenotazione del: " + self.dayData);
         }
