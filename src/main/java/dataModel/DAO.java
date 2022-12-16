@@ -641,13 +641,9 @@ public class DAO {
         try {
             conn = DriverManager.getConnection(url, user, pw);
             st = conn.prepareStatement(sql);
-            st.setString(1, docente);
-            st.setString(2, data);
-            st.setString(3, fasciaOraria);
-            st.setString(4, corso);
             st.executeUpdate();
 
-            System.out.println("Prenotazioni eliminate con successo.");
+            System.out.println("Prenotazione eliminata con successo.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
