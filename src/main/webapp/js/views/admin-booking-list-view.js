@@ -53,7 +53,7 @@ export var adminBookingListView = {
             <hr>
             <div class="row" style="margin-bottom: 7em">
                 <admin-booking-card v-for="prenotazione in listaPrenotazioni"
-                :user="prenotazione.utente" 
+                :user="prenotazione.utente"
                 :tutor="prenotazione.docente"
                 :course="prenotazione.corso"
                 :day="prenotazione.data"
