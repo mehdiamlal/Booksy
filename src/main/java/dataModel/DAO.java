@@ -267,12 +267,12 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "SELECT * FROM corso WHERE attiva = 1";
+            String sql = "SELECT * FROM corso WHERE attivo = 1";
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
-                Corso c = new Corso(rs.getString("nome"), rs.getString("attiva").equals("1"));
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
                 elencoCorsi.add(c);
             }
         } catch(SQLException e) {
@@ -302,7 +302,7 @@ public class DAO {
             ResultSet rs = st.executeQuery(sql);
 
             while(rs.next()) {
-                Corso c = new Corso(rs.getString("nome"), rs.getString("attiva").equals("1"));
+                Corso c = new Corso(rs.getString("nome"), rs.getString("attivo").equals("1"));
                 elencoCorsi.add(c);
             }
         } catch(SQLException e) {
