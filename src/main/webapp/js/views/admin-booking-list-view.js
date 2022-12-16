@@ -58,7 +58,8 @@ export var adminBookingListView = {
                 :course="prenotazione.corso"
                 :day="prenotazione.data"
                 :timeSlot="prenotazione.fasciaOraria"
-                :active="prenotazione.attiva" v-show="prenotazione.show"></admin-booking-card>
+                :active="prenotazione.attiva"
+                :completed="prenotazione.effettuata" v-show="prenotazione.show"></admin-booking-card>
             </div>
             <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione trovata.</h5>
         </div>

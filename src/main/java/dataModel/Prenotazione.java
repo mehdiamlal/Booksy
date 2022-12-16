@@ -6,18 +6,17 @@ public class Prenotazione {
     private String docente;
     private String data;
     private String fasciaOraria;
-
-    private String dataCancellazione;
     private boolean attiva;
     private boolean effettuata;
 
-    public Prenotazione(String utente, String corso, String docente, String data, String fasciaOraria, boolean attiva) {
+    public Prenotazione(String utente, String corso, String docente, String data, String fasciaOraria, boolean attiva, boolean effettuata) {
         this.utente = utente;
         this.corso = corso;
         this.docente = docente;
         this.data = data;
         this.fasciaOraria = fasciaOraria;
         this.attiva = attiva;
+        this.effettuata = effettuata;
     }
 
     public String getUtente() {
@@ -44,6 +43,8 @@ public class Prenotazione {
         return attiva;
     }
 
+    public boolean isEffettuata() { return effettuata; }
+
     @Override
     public String toString() {
         return "Prenotazione{" +
@@ -53,6 +54,7 @@ public class Prenotazione {
                 ", data='" + data + '\'' +
                 ", fasciaOraria='" + fasciaOraria + '\'' +
                 ", attiva=" + attiva +
+                ", effettuata=" + effettuata +
                 '}';
     }
 }

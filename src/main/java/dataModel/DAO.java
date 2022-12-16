@@ -678,7 +678,8 @@ public class DAO {
                         rs.getString("docente"),
                         rs.getString("data"),
                         rs.getString("fasciaOraria"),
-                        rs.getString("attiva").equals("1")));
+                        rs.getString("attiva").equals("1"),
+                        rs.getString("effettuata").equals("1")));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -712,7 +713,8 @@ public class DAO {
                         rs.getString("docente"),
                         rs.getString("data"),
                         rs.getString("fasciaOraria"),
-                        true));
+                        true,
+                        rs.getString("effettuata").equals("1")));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());
@@ -746,7 +748,8 @@ public class DAO {
                         rs.getString("docente"),
                         rs.getString("data"),
                         rs.getString("fasciaOraria"),
-                        rs.getString("attiva").equals("1")));
+                        rs.getString("attiva").equals("1"),
+                        rs.getString("effettuata").equals("1")));
             }
         } catch(SQLException e) {
             System.out.println(e.getMessage());

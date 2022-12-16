@@ -1,7 +1,6 @@
 export var appointmentCard = {
     props: {
         tutor: String,
-        email: String,
         course: String,
         day: String,
         timeSlot: String,
@@ -12,7 +11,6 @@ export var appointmentCard = {
             var self = this;
             return {
                 tutorData: self.tutor,
-                emailData: self.email,
                 courseData: self.course,
                 dayData: self.day,
                 timeSlotData: self.timeSlot,
@@ -24,12 +22,26 @@ export var appointmentCard = {
         deleteBooking: function() {
             var self = this;
             /* Chiamata HTTP che imposta prenotazione come attiva = 0 sul DB */
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
+                action: "rimuoviPrenotazione",
+                username: self.userData,
+                emailDocente: self.tutorData,
+                idCorso: self.courseData,
+                data: self.dayData,
+                fasciaOraria: self.timeSlotData
+            });
             self.activeData = !self.activeData;
             console.log("Cancellata prenotazione del: " + self.dayData);
         },
         completeBooking: function() {
             var self = this;
             /* Chiamata HTTP che imposta prenotazione come completata = 1 sul DB */
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
+               action: "impostaPrenotazioneEffettuata",
+               emailDocente: self.tutorData,
+               data: self.dayData,
+               fasciaOraria: self.timeSlotData
+            });
             self.completedData = !this.completedData;
             console.log("Completata prenotazione del: " + self.dayData);
         }
@@ -41,7 +53,6 @@ export var appointmentCard = {
                     <div class="user-info">
                         <div class="user-info__basic">
                             <h5 class="mb-0">{{tutorData}}</h5>
-                            <p class="text-muted mb-0">{{emailData}}</p>
                         </div>
                     </div>
                     <div class="dropdown open" v-if="activeData && !completedData">

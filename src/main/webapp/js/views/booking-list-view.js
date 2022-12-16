@@ -16,7 +16,7 @@ export var bookingListView = {
             var contatorePrenotazioni = self.listaPrenotazioni.length;
 
             self.listaPrenotazioni.forEach((prenotazione) => {
-                if(prenotazione.day.includes(formattedDate)) {
+                if(prenotazione.data.includes(formattedDate)) {
                     prenotazione.show = true;
                 } else {
                     prenotazione.show = false;
@@ -53,12 +53,13 @@ export var bookingListView = {
             <hr>
             <div class="row" style="margin-bottom: 7em">
                 <appointment-card v-for="prenotazione in listaPrenotazioni" 
-                :tutor="prenotazione.tutor"
-                :email="prenotazione.email"
-                :course="prenotazione.course"
-                :day="prenotazione.day"
-                :timeSlot="prenotazione.timeSlot"
-                active v-show="prenotazione.show"></appointment-card>
+                :user="prenotazione.utente" 
+                :tutor="prenotazione.docente"
+                :course="prenotazione.corso"
+                :day="prenotazione.data"
+                :timeSlot="prenotazione.fasciaOraria"
+                :active="prenotazione.attiva"
+                :completed="prenotazione.effettuata" v-show="prenotazione.show"></appointment-card>
             </div>
             <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione trovata.</h5>
             <button class="btn btn-primary shadow add-btn"><i class="fas fa-plus"></i></button>
@@ -67,69 +68,19 @@ export var bookingListView = {
     created: function() {
         var self = this;
 
-        self.listaPrenotazioni = [{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "23/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        }, {
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "24/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        }, {
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "25/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        },{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "26/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        },{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "27/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        },{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "27/01/2023",
-            timeSlot: "15:00 - 16:00",
-            show: true
-        },{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "28/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        },{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "29/01/2023",
-            timeSlot: "16:00 - 17:00",
-            show: true
-        },{
-            tutor: "Mehdi Amlal",
-            email: "mehdi@gmail.com",
-            course: "Informatica",
-            day: "26/01/2023",
-            timeSlot: "18:00 - 19:00",
-            show: true
-        }]
+        self.listaPrenotazioni = [];
+        $.get("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni",
+            {
+                action: "ottieniPrenotazioniUtente",
+                utente: "heymehdi" //prendiamo dai cookie o da sessione (app.js)
+            },
+            function(data) {
+                data.forEach(function(prenotazione) {
+                    var tmp = prenotazione;
+                    tmp["show"] = true;
+                    self.listaPrenotazioni.push(tmp);
+                    console.log(tmp);
+                });
+            });
     }
 }
