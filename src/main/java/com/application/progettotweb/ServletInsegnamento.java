@@ -74,18 +74,18 @@ public class ServletInsegnamento extends HttpServlet {
             tipoRichiesta = "";
         }
 
-        String docente, corso;
+        String corso, docente;
 
-        docente = req.getParameter("docente");
         corso = req.getParameter("corso");
+        docente = req.getParameter("docente");
 
         switch (tipoRichiesta) {
             case "aggiungiInsegnamento":
-                dataModel.aggiungiInsegnamento(docente, corso);
+                dataModel.aggiungiInsegnamento(corso, docente);
                 break;
 
             case "rimuoviInsegnamenti":
-                dataModel.rimuoviInsegnamenti(docente, corso);
+                dataModel.rimuoviInsegnamenti(corso, docente);
                 break;
 
             default:
