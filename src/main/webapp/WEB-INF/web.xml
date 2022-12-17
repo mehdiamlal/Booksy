@@ -8,6 +8,11 @@
         <param-name>DB-URL</param-name>
         <param-value>jdbc:mysql://localhost:8889/test?useSSL=false</param-value>
     </context-param>
+    <!-- Per XAMPP (Windows) -->
+    <!--<context-param>
+        <param-name>DB-URL</param-name>
+        <param-value>jdbc:mysql://localhost:3306/prenotazioni?useSSL=false</param-value>
+    </context-param>-->
     <context-param>
         <param-name>user</param-name>
         <param-value>root</param-value>
