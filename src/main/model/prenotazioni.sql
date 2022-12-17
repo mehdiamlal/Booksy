@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 17, 2022 alle 13:48
+-- Creato il: Dic 17, 2022 alle 17:50
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -111,7 +111,7 @@ CREATE TABLE `prenotazione` (
 INSERT INTO `prenotazione` (`utente`, `corso`, `docente`, `data`, `fasciaOraria`, `attiva`, `effettuata`, `dataCancellazione`) VALUES
 ('heymehdi', 'Fisica', 'antonello@yahoo.com', '17/12/2022', '15.00 - 16.00', 1, 0, 'none'),
 ('heymehdi', 'Musica', 'antonello@yahoo.com', '22/12/2022', '18.00 - 19.00', 0, 0, '15/11/2022'),
-('fplfrancesco', 'Informatica', 'ciruzz79@libero.it', '', '16.00 - 17.00', 1, 0, 'none'),
+('fplfrancesco', 'Informatica', 'ciruzz79@libero.it', '09/01/2023', '16.00 - 17.00', 1, 0, 'none'),
 ('ilConoscitore', 'Matematica', 'marco@gmail.com', '16/01/2023', '18.00 - 19.00', 1, 0, 'none');
 
 -- --------------------------------------------------------
@@ -122,7 +122,7 @@ INSERT INTO `prenotazione` (`utente`, `corso`, `docente`, `data`, `fasciaOraria`
 
 CREATE TABLE `utente` (
   `username` varchar(30) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` char(64) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `cognome` varchar(50) NOT NULL,
   `ruolo` enum('studente','ospite','amministratore') NOT NULL,
@@ -136,10 +136,10 @@ CREATE TABLE `utente` (
 --
 
 INSERT INTO `utente` (`username`, `password`, `nome`, `cognome`, `ruolo`, `attivo`, `dataCreazione`, `dataCancellazione`) VALUES
-('fplfrancesco', 'password', 'Francesco', 'Francis', 'studente', 1, '17/12/2022', 'none'),
-('heymehdi', '12345', 'Mehdi', 'Amlal', 'studente', 1, '19/10/2022', 'none'),
-('ilConoscitore', 'mircella', 'Mauro', 'Chiesa', 'studente', 1, '19/10/2022', 'none'),
-('root', 'root', 'Michele', 'Sciacarri', 'amministratore', 1, '27/10/2022', 'none');
+('fplfrancesco', '5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8', 'Francesco', 'Francis', 'studente', 1, '17/12/2022', 'none'),
+('heymehdi', '5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5', 'Mehdi', 'Amlal', 'studente', 1, '17/12/2022', 'none'),
+('ilConoscitore', '95BF20C96D834A2A13C14E753A51494827CF607F24D14E82FE6D224A57A42AD8', 'Mauro', 'Chiesa', 'studente', 1, '17/12/2022', 'none'),
+('root', '4813494D137E1631BBA301D5ACAB6E7BB7AA74CE1185D456565EF51D737677B2', 'Michele', 'Sciacarri', 'amministratore', 1, '17/12/2022', 'none');
 
 --
 -- Indici per le tabelle scaricate
