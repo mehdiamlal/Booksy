@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,10 +42,23 @@ public class ServletDocente extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         resp.addHeader("Access-Control-Allow-Origin", "*");
-
+        HttpSession session = req.getSession(false);
+        if(session == null) {
+            //sessione scaduta o inesistente
+            PrintWriter out = resp.getWriter();
+            Gson gson = new Gson();
+            String risposta = gson.toJson("no_session");
+            out.print(risposta);
+            return;
+        }
         String tipoRichiesta = req.getParameter("action");
         if(tipoRichiesta == null) {
             tipoRichiesta = "";
+        }
+
+        if(!(req.getParameter("ruolo").equals("amministratore")) && !(req.getParameter("ruolo").equals("studente"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
+            return;
         }
 
         ArrayList<Docente> elencoDocenti = new ArrayList<>();
@@ -91,13 +105,26 @@ public class ServletDocente extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         resp.addHeader("Access-Control-Allow-Origin", "*");
+        HttpSession session = req.getSession(false);
+        if(session == null) {
+            //sessione scaduta o inesistente
+            PrintWriter out = resp.getWriter();
+            Gson gson = new Gson();
+            String risposta = gson.toJson("no_session");
+            out.print(risposta);
+            return;
+        }
         String tipoRichiesta = req.getParameter("action");
-
         String email, nome, cognome;
 
         email = req.getParameter("email");
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
+
+        if(!(req.getParameter("ruolo").equals("amministratore"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
+            return;
+        }
 
         boolean richiestaNonValida = tipoRichiesta == null || !controllaMail(email);
         if(richiestaNonValida) {

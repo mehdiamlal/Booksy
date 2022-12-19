@@ -12,7 +12,7 @@ export var loginForm = {
         login_event: function() {
             var self = this;
             if(self.valid_input()) {
-                $.get("http://localhost:8080/progetto_TWeb_war_exploded/autentica", {
+                $.post("http://localhost:8080/progetto_TWeb_war_exploded/autentica", {
                     action: "autenticaUtente",
                     username: self.username,
                     password: self.password
@@ -22,7 +22,6 @@ export var loginForm = {
                     } else {
                         self.userNotFound = false;
                         localStorage.setItem("username", self.username);
-                        localStorage.setItem("password", self.password);
                         localStorage.setItem("role", data["ruolo"]);
                     }
                 });
