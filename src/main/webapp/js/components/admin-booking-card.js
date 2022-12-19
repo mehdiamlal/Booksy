@@ -31,6 +31,11 @@ export var adminBookingCard = {
                 idCorso: self.courseData,
                 data: self.dayData,
                 fasciaOraria: self.timeSlotData
+            }, function(data) {
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                }
             });
             self.activeData = !self.activeData;
             console.log("Cancellata prenotazione del: " + self.dayData);

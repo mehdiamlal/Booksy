@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,10 +41,24 @@ public class ServletCorso extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         resp.addHeader("Access-Control-Allow-Origin", "*");
-
+        HttpSession session = req.getSession(false);
+        if(session == null) {
+            //sessione scaduta o inesistente
+            PrintWriter out = resp.getWriter();
+            Gson gson = new Gson();
+            String risposta = gson.toJson("no_session");
+            out.print(risposta);
+            return;
+        }
+        System.out.println(session.getAttribute("ruolo"));
         String tipoRichiesta = req.getParameter("action");
         if(tipoRichiesta == null) {
             tipoRichiesta = "";
+        }
+
+        if(!(session.getAttribute("ruolo").equals("amministratore")) && !(session.getAttribute("ruolo").equals("studente"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
+            return;
         }
 
         ArrayList<Corso> elencoCorsi;
@@ -53,6 +68,10 @@ public class ServletCorso extends HttpServlet {
                 elencoCorsi = new ArrayList<>(dataModel.ottieniCorsiAttivi());
                 break;
             case "ottieniCorsi":
+                if(!(session.getAttribute("ruolo").equals("amministratore"))) {
+                    resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
+                    return;
+                }
                 elencoCorsi = new ArrayList<>(dataModel.ottieniCorsi());
                 break;
 
@@ -74,12 +93,27 @@ public class ServletCorso extends HttpServlet {
     * */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+        HttpSession session = req.getSession(false);
+        if(session == null) {
+            //sessione scaduta o inesistente
+            PrintWriter out = resp.getWriter();
+            Gson gson = new Gson();
+            String risposta = gson.toJson("no_session");
+            out.print(risposta);
+            return;
+        }
         String tipoRichiesta = req.getParameter("action");
         if(tipoRichiesta == null) {
             tipoRichiesta = "";
         }
 
         String corso = req.getParameter("corso");
+        if(!(session.getAttribute("ruolo").equals("amministratore"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
+            return;
+        }
 
         switch(tipoRichiesta) {
             case "aggiungiCorso":

@@ -11,5 +11,12 @@ export var loginView = {
             </div>
             <div class="col"></div>
         </div>
-    `
+    `,
+    mounted() {
+        if(localStorage.getItem("role") === "studente") {
+            this.$router.push("/home");
+        } else if(localStorage.getItem("role") === "amministratore") {
+            this.$router.push("/admin");
+        }
+    }
 };

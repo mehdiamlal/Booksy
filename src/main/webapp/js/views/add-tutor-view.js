@@ -13,16 +13,24 @@ export var addTutorView = {
     `,
     created() {
         var self = this;
+        if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
+            self.$router.push("/");
+        }
         //chiamata http per ottenere i docenti attivi
         self.listaDocenti = [];
         var tmp;
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti",{
             action: "ottieniDocenti"
         }, function(data) {
-            data.forEach(function(docente) {
-                tmp = docente.email;
-                self.listaDocenti.push(tmp);
-            });
+            if(data === "no_session") {
+                localStorage.clear();
+                self.$router.push("/login");
+            } else {
+                data.forEach(function(docente) {
+                    tmp = docente.email;
+                    self.listaDocenti.push(tmp);
+                });
+            }
         });
         console.log(self.listaDocenti);
     }

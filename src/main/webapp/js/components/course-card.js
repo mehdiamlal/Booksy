@@ -51,13 +51,18 @@ export var courseCard = {
                 corso: self.title
             },
             function(data) {
-                data.forEach(function(docente) {
-                    self.listaDocenti.push({
-                        nome: docente.nome,
-                        cognome: docente.cognome,
-                        email: docente.email
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                } else {
+                    data.forEach(function (docente) {
+                        self.listaDocenti.push({
+                            nome: docente.nome,
+                            cognome: docente.cognome,
+                            email: docente.email
+                        });
                     });
-                });
+                }
             });
     }
 }

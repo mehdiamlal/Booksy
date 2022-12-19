@@ -106,7 +106,6 @@ public class DAO {
             st.setString(4, cognome);
             st.setString(5, ruolo);
             st.setString(6, getDate());
-
             st.executeUpdate();
 
             System.out.println("Utente aggiunto con successo.");
@@ -224,7 +223,7 @@ public class DAO {
             conn = DriverManager.getConnection(url, user, pw);
             System.out.println("Connesso al database locale.");
 
-            String sql = "UPDATE corso SET attiva = ? WHERE nome = ? AND attiva = ?";
+            String sql = "UPDATE corso SET attivo = ? WHERE nome = ? AND attivo = ?";
 
             /* Provo ad eseguire la query sui corsi con nome "nome" inattivi */
             String setActive, whereActive;
@@ -325,12 +324,13 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "INSERT INTO docente (email, nome, cognome) VALUES (?,?,?)";
+            String sql = "INSERT INTO docente (email, nome, cognome, dataCreazione) VALUES (?,?,?,?)";
 
             st = conn.prepareStatement(sql);
             st.setString(1, email.toLowerCase());
             st.setString(2, nome);
             st.setString(3, cognome);
+            st.setString(4, getDate());
 
             st.executeUpdate();
 

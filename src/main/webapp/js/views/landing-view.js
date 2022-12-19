@@ -21,5 +21,15 @@ export var landingView = {
             </div>
             
         </div>
-    `
+    `,
+    mounted() {
+        var self = this;
+        if(localStorage.getItem("role") !== null) {
+            if(localStorage.getItem("role") === "amministratore") {
+                self.$router.push("/admin");
+            } else if(localStorage.getItem("role") === "studente") {
+                self.$router.push("/home");
+            }
+        }
+    }
 };

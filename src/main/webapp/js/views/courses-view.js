@@ -32,15 +32,23 @@ export var coursesView = {
     `,
     created: function() {
         var self = this;
+        if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
+            self.$router.push("/");
+        }
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
             {action: "ottieniCorsiAttivi"},
             function(data) {
-                data.forEach(function(c) {
-                    self.listaCorsi.push({
-                        nome: c.nome,
-                        show: true
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                } else {
+                    data.forEach(function (c) {
+                        self.listaCorsi.push({
+                            nome: c.nome,
+                            show: true
+                        });
                     });
-                });
+                }
             });
     }
 };

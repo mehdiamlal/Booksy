@@ -29,6 +29,11 @@ export var appointmentCard = {
                 idCorso: self.courseData,
                 data: self.dayData,
                 fasciaOraria: self.timeSlotData
+            }, function(data) {
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                }
             });
             self.activeData = !self.activeData;
             console.log("Cancellata prenotazione del: " + self.dayData);
@@ -41,6 +46,11 @@ export var appointmentCard = {
                emailDocente: self.tutorData,
                data: self.dayData,
                fasciaOraria: self.timeSlotData
+            }, function(data) {
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                }
             });
             self.completedData = !this.completedData;
             console.log("Completata prenotazione del: " + self.dayData);

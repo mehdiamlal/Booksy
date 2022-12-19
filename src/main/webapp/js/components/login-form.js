@@ -4,17 +4,42 @@ export var loginForm = {
             username: "",
             usernameMissing: false,
             password: "",
-            passwordMissing: false
+            passwordMissing: false,
+            userNotFound: false
         }
     },
     methods: {
         login_event: function() {
             var self = this;
             if(self.valid_input()) {
-                this.$emit("login-event", {
+                $.post("http://localhost:8080/progetto_TWeb_war_exploded/autentica", {
+                    action: "autenticaUtente",
                     username: self.username,
                     password: self.password
+                }, function(data) {
+                    if(data === null) {
+                        self.userNotFound = true;
+                    } else {
+                        self.userNotFound = false;
+                        localStorage.setItem("username", self.username);
+                        localStorage.setItem("name", data["nome"]);
+                        localStorage.setItem("role", data["ruolo"]);
+                        if(localStorage.getItem("role") === "amministratore") {
+                            self.$router.push("/admin");
+                        } else if(localStorage.getItem("role") === "studente") {
+                            self.$router.push("/home");
+                        }
+                    }
                 });
+
+                if(localStorage.getItem("role") === "studente") {
+                    this.$router.push("/home");
+                    console.log("going home");
+                } else if(localStorage.getItem("role") === "amministratore") {
+                    this.$router.push("/admin");
+                    console.log("going to admin");
+                }
+
             }
         },
         valid_input: function() {
@@ -72,12 +97,16 @@ export var loginForm = {
                                         <input v-model="password" type="password" id="password" name="password" class="form-control is-invalid"/>
                                         <div id="invalidUsernameFeedback" class="invalid-feedback">Il campo password non può essere vuoto.</div>
                                     </div>
+                                    
+                                    <div v-if="userNotFound" class="text-secondary text-danger text-center">
+                                        <p></p>
+                                        Spiacenti, il tuo username o password non sono corretti. Ricontrollali.
+                                        <p></p>
+                                    </div>
                                 
                                     <!-- Submit button -->
                                     <div class="text-center">
-                                        <router-link to="/home">
-                                            <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Accedi</button>
-                                        </router-link>  
+                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Accedi</button> 
                                         <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <router-link to="/register" style="color: #5E17EB">Registrati</router-link></p>
                                     </div>
                             </div>
