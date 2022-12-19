@@ -856,4 +856,10 @@ public class DAO {
 
         return ris;
     }
+
+    public HashMap<String, ArrayList<String>> ottieniSlotDisponibiliDocente(String emailDocente, String dataInizio, String dataFine) {
+        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(dataInizio, dataFine);
+
+        return slotDisponibili.get(emailDocente);
+    }
 }
