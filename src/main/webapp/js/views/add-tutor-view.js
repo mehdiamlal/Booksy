@@ -20,7 +20,7 @@ export var addTutorView = {
         self.listaDocenti = [];
         var tmp;
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti",{
-            action: "ottieniElencoDocenti"
+            action: "ottieniDocenti"
         }, function(data) {
             if(data === "no_session") {
                 localStorage.clear();

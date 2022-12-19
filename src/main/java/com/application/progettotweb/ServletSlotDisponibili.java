@@ -56,14 +56,26 @@ public class ServletSlotDisponibili extends HttpServlet {
         }
 
         HashMap<String, HashMap<String, ArrayList<String>>> slotDisponbili = new HashMap<>();
-        String dataInizio, dataFine;
+        String dataInizio, dataFine, emailDocente;
 
         dataInizio = req.getParameter("dataInizio");
         dataFine = req.getParameter("dataFine");
+        emailDocente = req.getParameter("docente");
+
+        Gson gson = new Gson();
+        String risposta = "";
 
         switch (tipoRichiesta) {
             case "ottieniSlotDisponibili":
+                HashMap<String, HashMap<String, ArrayList<String>>> slotDisponbili = new HashMap<>();
                 slotDisponbili.putAll(dataModel.ottieniSlotDisponibili(dataInizio, dataFine));
+                risposta = gson.toJson(slotDisponbili);
+                break;
+
+            case "ottieniSlotDisponibiliDocente":
+                HashMap<String, ArrayList<String>> slotDisponibiliDocente = new HashMap<>();
+                slotDisponibiliDocente.putAll(dataModel.ottieniSlotDisponibiliDocente(emailDocente, dataInizio, dataFine));
+                risposta = gson.toJson(slotDisponibiliDocente);
                 break;
 
             default:
@@ -72,9 +84,6 @@ public class ServletSlotDisponibili extends HttpServlet {
         }
 
         PrintWriter writer = resp.getWriter();
-        Gson gson = new Gson();
-
-        String risposta = gson.toJson(slotDisponbili);
         writer.print(risposta);
     }
 }
