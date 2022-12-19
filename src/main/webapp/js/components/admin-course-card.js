@@ -41,13 +41,18 @@ export var adminCourseCard = {
                     corso: self.title
                 },
                 function(data) {
-                    data.forEach(function(docente) {
-                        self.listaDocentiDaAggiungere.push({
-                            nome: docente.nome,
-                            cognome: docente.cognome,
-                            email: docente.email
+                    if(data === "no_session") {
+                        localStorage.clear();
+                        self.$router.push("/login");
+                    } else {
+                        data.forEach(function (docente) {
+                            self.listaDocentiDaAggiungere.push({
+                                nome: docente.nome,
+                                cognome: docente.cognome,
+                                email: docente.email
+                            });
                         });
-                    });
+                    }
                 });
 
         },
@@ -59,6 +64,11 @@ export var adminCourseCard = {
                     action: "aggiungiInsegnamento",
                     docente: self.docenteDaAggiungere.email,
                     corso: self.title
+                }, function(data) {
+                    if(data === "no_session") {
+                        localStorage.clear();
+                        self.$router.push("/login");
+                    }
                 });
             self.listaDocenti.push(self.docenteDaAggiungere);
             self.listaDocentiDaAggiungere = self.listaDocentiDaAggiungere.filter(function(docente){
@@ -73,6 +83,11 @@ export var adminCourseCard = {
                 {
                     action: "cambiaStatoCorso",
                     corso: self.title
+                }, function(data) {
+                    if(data === "no_session") {
+                        localStorage.clear();
+                        self.$router.push("/login");
+                    }
                 });
             self.activeData = false;
         },
@@ -83,6 +98,13 @@ export var adminCourseCard = {
                 {
                     action: "cambiaStatoCorso",
                     corso: self.title
+                }, function(data) {
+                    if(data === "no_session") {
+                        localStorage.clear();
+                        self.$router.push("/login");
+                        console.log("fo");
+                    }
+                    console.log("fi");
                 });
             self.activeData = true;
         },
@@ -96,6 +118,11 @@ export var adminCourseCard = {
                     action: "rimuoviInsegnamenti",
                     docente: self.docenteDaRimuovere.email,
                     corso: self.title
+                }, function(data) {
+                    if(data === "no_session") {
+                        localStorage.clear();
+                        self.$router.push("/login");
+                    }
                 });
             self.listaDocentiDaAggiungere.push(self.docenteDaRimuovere);
             self.listaDocenti = self.listaDocenti.filter(function(docente){
@@ -200,13 +227,18 @@ export var adminCourseCard = {
                 corso: self.title
             },
             function(data) {
-                data.forEach(function(docente) {
-                    self.listaDocenti.push({
-                        nome: docente.nome,
-                        cognome: docente.cognome,
-                        email: docente.email
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                } else {
+                    data.forEach(function (docente) {
+                        self.listaDocenti.push({
+                            nome: docente.nome,
+                            cognome: docente.cognome,
+                            email: docente.email
+                        });
                     });
-                });
+                }
             });
     }
 }

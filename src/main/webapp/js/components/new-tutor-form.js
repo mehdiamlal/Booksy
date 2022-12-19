@@ -29,6 +29,11 @@ export var newTutorForm = {
                         nome: self.nome,
                         cognome: self.cognome,
                         email: self.email
+                    }, function(data) {
+                        if(data === "no_session") {
+                            localStorage.clear();
+                            self.$router.push("/login");
+                        }
                     });
                 self.addedSuccess = true;
                 self.docenteExists = false;

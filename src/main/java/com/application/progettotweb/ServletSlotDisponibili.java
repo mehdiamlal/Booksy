@@ -50,7 +50,7 @@ public class ServletSlotDisponibili extends HttpServlet {
             tipoRichiesta = "";
         }
 
-        if(!(req.getParameter("ruolo").equals("amministratore")) && !(req.getParameter("ruolo").equals("studente"))) {
+        if(!(session.getAttribute("ruolo").equals("amministratore")) && !(session.getAttribute("ruolo").equals("studente"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
             return;
         }

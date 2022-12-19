@@ -66,18 +66,26 @@ export var adminBookingListView = {
     `,
     created: function() {
         var self = this;
+        if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
+            self.$router.push("/");
+        }
         self.listaPrenotazioni = [];
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni",
             {
                 action: "ottieniTuttePrenotazioni"
             },
             function(data) {
-                data.forEach(function(prenotazione) {
-                    var tmp = prenotazione;
-                    tmp["show"] = true;
-                    self.listaPrenotazioni.push(tmp);
-                    console.log(tmp);
-                });
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                } else {
+                    data.forEach(function (prenotazione) {
+                        var tmp = prenotazione;
+                        tmp["show"] = true;
+                        self.listaPrenotazioni.push(tmp);
+                        console.log(tmp);
+                    });
+                }
             });
     }
 }

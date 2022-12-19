@@ -66,6 +66,11 @@ export var bookingForm = {
                     emailDocente: self.selectedDocente.email,
                     data: self.formattedData,
                     fasciaOraria: self.selectedFascia
+                }, function(data) {
+                    if(data === "no_session") {
+                        localStorage.clear();
+                        self.$router.push("/login");
+                    }
                 });
                 self.addedSuccess = true;
                 self.selectedCorso = "";
@@ -146,9 +151,14 @@ export var bookingForm = {
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/corsi", {
             action: "ottieniCorsiAttivi"
         }, function(data) {
-            data.forEach(function(corso) {
-                self.listaCorsi.push(corso.nome);
-            });
+            if(data === "no_session") {
+                localStorage.clear();
+                self.$router.push("/login");
+            } else {
+                data.forEach(function (corso) {
+                    self.listaCorsi.push(corso.nome);
+                });
+            }
         });
         console.log(self.listaCorsi);
     }

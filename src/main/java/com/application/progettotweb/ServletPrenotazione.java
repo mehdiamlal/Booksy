@@ -56,7 +56,7 @@ public class ServletPrenotazione extends HttpServlet {
             tipoRichiesta = "";
         }
 
-        if(!(req.getParameter("ruolo").equals("amministratore")) && !(req.getParameter("ruolo").equals("studente"))) {
+        if(!(session.getAttribute("ruolo").equals("amministratore")) && !(session.getAttribute("ruolo").equals("studente"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
             return;
         }
@@ -66,7 +66,7 @@ public class ServletPrenotazione extends HttpServlet {
 
         switch(tipoRichiesta) {
             case "ottieniPrenotazioniAttive":
-                if(!(req.getParameter("ruolo").equals("amministratore"))) {
+                if(!(session.getAttribute("ruolo").equals("amministratore"))) {
                     resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
                     return;
                 }
@@ -74,7 +74,7 @@ public class ServletPrenotazione extends HttpServlet {
                 break;
 
             case "ottieniTuttePrenotazioni":
-                if(!(req.getParameter("ruolo").equals("amministratore"))) {
+                if(!(session.getAttribute("ruolo").equals("amministratore"))) {
                     resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
                     return;
                 }
@@ -124,7 +124,7 @@ public class ServletPrenotazione extends HttpServlet {
             tipoRichiesta = "";
         }
 
-        if(!(req.getParameter("ruolo").equals("amministratore")) && !(req.getParameter("ruolo").equals("studente"))) {
+        if(!(session.getAttribute("ruolo").equals("amministratore")) && !(session.getAttribute("ruolo").equals("studente"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
             return;
         }
@@ -139,7 +139,7 @@ public class ServletPrenotazione extends HttpServlet {
 
         switch(tipoRichiesta) {
             case "aggiungiPrenotazione":
-                if(!(req.getParameter("ruolo").equals("studente"))) {
+                if(!(session.getAttribute("ruolo").equals("studente"))) {
                     resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
                     return;
                 }
@@ -147,7 +147,7 @@ public class ServletPrenotazione extends HttpServlet {
                 break;
 
             case "impostaPrenotazioneEffettuata":
-                if(!(req.getParameter("ruolo").equals("studente"))) {
+                if(!(session.getAttribute("ruolo").equals("studente"))) {
                     resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
                     return;
                 }

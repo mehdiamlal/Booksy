@@ -5,6 +5,10 @@ export var navbar = {
     },
     methods: {
         logout() {
+            var self = this;
+            $.post("http://localhost:8080/progetto_TWeb_war_exploded/autentica", {
+                action: "scollegaUtente"
+            });
             localStorage.clear();
             this.$router.push("/");
         }
@@ -49,7 +53,7 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/" class="nav-link">Logout</router-link>
+                            <a href="#" @click="logout" class="nav-link">Logout</a>
                         </div>
                     </li>
                 </ul>
@@ -76,7 +80,7 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <a href="#" class="nav-link" @click="logout">Logout</a>
+                            <a href="#" @click="logout" class="nav-link">Logout</a>
                         </div>
                     </li>
                 </ul>

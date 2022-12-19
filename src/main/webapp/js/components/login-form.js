@@ -22,7 +22,13 @@ export var loginForm = {
                     } else {
                         self.userNotFound = false;
                         localStorage.setItem("username", self.username);
+                        localStorage.setItem("name", data["nome"]);
                         localStorage.setItem("role", data["ruolo"]);
+                        if(localStorage.getItem("role") === "amministratore") {
+                            self.$router.push("/admin");
+                        } else if(localStorage.getItem("role") === "studente") {
+                            self.$router.push("/home");
+                        }
                     }
                 });
 

@@ -56,7 +56,7 @@ public class ServletDocente extends HttpServlet {
             tipoRichiesta = "";
         }
 
-        if(!(req.getParameter("ruolo").equals("amministratore")) && !(req.getParameter("ruolo").equals("studente"))) {
+        if(!(session.getAttribute("ruolo").equals("amministratore")) && !(session.getAttribute("ruolo").equals("studente"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
             return;
         }
@@ -121,7 +121,7 @@ public class ServletDocente extends HttpServlet {
         nome = req.getParameter("nome");
         cognome = req.getParameter("cognome");
 
-        if(!(req.getParameter("ruolo").equals("amministratore"))) {
+        if(!(session.getAttribute("ruolo").equals("amministratore"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
             return;
         }

@@ -34,6 +34,11 @@ export var adminCoursesView = {
                     {
                         action: "aggiungiCorso",
                         corso: self.newCourse
+                    }, function(data) {
+                        if(data === "no_session") {
+                            localStorage.clear();
+                            self.$router.push("/login");
+                        }
                     });
 
                 self.listaCorsi.push({
@@ -105,18 +110,24 @@ export var adminCoursesView = {
     `,
     created: function() {
         var self = this;
-
-        var self = this;
+        if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
+            self.$router.push("/");
+        }
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/corsi",
             {action: "ottieniCorsi"},
             function(data) {
-                data.forEach(function(c) {
-                    self.listaCorsi.push({
-                        nome: c.nome,
-                        attivo: c.attivo,
-                        show: true
+                if(data === "no_session") {
+                    localStorage.clear();
+                    self.$router.push("/login");
+                } else {
+                    data.forEach(function (c) {
+                        self.listaCorsi.push({
+                            nome: c.nome,
+                            attivo: c.attivo,
+                            show: true
+                        });
                     });
-                });
+                }
             });
     }
 }

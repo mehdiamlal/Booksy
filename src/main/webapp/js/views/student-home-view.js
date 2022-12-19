@@ -1,13 +1,14 @@
 export var studentHomeView = {
     data: function() {
         return {
-            prenotImminenti: []
+            prenotImminenti: [],
+            nomeStudente: localStorage.getItem("name")
         }
     },
     template: `
         <navbar logged></navbar>
         <div class="container">
-            <h1 class="text-center">Benvenuto, Mehdi. &#128075;</h1>
+            <h1 class="text-center">Benvenuto, {{nomeStudente}}. &#128075;</h1>
             <hr>
             <h3 class="text-center" style="margin: 1em">Le tue prenotazioni più imminenti</h3>
             <div class="row">
@@ -45,16 +46,24 @@ export var studentHomeView = {
     `,
     created() {
         var self = this;
+        if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
+            self.$router.push("/");
+        }
         self.prenotImminenti = [];
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
             action: "ottieniPrenotazioniUtenteImminenti",
             utente: "heymehdi"
         }, function(data) {
-            data.forEach(function(prenotazione) {
-                var tmp = prenotazione;
-                self.prenotImminenti.push(tmp);
-                console.log(tmp);
-            });
+            if(data === "no_session") {
+                localStorage.clear();
+                self.$router.push("/login");
+            } else {
+                data.forEach(function(prenotazione) {
+                    var tmp = prenotazione;
+                    self.prenotImminenti.push(tmp);
+                    console.log(tmp);
+                });
+            }
         });
     }
 }
