@@ -69,6 +69,8 @@ public class ServletInsegnamento extends HttpServlet {
     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         String tipoRichiesta = req.getParameter("action");
         if(tipoRichiesta == null) {
             tipoRichiesta = "";

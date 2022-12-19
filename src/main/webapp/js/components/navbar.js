@@ -3,6 +3,12 @@ export var navbar = {
         logged: Boolean,
         admin: Boolean
     },
+    methods: {
+        logout() {
+            localStorage.clear();
+            this.$router.push("/");
+        }
+    },
     template: `
         <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #fff;">
             <div class="container">
@@ -70,7 +76,7 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/" class="nav-link">Logout</router-link>
+                            <a href="#" class="nav-link" @click="logout">Logout</a>
                         </div>
                     </li>
                 </ul>

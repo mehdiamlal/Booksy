@@ -32,45 +32,9 @@ public class ServletAutenticazione extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         resp.addHeader("Access-Control-Allow-Origin", "*");
-
-        String tipoRichiesta = req.getParameter("action");
-        if(tipoRichiesta == null) {
-            tipoRichiesta = "";
-        }
-
-        String username, password;
-        username = req.getParameter("username");
-        password = req.getParameter("password");
-
-        Utente daAutenticare;
-
-        switch(tipoRichiesta) {
-            case "autenticaUtente":
-                daAutenticare = dataModel.autenticaUtente(username, password);
-                if(daAutenticare != null) {
-                    HttpSession session = req.getSession();
-                    session.setAttribute("username", daAutenticare.getUsername());
-                    session.setAttribute("ruolo", daAutenticare.getRuolo());
-                }
-                break;
-
-            default:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo di operazione non valida. Riprovare.");
-                return;
-        }
-
-        Gson gson = new Gson();
-        String risposta = gson.toJson(daAutenticare);
-
-        PrintWriter out = resp.getWriter();
-        out.print(risposta);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String tipoRichiesta = req.getParameter("action");
         if(tipoRichiesta == null) {
             tipoRichiesta = "";
@@ -83,7 +47,24 @@ public class ServletAutenticazione extends HttpServlet {
         cognome = req.getParameter("cognome");
         ruolo = req.getParameter("ruolo");
 
+        Utente daAutenticare;
+
         switch(tipoRichiesta) {
+            case "autenticaUtente":
+                daAutenticare = dataModel.autenticaUtente(username, password);
+                if(daAutenticare != null) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("username", daAutenticare.getUsername());
+                    session.setAttribute("ruolo", daAutenticare.getRuolo());
+                }
+
+                Gson gson = new Gson();
+                String risposta = gson.toJson(daAutenticare);
+
+                PrintWriter out = resp.getWriter();
+                out.print(risposta);
+                break;
+
             case "aggiungiUtente":
                 dataModel.aggiungiUtente(username, password, nome, cognome, ruolo);
                 break;

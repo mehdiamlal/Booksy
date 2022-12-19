@@ -40,16 +40,16 @@ app.component("admin-booking-list-view", adminBookingListView);
 
 
 const routes = [
-    {path: "/", component: landingView},
-    {path: "/login", component: loginView},
-    {path: "/home", component: studentHomeView},
-    {path: "/courses", component: coursesView},
-    {path: "/bookings", component: bookingListView},
-    {path: "/book", component: bookingView},
-    {path: "/admin", component: adminHomeView},
-    {path: "/admin_courses", component: adminCoursesView},
-    {path: "/admin_bookings", component: adminBookingListView},
-    {path: "/add_tutor", component: addTutorView}
+    {path: "/", name: "Landing", component: landingView},
+    {path: "/login", name: "Login", component: loginView},
+    {path: "/home", name: "Home", component: studentHomeView},
+    {path: "/courses", name: "Courses", component: coursesView},
+    {path: "/bookings", name: "Bookings", component: bookingListView},
+    {path: "/book", name: "Book", component: bookingView},
+    {path: "/admin", name: "Admin", component: adminHomeView},
+    {path: "/admin_courses", name: "Admin-Courses", component: adminCoursesView},
+    {path: "/admin_bookings", name: "Admin-Bookings", component: adminBookingListView},
+    {path: "/add_tutor", name: "Add-Tutor", component: addTutorView}
 ]
 
 const router = VueRouter.createRouter({
