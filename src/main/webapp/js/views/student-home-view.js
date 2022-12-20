@@ -30,8 +30,11 @@ export var studentHomeView = {
                     <router-link to="/book">
                         <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Prenota una ripetizione</button>
                     </router-link>
+                    <router-link to="/active_bookings">
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Le tue prenotazioni attive</button>
+                    </router-link>
                     <router-link to="/bookings">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Le tue prenotazioni</button>
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Storico prenotazioni</button>
                     </router-link>
                     <router-link to="/courses">
                         <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Lista corsi</button>

@@ -9,15 +9,15 @@ export var adminCourseCard = {
             listaDocentiDaAggiungere: [],
             docenteDaAggiungere: {},
             docenteDaRimuovere: {},
-            modalIDHash1: "#" + this.title + "1",
-            modalID1: this.title + "1",
-            modalLabel1: this.title + "Label",
-            modalIDHash2: "#" + this.title + "2",
-            modalID2: this.title + "2",
-            modalLabel2: this.title + "Label2",
-            modalIDHash3: "#" + this.title + "3",
-            modalID3: this.title + "3",
-            modalLabel3: this.title + "Label3",
+            modalIDHash1: "#" + this.title.replace(/\s/g,'') + "1",
+            modalID1: this.title.replace(/\s/g,'') + "1",
+            modalLabel1: this.title.replace(/\s/g,'') + "Label",
+            modalIDHash2: "#" + this.title.replace(/\s/g,'') + "2",
+            modalID2: this.title.replace(/\s/g,'') + "2",
+            modalLabel2: this.title.replace(/\s/g,'') + "Label2",
+            modalIDHash3: "#" + this.title.replace(/\s/g,'') + "3",
+            modalID3: this.title.replace(/\s/g,'') + "3",
+            modalLabel3: this.title.replace(/\s/g,'') + "Label3",
             activeData: this.active,
             addedSuccess: false,
             removedSuccess: false
@@ -102,9 +102,7 @@ export var adminCourseCard = {
                     if(data === "no_session") {
                         localStorage.clear();
                         self.$router.push("/login");
-                        console.log("fo");
                     }
-                    console.log("fi");
                 });
             self.activeData = true;
         },

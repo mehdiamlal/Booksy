@@ -5,8 +5,8 @@ export var courseCard = {
     data: function() {
         return {
             listaDocenti: [],
-            modalID: "#" + this.title,
-            modalLabel: this.title + "Label"
+            modalID: "#" + this.title.replace(/\s/g,''),
+            modalLabel: this.title.replace(/\s/g,'') + "Label"
         }
     },
     template: `
@@ -19,7 +19,7 @@ export var courseCard = {
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" :id="title" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" :aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal fade" :id="title.replace(/\\s/g,'')" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" :aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">

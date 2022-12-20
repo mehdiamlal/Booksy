@@ -62,7 +62,7 @@ public class ServletPrenotazione extends HttpServlet {
         }
 
         ArrayList<Prenotazione> elencoPrenotazioni = new ArrayList<>();
-        String filtro = req.getParameter("utente");
+        String filtro = (String) session.getAttribute("username");
 
         switch(tipoRichiesta) {
             case "ottieniPrenotazioniAttive":
@@ -81,8 +81,12 @@ public class ServletPrenotazione extends HttpServlet {
                 elencoPrenotazioni.addAll(dataModel.ottieniTuttePrenotazioni());
                 break;
 
-            case "ottieniPrenotazioniUtente":
-                elencoPrenotazioni.addAll(dataModel.ottieniPrenotazioniUtente(filtro));
+            case "ottieniStoricoPrenotazioniUtente":
+                elencoPrenotazioni.addAll(dataModel.ottieniStoricoPrenotazioniUtente(filtro));
+                break;
+
+            case "ottieniPrenotazioniUtenteAttive":
+                elencoPrenotazioni.addAll(dataModel.ottieniPrenotazioniUtenteAttive(filtro));
                 break;
 
             case "ottieniPrenotazioniUtenteImminenti":
@@ -131,7 +135,7 @@ public class ServletPrenotazione extends HttpServlet {
 
         String username, idCorso, emailDocente, data, fasciaOraria;
 
-        username = req.getParameter("username");
+        username = (String) session.getAttribute("username");
         idCorso = req.getParameter("idCorso");
         emailDocente = req.getParameter("emailDocente");
         data = req.getParameter("data");

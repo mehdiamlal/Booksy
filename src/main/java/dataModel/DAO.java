@@ -658,14 +658,50 @@ public class DAO {
         }
     }
 
-    public ArrayList<Prenotazione> ottieniPrenotazioniUtente(String username) {
+    public ArrayList<Prenotazione> ottieniStoricoPrenotazioniUtente(String username) {
         Connection conn = null;
         PreparedStatement st = null;
         ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<>();
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "SELECT * FROM prenotazione WHERE utente = ?";
+            String sql = "SELECT * FROM prenotazione WHERE utente = ? AND (attiva = 0 OR effettuata = 1)";
+
+            st = conn.prepareStatement(sql);
+            st.setString(1, username);
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()) {
+                prenotazioniUtente.add(new Prenotazione(rs.getString("utente"),
+                        rs.getString("corso"),
+                        rs.getString("docente"),
+                        rs.getString("data"),
+                        rs.getString("fasciaOraria"),
+                        rs.getString("attiva").equals("1"),
+                        rs.getString("effettuata").equals("1")));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if(conn != null && st != null) {conn.close(); st.close();}
+            } catch(SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return prenotazioniUtente;
+    }
+
+    public ArrayList<Prenotazione> ottieniPrenotazioniUtenteAttive(String username) {
+        Connection conn = null;
+        PreparedStatement st = null;
+        ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection(url, user, pw);
+            String sql = "SELECT * FROM prenotazione WHERE utente = ? AND attiva = 1 AND effettuata = 0 ORDER BY data";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);

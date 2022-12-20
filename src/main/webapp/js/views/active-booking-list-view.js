@@ -1,7 +1,7 @@
-export var bookingListView = {
+export var activeBookingListView = {
     data: function () {
         return {
-            searchDate: "", 
+            searchDate: "",
             listaPrenotazioni: [],
             nessunaPrenotazione: false
         }
@@ -9,10 +9,10 @@ export var bookingListView = {
     methods: {
         filterBookings() {
             var self = this;
-            var formattedDate = 
-            self.searchDate.substring(8, 10) + "/" +
-            self.searchDate.substring(5, 7) + "/" +
-            self.searchDate.substring(0, 4);
+            var formattedDate =
+                self.searchDate.substring(8, 10) + "/" +
+                self.searchDate.substring(5, 7) + "/" +
+                self.searchDate.substring(0, 4);
             var contatorePrenotazioni = self.listaPrenotazioni.length;
 
             self.listaPrenotazioni.forEach((prenotazione) => {
@@ -61,7 +61,7 @@ export var bookingListView = {
                 :active="prenotazione.attiva"
                 :completed="prenotazione.effettuata" v-show="prenotazione.show"></appointment-card>
             </div>
-            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione trovata.</h5>
+            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione attiva.</h5>
             <router-link to="/book">
                 <button class="btn btn-primary shadow add-btn"><i class="fas fa-plus"></i></button>
             </router-link>
@@ -75,7 +75,7 @@ export var bookingListView = {
         self.listaPrenotazioni = [];
         $.get("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni",
             {
-                action: "ottieniStoricoPrenotazioniUtente",
+                action: "ottieniPrenotazioniUtenteAttive",
                 utente: localStorage.getItem("username")
             },
             function(data) {
@@ -83,6 +83,7 @@ export var bookingListView = {
                     localStorage.clear();
                     self.$router.push("/login");
                 } else {
+                    self.nessunaPrenotazione = data.length === 0;
                     data.forEach(function (prenotazione) {
                         var tmp = prenotazione;
                         tmp["show"] = true;
@@ -91,5 +92,6 @@ export var bookingListView = {
                     });
                 }
             });
+
     }
 }

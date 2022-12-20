@@ -43,12 +43,17 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/courses" class="nav-link">Lista Corsi</router-link>
+                            <router-link to="/active_bookings" class="nav-link">Prenotazioni Attive</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/bookings" class="nav-link">Lista Prenotazioni</router-link>
+                            <router-link to="/bookings" class="nav-link">Storico Prenotazioni</router-link>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link">
+                            <router-link to="/courses" class="nav-link">Lista Corsi</router-link>
                         </div>
                     </li>
                     <li class="nav-item">

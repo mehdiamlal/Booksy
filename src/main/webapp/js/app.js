@@ -16,6 +16,7 @@ import {studentHomeView} from "./views/student-home-view.js";
 import {adminHomeView} from "./views/admin-home-view.js";
 import {adminCoursesView} from "./views/admin-courses-view.js";
 import {adminBookingListView} from "./views/admin-booking-list-view.js";
+import {activeBookingListView} from "./views/active-booking-list-view.js";
 
 const app = Vue.createApp();
 
@@ -37,6 +38,7 @@ app.component("student-home-view", studentHomeView);
 app.component("admin-home-view", adminHomeView);
 app.component("admin-courses-view", adminCoursesView);
 app.component("admin-booking-list-view", adminBookingListView);
+app.component("active-booking-list-view", activeBookingListView);
 
 
 const routes = [
@@ -49,7 +51,8 @@ const routes = [
     {path: "/admin", name: "Admin", component: adminHomeView},
     {path: "/admin_courses", name: "Admin-Courses", component: adminCoursesView},
     {path: "/admin_bookings", name: "Admin-Bookings", component: adminBookingListView},
-    {path: "/add_tutor", name: "Add-Tutor", component: addTutorView}
+    {path: "/add_tutor", name: "Add-Tutor", component: addTutorView},
+    {path: "/active_bookings", name: "Active-Bookings", component: activeBookingListView}
 ]
 
 const router = VueRouter.createRouter({
