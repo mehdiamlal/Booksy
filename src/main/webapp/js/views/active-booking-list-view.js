@@ -38,7 +38,7 @@ export var activeBookingListView = {
     template: `
         <navbar logged></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Le mie prenotazioni</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">Le mie prenotazioni attive</h1>
             <div class="form-group row">
                 <div class="col"></div>
                 <div class="col-6 text-center">
