@@ -32,6 +32,7 @@ export var coursesView = {
     `,
     created: function() {
         var self = this;
+        document.title = "Corsi | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
             self.$router.push("/");
         }

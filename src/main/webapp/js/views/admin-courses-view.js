@@ -111,6 +111,7 @@ export var adminCoursesView = {
     `,
     created: function() {
         var self = this;
+        document.title = "(Admin) Corsi | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

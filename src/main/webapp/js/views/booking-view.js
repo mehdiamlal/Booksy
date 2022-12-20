@@ -8,6 +8,7 @@ export var bookingView = {
     `,
     mounted() {
         var self = this;
+        document.title = "Prenota una ripetizione | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
             self.$router.push("/");
         }

@@ -24,6 +24,7 @@ export var landingView = {
     `,
     mounted() {
         var self = this;
+        document.title = "Booksy | Trova le migliori ripetizioni";
         if(localStorage.getItem("role") !== null) {
             if(localStorage.getItem("role") === "amministratore") {
                 self.$router.push("/admin");

@@ -69,6 +69,7 @@ export var activeBookingListView = {
     `,
     created: function() {
         var self = this;
+        document.title = "Prenotazioni attive | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
             self.$router.push("/");
         }

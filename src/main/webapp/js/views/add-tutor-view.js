@@ -13,6 +13,7 @@ export var addTutorView = {
     `,
     created() {
         var self = this;
+        document.title = "(Admin) Aggiungi docente | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

@@ -69,6 +69,7 @@ export var bookingListView = {
     `,
     created: function() {
         var self = this;
+        document.title = "Storico prenotazioni | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
             self.$router.push("/");
         }

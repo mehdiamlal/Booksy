@@ -28,6 +28,7 @@ export var adminHomeView = {
     `,
     mounted() {
         var self = this;
+        document.title = "Admin | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

@@ -66,6 +66,7 @@ export var adminBookingListView = {
     `,
     created: function() {
         var self = this;
+        document.title = "(Admin) Storico prenotazioni | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }
