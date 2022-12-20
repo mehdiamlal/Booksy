@@ -39,9 +39,6 @@ export var studentHomeView = {
                     <router-link to="/courses">
                         <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Lista corsi</button>
                     </router-link>
-                    <router-link to="/home">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Controlla disponibilità</button>
-                    </router-link>
                 </div>
                 <div class="col"></div>
             </div>
@@ -59,6 +56,7 @@ export var studentHomeView = {
         }, function(data) {
             if(data === "no_session") {
                 localStorage.clear();
+                alert("Sessione scaduta.");
                 self.$router.push("/login");
             } else {
                 data.forEach(function(prenotazione) {

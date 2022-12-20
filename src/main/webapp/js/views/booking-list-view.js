@@ -61,7 +61,7 @@ export var bookingListView = {
                 :active="prenotazione.attiva"
                 :completed="prenotazione.effettuata" v-show="prenotazione.show"></appointment-card>
             </div>
-            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione trovata.</h5>
+            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione.</h5>
             <router-link to="/book">
                 <button class="btn btn-primary shadow add-btn"><i class="fas fa-plus"></i></button>
             </router-link>
@@ -81,8 +81,10 @@ export var bookingListView = {
             function(data) {
                 if(data === "no_session") {
                     localStorage.clear();
+                    alert("Sessione scaduta.");
                     self.$router.push("/login");
                 } else {
+                    self.nessunaPrenotazione = data.length === 0;
                     data.forEach(function (prenotazione) {
                         var tmp = prenotazione;
                         tmp["show"] = true;

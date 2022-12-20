@@ -51,6 +51,7 @@ export var loginForm = {
 
             if(self.password != "" && self.passwordMissing == true) {
                 self.passwordMissing = false;
+                document.getElementById("flexCheckDefault").checked = false;
             }
 
             if(self.username == "") {
@@ -60,17 +61,26 @@ export var loginForm = {
 
             if(self.password == "") {
                 self.passwordMissing = true;
+                document.getElementById("flexCheckDefault").checked = false;
                 res = false;
             }
 
             return res;
+        },
+        showPassword: function() {
+            var x = document.getElementById("password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
         }
     },
     template: `
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-6 offset-md-3 border p-4 shadow bg-light">
-                    <form action="">
+                    <form>
                         <div class="row g-3">
                             <div class="col-12">
                                     <div class="text-center">
@@ -96,6 +106,10 @@ export var loginForm = {
                                         <label class="text-secondary" for="password">Password</label>
                                         <input v-model="password" type="password" id="password" name="password" class="form-control is-invalid"/>
                                         <div id="invalidUsernameFeedback" class="invalid-feedback">Il campo password non può essere vuoto.</div>
+                                    </div>
+                                    <div class="form-check" style="margin-bottom: 2em; margin-top: -1em">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @click="showPassword">
+                                        <label class="form-check-label" for="flexCheckDefault">Mostra password</label>
                                     </div>
                                     
                                     <div v-if="userNotFound" class="text-secondary text-danger text-center">

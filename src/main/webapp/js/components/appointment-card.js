@@ -62,7 +62,7 @@ export var appointmentCard = {
                 <div class="d-flex justify-content-between mb-4">
                     <div class="user-info">
                         <div class="user-info__basic">
-                            <h5 class="mb-0">{{tutorData}}</h5>
+                            <h5 class="mb-0">Docente: <br><span class="text-muted">{{tutorData}}</span></h5>
                         </div>
                     </div>
                     <div class="dropdown open" v-if="activeData && !completedData">
@@ -80,7 +80,7 @@ export var appointmentCard = {
                 <h4 class="mb-0">{{courseData}}</h4>
                 <div class="d-flex justify-content-between mt-4">
                     <div>
-                        <h5 class="mb-0">{{timeSlotData}}
+                        <h5 class="mb-0">{{timeSlotData}} |
                             <small class="ml-1 text-muted">{{dayData}}</small>
                         </h5>
                     </div>

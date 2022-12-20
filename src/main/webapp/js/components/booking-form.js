@@ -21,6 +21,7 @@ export var bookingForm = {
     methods: {
         getDocenti() {
             var self = this;
+            self.addedSuccess = false;
             /*chiamata http per ottenere i docenti che insegnano il corso self.selectedCorso
             i dati vanno aggiunti a self.listaDocenti*/
             $.get("http://localhost:8080/progetto_TWeb_war_exploded/docenti", {

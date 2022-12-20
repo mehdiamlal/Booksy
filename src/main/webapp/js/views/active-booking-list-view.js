@@ -81,6 +81,7 @@ export var activeBookingListView = {
             function(data) {
                 if(data === "no_session") {
                     localStorage.clear();
+                    alert("Sessione scaduta.");
                     self.$router.push("/login");
                 } else {
                     self.nessunaPrenotazione = data.length === 0;
