@@ -72,8 +72,8 @@ public class ServletSlotDisponibili extends HttpServlet {
                 break;
 
             case "ottieniSlotDisponibiliDocente":
-                HashMap<String, ArrayList<String>> slotDisponibiliDocente = new HashMap<>();
-                slotDisponibiliDocente.putAll(dataModel.ottieniSlotDisponibiliDocente(emailDocente, dataInizio, dataFine));
+                ArrayList<String> slotDisponibiliDocente = new ArrayList<>();
+                slotDisponibiliDocente.addAll(dataModel.ottieniSlotDisponibiliDocente(emailDocente, dataInizio));
                 risposta = gson.toJson(slotDisponibiliDocente);
                 break;
 

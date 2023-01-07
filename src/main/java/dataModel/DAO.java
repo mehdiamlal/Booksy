@@ -867,7 +867,6 @@ public class DAO {
         ArrayList<Prenotazione> listaPrenotazioni = ottieniPrenotazioniAttive();
         ArrayList<Docente> listaDocenti = ottieniDocenti();  //prendo i docenti attivi
 
-
         //Si presuppone che il formato delle date che vengono passate sia dd/MM/yyyy
         DateTime inizio = new DateTime(Integer.parseInt(dataInizio.substring(6)),
                                         Integer.parseInt(dataInizio.substring(3, 5)),
@@ -893,9 +892,9 @@ public class DAO {
         return ris;
     }
 
-    public HashMap<String, ArrayList<String>> ottieniSlotDisponibiliDocente(String emailDocente, String dataInizio, String dataFine) {
-        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(dataInizio, dataFine);
+    public ArrayList<String> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
+        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(data, data);
 
-        return slotDisponibili.get(emailDocente);
+        return (slotDisponibili.get(emailDocente)).get(data);
     }
 }
