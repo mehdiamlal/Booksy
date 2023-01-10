@@ -75,7 +75,7 @@ public class ServletSlotDisponibili extends HttpServlet {
                 String nomeCorso = req.getParameter("corso");
 
                 HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibiliCorso = new HashMap<>();
-                slotDisponibiliCorso.putAll(dataModel.ottieniSlotDisponibili(nomeCorso, dataInizio, dataFine));
+                slotDisponibiliCorso.putAll(dataModel.ottieniSlotDisponibiliCorso(nomeCorso, dataInizio, dataFine));
 
                 risposta = gson.toJson(slotDisponibiliCorso);
                 break;
