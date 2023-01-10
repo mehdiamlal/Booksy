@@ -884,14 +884,15 @@ public class DAO {
 //        HashMap<String, ArrayList<String>> totalSlots = getTotalSlots(inizio, fine);
         HashMap<String, HashMap<String, ArrayList<String>>> ris = new HashMap<>();
 
+        // memorizzo i docenti di cui voglio sapere i slot disponibili come chiavi di una hashmap
         for(Docente d : listaDocenti) {
             ris.put(d.getEmail(), getTotalSlots(inizio, fine));
         }
 
         for(Prenotazione p : listaPrenotazioni) {
-            HashMap<String, ArrayList<String>> fascieOrarieDocente = ris.get(p.getDocente());
             // guardo se questa prenotazione coinvolge uno dei docenti interessati
-            if(fascieOrarieDocente != null) {
+            if(ris.containsKey(p.getDocente())) {
+                HashMap<String, ArrayList<String>> fascieOrarieDocente = ris.get(p.getDocente());
                 // guardo se questa prenotazione è in una fascia oraria che fin'ora era memorizzata come libera
                 if(fascieOrarieDocente.containsKey(p.getData())) {
                     // in caso positivo, rimuovo la fascia oraria dalla hashmap
@@ -904,8 +905,8 @@ public class DAO {
         return ris;
     }
 
-    public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibiliCorso(String corso, String data) {
-        return ottieniSlotDisponibili(corso, data, data);
+    public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibiliCorso(String corso, String dataInizio, String dataFine) {
+        return ottieniSlotDisponibili(corso, dataInizio, dataFine);
     }
 
     public ArrayList<String> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
