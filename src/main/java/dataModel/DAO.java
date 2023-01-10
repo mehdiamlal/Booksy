@@ -904,6 +904,10 @@ public class DAO {
         return ris;
     }
 
+    public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibiliCorso(String corso, String data) {
+        return ottieniSlotDisponibili(corso, data, data);
+    }
+
     public ArrayList<String> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
         HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(null, data, data);
 
