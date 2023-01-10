@@ -45,6 +45,7 @@ public class ServletSlotDisponibili extends HttpServlet {
             out.print(risposta);
             return;
         }
+
         String tipoRichiesta = req.getParameter("action");
         if(tipoRichiesta == null) {
             tipoRichiesta = "";
@@ -55,25 +56,36 @@ public class ServletSlotDisponibili extends HttpServlet {
             return;
         }
 
-        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponbili = new HashMap<>();
-        String dataInizio, dataFine, emailDocente;
-
+        String dataInizio, dataFine;
         dataInizio = req.getParameter("dataInizio");
         dataFine = req.getParameter("dataFine");
-        emailDocente = req.getParameter("docente");
 
         Gson gson = new Gson();
         String risposta = "";
 
         switch (tipoRichiesta) {
             case "ottieniSlotDisponibili":
-                slotDisponbili.putAll(dataModel.ottieniSlotDisponibili(dataInizio, dataFine));
+                HashMap<String, HashMap<String, ArrayList<String>>> slotDisponbili = new HashMap<>();
+                slotDisponbili.putAll(dataModel.ottieniSlotDisponibili(null, dataInizio, dataFine));
+
                 risposta = gson.toJson(slotDisponbili);
                 break;
 
+            case "ottieniSlotDisponibiliCorso":
+                String nomeCorso = req.getParameter("corso");
+
+                HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibiliCorso = new HashMap<>();
+                slotDisponibiliCorso.putAll(dataModel.ottieniSlotDisponibili(nomeCorso, dataInizio, dataFine));
+
+                risposta = gson.toJson(slotDisponibiliCorso);
+                break;
+
             case "ottieniSlotDisponibiliDocente":
+                String emailDocente = req.getParameter("docente");
+
                 ArrayList<String> slotDisponibiliDocente = new ArrayList<>();
                 slotDisponibiliDocente.addAll(dataModel.ottieniSlotDisponibiliDocente(emailDocente, dataInizio));
+
                 risposta = gson.toJson(slotDisponibiliDocente);
                 break;
 
