@@ -863,9 +863,15 @@ public class DAO {
         return ret;
     }
 
-    public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibili(String dataInizio, String dataFine) {
+    public HashMap<String, HashMap<String, ArrayList<String>>> ottieniSlotDisponibili(String corso, String dataInizio, String dataFine) {
         ArrayList<Prenotazione> listaPrenotazioni = ottieniPrenotazioniAttive();
-        ArrayList<Docente> listaDocenti = ottieniDocenti();  //prendo i docenti attivi
+        ArrayList<Docente> listaDocenti;  //prendo i docenti attivi
+
+        if(corso != null) {
+            listaDocenti = filtraDocentePerCorso(corso);
+        } else {
+            listaDocenti = ottieniDocenti();
+        }
 
         //Si presuppone che il formato delle date che vengono passate sia dd/MM/yyyy
         DateTime inizio = new DateTime(Integer.parseInt(dataInizio.substring(6)),
@@ -883,9 +889,15 @@ public class DAO {
         }
 
         for(Prenotazione p : listaPrenotazioni) {
-            if(ris.get(p.getDocente()).get(p.getData()) != null) {
-                ris.get(p.getDocente()).get(p.getData()).remove(p.getFasciaOraria());
-                System.out.println("Ho tolto a " + p.getDocente() + " la fascia delle: " + p.getFasciaOraria());
+            HashMap<String, ArrayList<String>> fascieOrarieDocente = ris.get(p.getDocente());
+            // guardo se questa prenotazione coinvolge uno dei docenti interessati
+            if(fascieOrarieDocente != null) {
+                // guardo se questa prenotazione è in una fascia oraria che fin'ora era memorizzata come libera
+                if(fascieOrarieDocente.containsKey(p.getData())) {
+                    // in caso positivo, rimuovo la fascia oraria dalla hashmap
+                    fascieOrarieDocente.get(p.getData()).remove(p.getFasciaOraria());
+                    System.out.println("Ho tolto a " + p.getDocente() + " la fascia delle: " + p.getFasciaOraria());
+                }
             }
         }
 
@@ -893,7 +905,7 @@ public class DAO {
     }
 
     public ArrayList<String> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
-        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(data, data);
+        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(null, data, data);
 
         return (slotDisponibili.get(emailDocente)).get(data);
     }
