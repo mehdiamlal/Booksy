@@ -40,12 +40,9 @@ public class ServletAutenticazione extends HttpServlet {
             tipoRichiesta = "";
         }
 
-        String username, password, nome, cognome, ruolo;
+        String username, password;
         username = req.getParameter("username");
         password = req.getParameter("password");
-        nome = req.getParameter("nome");
-        cognome = req.getParameter("cognome");
-        ruolo = req.getParameter("ruolo");
 
         Utente daAutenticare;
 
@@ -66,6 +63,10 @@ public class ServletAutenticazione extends HttpServlet {
                 break;
 
             case "aggiungiUtente":
+                String nome, cognome, ruolo;
+                nome = req.getParameter("nome");
+                cognome = req.getParameter("cognome");
+                ruolo = req.getParameter("ruolo");
                 dataModel.aggiungiUtente(username, password, nome, cognome, ruolo);
                 break;
 
