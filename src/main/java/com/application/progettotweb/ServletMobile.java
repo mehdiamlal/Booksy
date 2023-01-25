@@ -69,6 +69,7 @@ public class ServletMobile extends HttpServlet {
                 rd.forward(req, resp);
                 break;
 
+            case "ottieniSlotDisponibili":
             case "ottieniSlotDisponibiliCorso":
                 rd = ctx.getNamedDispatcher("servletSlot");
                 rd.forward(req, resp);
