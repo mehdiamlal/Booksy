@@ -56,23 +56,23 @@ public class ServletMobile extends HttpServlet {
             case "ottieniPrenotazioniUtente":
             case "ottieniPrenotazioniUtenteImminenti":
                 rd = ctx.getNamedDispatcher("servletPrenotazione");
-                rd.forward(req, resp);
+                rd.include(req, resp);
                 break;
 
             case "ottieniCorsiAttivi":
                 rd = ctx.getNamedDispatcher("servletCorso");
-                rd.forward(req, resp);
+                rd.include(req, resp);
                 break;
 
             case "filtraDocentePerCorso":
                 rd = ctx.getNamedDispatcher("servletDocente");
-                rd.forward(req, resp);
+                rd.include(req, resp);
                 break;
 
             case "ottieniSlotDisponibili":
             case "ottieniSlotDisponibiliCorso":
                 rd = ctx.getNamedDispatcher("servletSlot");
-                rd.forward(req, resp);
+                rd.include(req, resp);
                 break;
         }
     }
@@ -102,7 +102,7 @@ public class ServletMobile extends HttpServlet {
             case "impostaPrenotazioneEffettuata":
             case "rimuoviPrenotazione":
                 rd = ctx.getNamedDispatcher("servletPrenotazione");
-                rd.forward(req, resp);
+                rd.include(req, resp);
                 break;
         }
     }
