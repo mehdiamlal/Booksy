@@ -22,6 +22,6 @@
         <param-value>root</param-value>
     </context-param>
     <session-config>
-        <session-timeout>1</session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 </web-app>

@@ -9,7 +9,6 @@ export var bookingForm = {
             selectedData: "",
             formattedData: "",
             selectedFascia: "",
-            fact: "",
             slotAvailable: true,
             showDocenteSelector: false,
             showDateSelector: false,
@@ -62,7 +61,7 @@ export var bookingForm = {
             if(self.selectedCorso !== "" && self.selectedDocente !== "" && self.formattedData !== "" && self.selectedFascia != "") {
                 $.post("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
                     action: "aggiungiPrenotazione",
-                    username: "heymehdi",
+                    username: localStorage.username,
                     idCorso: self.selectedCorso,
                     emailDocente: self.selectedDocente.email,
                     data: self.formattedData,
