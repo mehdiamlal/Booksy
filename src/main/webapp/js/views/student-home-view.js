@@ -27,6 +27,9 @@ export var studentHomeView = {
             <div class="row text-center" style="margin-top: 2em">
                 <div class="col"></div>
                 <div class="col">
+                    <router-link to="/available_slots">
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Consulta gli slot disponibili</button>
+                    </router-link>
                     <router-link to="/book">
                         <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Prenota una ripetizione</button>
                     </router-link>

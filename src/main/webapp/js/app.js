@@ -6,6 +6,8 @@ import {appointmentCard} from "./components/appointment-card.js";
 import {newTutorForm} from "./components/new-tutor-form.js";
 import {adminCourseCard} from "./components/admin-course-card.js";
 import {adminBookingCard} from "./components/admin-booking-card.js";
+import {slotCard} from "./components/slot-card.js";
+import {adminSlotCard} from "./components/admin-slot-card.js";
 import {bookingView} from "./views/booking-view.js";
 import {coursesView} from "./views/courses-view.js";
 import {landingView} from "./views/landing-view.js";
@@ -17,6 +19,8 @@ import {adminHomeView} from "./views/admin-home-view.js";
 import {adminCoursesView} from "./views/admin-courses-view.js";
 import {adminBookingListView} from "./views/admin-booking-list-view.js";
 import {activeBookingListView} from "./views/active-booking-list-view.js";
+import {availableSlotsView} from "./views/available-slots-view.js";
+import {adminAvailableSlotsView} from "./views/admin-available-slots-view.js";
 
 const app = Vue.createApp();
 
@@ -28,6 +32,8 @@ app.component("appointment-card", appointmentCard);
 app.component("new-tutor-form", newTutorForm);
 app.component("admin-course-card", adminCourseCard);
 app.component("admin-booking-card", adminBookingCard);
+app.component("slot-card", slotCard);
+app.component("admin-slot-card", adminSlotCard);
 app.component("booking-view", bookingView);
 app.component("courses-view", coursesView);
 app.component("landing-view", landingView);
@@ -39,6 +45,8 @@ app.component("admin-home-view", adminHomeView);
 app.component("admin-courses-view", adminCoursesView);
 app.component("admin-booking-list-view", adminBookingListView);
 app.component("active-booking-list-view", activeBookingListView);
+app.component("available-slots-view", availableSlotsView);
+app.component("admin-available-slots-view", adminAvailableSlotsView);
 
 
 const routes = [
@@ -52,7 +60,9 @@ const routes = [
     {path: "/admin_courses", name: "Admin-Courses", component: adminCoursesView},
     {path: "/admin_bookings", name: "Admin-Bookings", component: adminBookingListView},
     {path: "/add_tutor", name: "Add-Tutor", component: addTutorView},
-    {path: "/active_bookings", name: "Active-Bookings", component: activeBookingListView}
+    {path: "/active_bookings", name: "Active-Bookings", component: activeBookingListView},
+    {path: "/available_slots", name: "Available-Slots", component: availableSlotsView},
+    {path: "/admin_available_slots", name: "Admin-Available-Slots", component: adminAvailableSlotsView}
 ]
 
 const router = VueRouter.createRouter({
