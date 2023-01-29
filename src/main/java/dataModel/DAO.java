@@ -881,7 +881,6 @@ public class DAO {
                                     Integer.parseInt(dataFine.substring(3, 5)),
                                     Integer.parseInt(dataFine.substring(0, 2)), 0, 0);
 
-//        HashMap<String, ArrayList<String>> totalSlots = getTotalSlots(inizio, fine);
         HashMap<String, HashMap<String, ArrayList<String>>> ris = new HashMap<>();
 
         // memorizzo i docenti di cui voglio sapere i slot disponibili come chiavi di una hashmap
@@ -909,7 +908,13 @@ public class DAO {
         return ottieniSlotDisponibili(corso, dataInizio, dataFine);
     }
 
-    public ArrayList<String> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
+    public HashMap<String, ArrayList<String>> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
+        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(null, data, data);
+
+        return slotDisponibili.get(emailDocente);
+    }
+
+    public ArrayList<String> ottieniSlotDisponibiliDocenteData(String emailDocente, String data) {
         HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(null, data, data);
 
         return (slotDisponibili.get(emailDocente)).get(data);

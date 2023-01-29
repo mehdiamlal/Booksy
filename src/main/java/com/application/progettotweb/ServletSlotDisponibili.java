@@ -56,9 +56,10 @@ public class ServletSlotDisponibili extends HttpServlet {
             return;
         }
 
-        String dataInizio, dataFine;
+        String dataInizio, dataFine, emailDocente;
         dataInizio = req.getParameter("dataInizio");
         dataFine = req.getParameter("dataFine");
+        emailDocente = req.getParameter("docente");
 
         Gson gson = new Gson();
         String risposta = "";
@@ -81,12 +82,17 @@ public class ServletSlotDisponibili extends HttpServlet {
                 break;
 
             case "ottieniSlotDisponibiliDocente":
-                String emailDocente = req.getParameter("docente");
-
-                ArrayList<String> slotDisponibiliDocente = new ArrayList<>();
-                slotDisponibiliDocente.addAll(dataModel.ottieniSlotDisponibiliDocente(emailDocente, dataInizio));
+                HashMap<String, ArrayList<String>> slotDisponibiliDocente = new HashMap<>();
+                slotDisponibiliDocente.putAll(dataModel.ottieniSlotDisponibiliDocente(emailDocente, dataInizio));
 
                 risposta = gson.toJson(slotDisponibiliDocente);
+                break;
+
+            case "ottieniSlotDisponibiliDocenteData":
+                ArrayList<String> slotDisponibiliDocenteData = new ArrayList<>();
+                slotDisponibiliDocenteData.addAll(dataModel.ottieniSlotDisponibiliDocenteData(emailDocente, dataInizio));
+
+                risposta = gson.toJson(slotDisponibiliDocenteData);
                 break;
 
             default:

@@ -53,17 +53,18 @@ public class ServletMobile extends HttpServlet {
 
         switch(tipoRichiesta) {
             case "ottieniTuttePrenotazioni":
-            case "ottieniPrenotazioniUtente":
+            case "ottieniStoricoPrenotazioniUtente":
             case "ottieniPrenotazioniUtenteImminenti":
                 rd = ctx.getNamedDispatcher("servletPrenotazione");
                 rd.include(req, resp);
                 break;
 
             case "ottieniCorsiAttivi":
-                rd = ctx.getNamedDispatcher("servletCorso");
+                rd = ctx.getNamedDispatcher("servletCorsi");
                 rd.include(req, resp);
                 break;
 
+            case "ottieniDocentiLiberi":
             case "filtraDocentePerCorso":
                 rd = ctx.getNamedDispatcher("servletDocente");
                 rd.include(req, resp);
@@ -71,6 +72,8 @@ public class ServletMobile extends HttpServlet {
 
             case "ottieniSlotDisponibili":
             case "ottieniSlotDisponibiliCorso":
+            case "ottieniSlotDisponibiliDocente":
+            case "ottieniSlotDisponibiliDocenteData":
                 rd = ctx.getNamedDispatcher("servletSlot");
                 rd.include(req, resp);
                 break;
