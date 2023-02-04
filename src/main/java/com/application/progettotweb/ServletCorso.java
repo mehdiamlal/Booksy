@@ -61,18 +61,19 @@ public class ServletCorso extends HttpServlet {
             return;
         }
 
-        ArrayList<Corso> elencoCorsi;
+        ArrayList<Corso> elencoCorsi = new ArrayList<>();
 
         switch(tipoRichiesta) {
             case "ottieniCorsiAttivi":
-                elencoCorsi = new ArrayList<>(dataModel.ottieniCorsiAttivi());
+                elencoCorsi.addAll(dataModel.ottieniCorsiAttivi());
                 break;
+
             case "ottieniCorsi":
                 if(!(session.getAttribute("ruolo").equals("amministratore"))) {
                     resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Operazione non autorizzata.");
                     return;
                 }
-                elencoCorsi = new ArrayList<>(dataModel.ottieniCorsi());
+                elencoCorsi.addAll(dataModel.ottieniCorsi());
                 break;
 
             default:
