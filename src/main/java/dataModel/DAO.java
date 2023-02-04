@@ -629,7 +629,6 @@ public class DAO {
 
         String sql = "UPDATE prenotazione SET attiva = 0, dataCancellazione = '" + getDate() + "' ";
 
-
         if(emailDocente != null && allNull(data, fasciaOraria, nomeCorso)) {
             sql = sql.concat("WHERE docente = '" + emailDocente + "' AND attiva = 1");
         } else if (nomeCorso != null && allNull(emailDocente, data, fasciaOraria)) {
@@ -908,8 +907,8 @@ public class DAO {
         return ottieniSlotDisponibili(corso, dataInizio, dataFine);
     }
 
-    public HashMap<String, ArrayList<String>> ottieniSlotDisponibiliDocente(String emailDocente, String data) {
-        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(null, data, data);
+    public HashMap<String, ArrayList<String>> ottieniSlotDisponibiliDocente(String emailDocente, String dataInizio, String dataFine) {
+        HashMap<String, HashMap<String, ArrayList<String>>> slotDisponibili = ottieniSlotDisponibili(null, dataInizio, dataFine);
 
         return slotDisponibili.get(emailDocente);
     }
