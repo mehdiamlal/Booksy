@@ -64,6 +64,7 @@ public class ServletMobile extends HttpServlet {
                 rd.include(req, resp);
                 break;
 
+            case "ottieniDocenti":
             case "ottieniDocentiLiberi":
             case "filtraDocentePerCorso":
                 rd = ctx.getNamedDispatcher("servletDocente");
