@@ -664,7 +664,7 @@ public class DAO {
 
         try {
             conn = DriverManager.getConnection(url, user, pw);
-            String sql = "SELECT * FROM prenotazione WHERE utente = ? AND (attiva = 0 OR effettuata = 1)";
+            String sql = "SELECT * FROM prenotazione WHERE utente = ?";
 
             st = conn.prepareStatement(sql);
             st.setString(1, username);
