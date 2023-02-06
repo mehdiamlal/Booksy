@@ -1,0 +1,97 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    height: 80vh;
+    margin-top: 5rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 10px;
+}
+
+span {
+    color: red;
+}
+
+.form {
+    background-color: #fff;
+    border-radius: 100px;
+    padding: 15px 25px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+legend {
+    background-color: #5e17eb;
+    border-radius: 5px;
+    color: #fff;
+    padding: 3px 6px;
+    font-size: 18px;
+}
+
+fieldset {
+    border-color: #5e17eb;
+    border-radius: 5px;
+    align-items: end;
+}
+
+.first-section input {
+    width: 85%;
+    height: 25px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.second-section input{
+    width: 80%;
+    height: 25px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.form h1, p{
+    text-align: center;
+}
+
+.checkbox {
+    width: 20px !important;
+}
+
+button {
+    border: none;
+    color: white;
+    background: #5e17eb;
+    padding: 8px 25px;
+    border-radius: 5px;
+    display: block;
+    margin: 20px auto 10px auto;
+    width: 120px;
+    font-size: 22px
+}
+
+.second-section {
+    margin-top: 15px;
+}
+
+.terms {
+    margin-top: 15px;
+    display: flex;
+    alignment: center;
+}
+
+.skip {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.skip:focus {
+    position: static;
+    width: auto;
+    height: auto;
+}
