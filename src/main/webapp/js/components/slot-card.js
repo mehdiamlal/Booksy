@@ -16,7 +16,6 @@ export var slotCard = {
     methods: {
         bookSlot() {
             var self = this;
-            console.log("CIONE");
             $.post("http://localhost:8080/progetto_TWeb_war_exploded/prenotazioni", {
                 action: "aggiungiPrenotazione",
                 username: localStorage.username,
@@ -28,9 +27,10 @@ export var slotCard = {
                 if(data === "no_session") {
                     localStorage.clear();
                     self.$router.push("/login");
+                } else {
+                    self.$router.push("/active_bookings");
                 }
             });
-            self.$router.push("/active_bookings");
         }
     },
     template: `

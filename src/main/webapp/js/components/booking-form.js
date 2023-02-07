@@ -28,8 +28,14 @@ export var bookingForm = {
                 corso: self.selectedCorso
             }, function(data) {
                 self.listaDocenti = data;
+                if(self.listaDocenti.length > 0) {
+                    self.showDocenteSelector = true;
+                } else {
+                    self.showDocenteSelector = false;
+                    self.showDateSelector = false;
+                    self.showFasciaSelector = false;
+                }
             });
-            self.showDocenteSelector = true;
         },
         getFasceOrarie() {
             var self = this;
@@ -102,7 +108,7 @@ export var bookingForm = {
                             </div>
                             <div class="col-12">
                                 <label for="selezionaDocente" class="text-secondary">Docente</label>
-                                <select id="selezionaDocente" class="form-select" name="docente" v-model="selectedDocente" v-if="showDocenteSelector" @change="showDateSelector = !showDateSelector">
+                                <select id="selezionaDocente" class="form-select" name="docente" v-model="selectedDocente" v-if="showDocenteSelector" @change="showDateSelector = true">
                                     <option v-for="docente in listaDocenti" :value="docente">{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
                                 </select>
                                 <select class="form-select" disabled v-else></select>
