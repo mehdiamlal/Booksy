@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 17, 2022 alle 17:50
+-- Creato il: Feb 08, 2023 alle 22:56
 -- Versione del server: 10.4.25-MariaDB
 -- Versione PHP: 8.1.10
 
@@ -37,11 +37,16 @@ CREATE TABLE `corso` (
 --
 
 INSERT INTO `corso` (`nome`, `attivo`) VALUES
-('Fisica', 1),
-('Informatica', 1),
+('Analisi', 1),
+('Chimica', 1),
+('Economia', 1),
+('Filosofia', 1),
+('Fisica', 0),
+('Informatica', 0),
+('Inglese', 1),
+('Italiano', 1),
 ('Matematica', 1),
-('Musica', 0),
-('Scienze', 0);
+('Storia', 1);
 
 -- --------------------------------------------------------
 
@@ -53,18 +58,35 @@ CREATE TABLE `docente` (
   `email` varchar(100) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `cognome` varchar(50) NOT NULL,
-  `attivo` tinyint(1) NOT NULL DEFAULT 1
+  `attivo` tinyint(1) NOT NULL DEFAULT 1,
+  `dataCreazione` varchar(10) NOT NULL,
+  `dataCancellazione` varchar(10) NOT NULL DEFAULT 'none'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `docente`
 --
 
-INSERT INTO `docente` (`email`, `nome`, `cognome`, `attivo`) VALUES
-('antonello@yahoo.com', 'Antonello', 'Perdonò', 0),
-('ciruzz79@libero.it', 'Ciro', 'Sarracino', 1),
-('marco@gmail.com', 'Marco', 'Antonini', 0),
-('michele@gmail.com', 'Michele', 'Mariucci', 1);
+INSERT INTO `docente` (`email`, `nome`, `cognome`, `attivo`, `dataCreazione`, `dataCancellazione`) VALUES
+('albi77@gmail.com', 'Alberto', 'Caccia', 1, '09/12/2022', 'none'),
+('ciruzz79@libero.it', 'Ciro', 'Sarracino', 1, '21/10/2022', 'none'),
+('edoardo@gmail.com', 'Edoardo', 'Gilda', 1, '08/12/2022', 'none'),
+('eladio@gmail.com', 'Eladio', 'Vasquez', 1, '08/12/2022', 'none'),
+('giovanni3@gmail.com', 'Giovanni', 'Tiredio', 1, '08/12/2022', 'none'),
+('marco@gmail.com', 'Marco', 'Antonini', 1, '19/10/2022', 'none'),
+('marini@libero.it', 'Alberto', 'Marini', 1, '09/12/2022', 'none'),
+('mario.nizza@gmail.com', 'Mario', 'Nizza', 1, '08/12/2022', 'none'),
+('marypi@gmail.com', 'Maria', 'Pistoia', 1, '09/12/2022', 'none'),
+('mehdi@gmail.com', 'Mehdi', 'Amlal', 1, '09/12/2022', 'none'),
+('michele.molteni@gmail.com', 'Michele', 'Molteni', 1, '08/12/2022', 'none'),
+('michele@gmail.com', 'Michele', 'Mariucci', 1, '19/10/2022', 'none'),
+('monga01@yahoo.com', 'Marco', 'Ongaro', 1, '09/12/2022', 'none'),
+('nino@gmail.com', 'Antonino', 'Pirro', 1, '08/12/2022', 'none'),
+('paolooo@gmail.com', 'Paolo', 'Melani', 1, '08/12/2022', 'none'),
+('paulie@gmail.com', 'Paolo', 'Gualtieri', 1, '08/12/2022', 'none'),
+('pirconazzi@gmail.com', 'Saverio', 'Pirconazzi', 1, '08/12/2022', 'none'),
+('raffy@gmail.com', 'Raffaele', 'Milone', 1, '08/12/2022', 'none'),
+('tony.sop@gmail.com', 'Antonio', 'Soprano', 1, '08/12/2022', 'none');
 
 -- --------------------------------------------------------
 
@@ -73,19 +95,21 @@ INSERT INTO `docente` (`email`, `nome`, `cognome`, `attivo`) VALUES
 --
 
 CREATE TABLE `insegnamento` (
-  `corso` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `docente` varchar(100) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `docente` varchar(100) NOT NULL,
+  `corso` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dump dei dati per la tabella `insegnamento`
 --
 
-INSERT INTO `insegnamento` (`corso`, `docente`) VALUES
-('Matematica', 'marco@gmail.com'),
-('Fisica', 'marco@gmail.com'),
-('Informatica', 'ciruzz79@libero.it'),
-('Matematica', 'antonello@yahoo.com');
+INSERT INTO `insegnamento` (`docente`, `corso`) VALUES
+('edoardo@gmail.com', 'Italiano'),
+('eladio@gmail.com', 'Inglese'),
+('marco@gmail.com', 'Economia'),
+('marini@libero.it', 'Storia'),
+('mario.nizza@gmail.com', 'Analisi'),
+('mario.nizza@gmail.com', 'Informatica');
 
 -- --------------------------------------------------------
 
@@ -104,16 +128,6 @@ CREATE TABLE `prenotazione` (
   `dataCancellazione` varchar(10) NOT NULL DEFAULT 'none'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dump dei dati per la tabella `prenotazione`
---
-
-INSERT INTO `prenotazione` (`utente`, `corso`, `docente`, `data`, `fasciaOraria`, `attiva`, `effettuata`, `dataCancellazione`) VALUES
-('heymehdi', 'Fisica', 'antonello@yahoo.com', '17/12/2022', '15.00 - 16.00', 1, 0, 'none'),
-('heymehdi', 'Musica', 'antonello@yahoo.com', '22/12/2022', '18.00 - 19.00', 0, 0, '15/11/2022'),
-('fplfrancesco', 'Informatica', 'ciruzz79@libero.it', '09/01/2023', '16.00 - 17.00', 1, 0, 'none'),
-('ilConoscitore', 'Matematica', 'marco@gmail.com', '16/01/2023', '18.00 - 19.00', 1, 0, 'none');
-
 -- --------------------------------------------------------
 
 --
@@ -122,7 +136,7 @@ INSERT INTO `prenotazione` (`utente`, `corso`, `docente`, `data`, `fasciaOraria`
 
 CREATE TABLE `utente` (
   `username` varchar(30) NOT NULL,
-  `password` char(64) NOT NULL,
+  `password` varchar(300) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `cognome` varchar(50) NOT NULL,
   `ruolo` enum('studente','ospite','amministratore') NOT NULL,
@@ -136,10 +150,8 @@ CREATE TABLE `utente` (
 --
 
 INSERT INTO `utente` (`username`, `password`, `nome`, `cognome`, `ruolo`, `attivo`, `dataCreazione`, `dataCancellazione`) VALUES
-('fplfrancesco', '5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8', 'Francesco', 'Francis', 'studente', 1, '17/12/2022', 'none'),
-('heymehdi', '5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5', 'Mehdi', 'Amlal', 'studente', 1, '17/12/2022', 'none'),
-('ilConoscitore', '95BF20C96D834A2A13C14E753A51494827CF607F24D14E82FE6D224A57A42AD8', 'Mauro', 'Chiesa', 'studente', 1, '17/12/2022', 'none'),
-('root', '4813494D137E1631BBA301D5ACAB6E7BB7AA74CE1185D456565EF51D737677B2', 'Michele', 'Sciacarri', 'amministratore', 1, '17/12/2022', 'none');
+('heymehdi', '2CF24DBA5FB0A30E26E83B2AC5B9E29E1B161E5C1FA7425E73043362938B9824', 'Mehdi', 'Amlal', 'studente', 1, '09/12/2022', 'none'),
+('root', '4813494D137E1631BBA301D5ACAB6E7BB7AA74CE1185D456565EF51D737677B2', 'Pasquale', 'Lipari', 'amministratore', 1, '16/12/2022', 'none');
 
 --
 -- Indici per le tabelle scaricate
@@ -155,14 +167,14 @@ ALTER TABLE `corso`
 -- Indici per le tabelle `docente`
 --
 ALTER TABLE `docente`
-  ADD PRIMARY KEY (`email`,`attivo`) USING BTREE;
+  ADD PRIMARY KEY (`email`,`attivo`,`dataCancellazione`);
 
 --
 -- Indici per le tabelle `insegnamento`
 --
 ALTER TABLE `insegnamento`
-  ADD KEY `corso` (`corso`),
-  ADD KEY `docente` (`docente`);
+  ADD PRIMARY KEY (`docente`,`corso`),
+  ADD KEY `corso` (`corso`);
 
 --
 -- Indici per le tabelle `prenotazione`
