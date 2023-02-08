@@ -12,9 +12,9 @@ export var landingView = {
                         <router-link to="/login">
                             <button class="btn btn-outline-primary btn-block shadow" style="margin: .5em; width: 10em; height: 3em">Accedi</button>
                         </router-link>
-                        <router-link to="/register">
+                        <a href="./register.html">
                             <button class="btn btn-primary btn-block shadow" style="margin: .5em; width: 10em; height: 3em">Registrati</button>
-                        </router-link>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md"></div>
