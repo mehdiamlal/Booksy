@@ -37,7 +37,6 @@ export var adminCoursesView = {
                     }, function(data) {
                         if(data === "no_session") {
                             localStorage.clear();
-                            alert("Sessione scaduta.");
                             self.$router.push("/login");
                         }
                     });
@@ -120,7 +119,6 @@ export var adminCoursesView = {
             function(data) {
                 if(data === "no_session") {
                     localStorage.clear();
-                    alert("Sessione scaduta.");
                     self.$router.push("/login");
                 } else {
                     data.forEach(function (c) {

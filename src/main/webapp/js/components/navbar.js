@@ -97,7 +97,7 @@ export var navbar = {
                     </li>
                     <li>
                         <div class="nav-link">
-                            <router-link to="/register" class="nav-link">Registrati</router-link>
+                            <a href="./register.html" class="nav-link">Registrati</a>
                         </div>
                     </li>
                 </ul>

@@ -27,10 +27,12 @@ export var slotCard = {
                 if(data === "no_session") {
                     localStorage.clear();
                     self.$router.push("/login");
-                } else {
-                    self.$router.push("/active_bookings");
                 }
+
             });
+
+            self.$router.push("/home");
+
         }
     },
     template: `
