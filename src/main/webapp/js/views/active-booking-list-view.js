@@ -38,11 +38,11 @@ export var activeBookingListView = {
     template: `
         <navbar logged></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Le mie prenotazioni attive</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">My Active Bookings</h1>
             <div class="form-group row">
                 <div class="col"></div>
                 <div class="col-6 text-center">
-                    <label for="dateFilter" class="form-label text-muted">Filtra per data:</label>
+                    <label for="dateFilter" class="form-label text-muted">Filter by date:</label>
                     <div class="input-group">
                         <input type="date" class="form-control" v-model="searchDate" id="dateFilter" @change="filterBookings">
                         <button class="btn btn-primary" type="button" @click="clearFilter"><i class="far fa-times"></i></button>
@@ -61,7 +61,7 @@ export var activeBookingListView = {
                 :active="prenotazione.attiva"
                 :completed="prenotazione.effettuata" v-show="prenotazione.show"></appointment-card>
             </div>
-            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione attiva.</h5>
+            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">No active bookings found.</h5>
             <router-link to="/book">
                 <button class="btn btn-primary shadow add-btn"><i class="fas fa-plus"></i></button>
             </router-link>
@@ -69,7 +69,7 @@ export var activeBookingListView = {
     `,
     created: function() {
         var self = this;
-        document.title = "Prenotazioni attive | Booksy";
+        document.title = "Active Bookings | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
             self.$router.push("/");
         }

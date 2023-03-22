@@ -101,49 +101,49 @@ export var bookingForm = {
                     <form action="">
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="selezionaCorso" class="text-secondary">Corso</label>
+                                <label for="selezionaCorso" class="text-secondary">Course</label>
                                 <select id="selezionaCorso" class="form-select" name="corso" v-model="selectedCorso" @change="getDocenti">
                                     <option v-for="corso in listaCorsi" :value="corso">{{corso}}</option>
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label for="selezionaDocente" class="text-secondary">Docente</label>
+                                <label for="selezionaDocente" class="text-secondary">Tutor</label>
                                 <select id="selezionaDocente" class="form-select" name="docente" v-model="selectedDocente" v-if="showDocenteSelector" @change="showDateSelector = true">
                                     <option v-for="docente in listaDocenti" :value="docente">{{docente.nome}} {{docente.cognome}} | {{docente.email}}</option>
                                 </select>
                                 <select class="form-select" disabled v-else></select>
                             </div>
                             <div class="col-12">
-                                <label for="data" class="text-secondary">Data</label>
+                                <label for="data" class="text-secondary">Date</label>
                                 <input v-model="selectedData" type="date" class="form-control" name="data" id="data" @change="getFasceOrarie" v-if="showDateSelector">
                                 <input type="date" class="form-control" v-else disabled>
                             </div>
                             <div class="col-12">
-                                <label for="selezionaSlot" class="text-secondary">Fascia Oraria</label>
+                                <label for="selezionaSlot" class="text-secondary">Time Slot</label>
                                 <select id="selezionaSlot" class="form-select" name="fasciaOraria" v-model="selectedFascia" v-if="showFasciaSelector">
                                     <option v-for="fascia in listaFasceOrarie">{{fascia}}</option>
                                 </select>
                                 <select class="form-select" disabled v-else></select>
                                 <div v-if="!slotAvailable" id="noSlotAvailable" class="text-secondary text-danger text-center">
                                     <p></p>
-                                    Nessuna fascia oraria disponibile in data selezionata.
+                                    There are no available time slots in the selected date.
                                 </div>
                                 <div v-if="showWarning" class="text-secondary text-danger text-center">
                                     <p></p>
-                                    Attenzione! Compilare tutti i campi.
+                                    Please, fill all the fields.
                                 </div>
                                 <div v-if="addedSuccess" class="text-secondary text-success text-center">
                                     <p></p>
-                                    Prenotazione aggiunta con successo.
+                                    Booking added successfully.
                                 </div>
                             </div>
                         </div>
                     </form>
                     <div class="col-12 mt-5 text-center">
                             <router-link class="navbar-brand" to="/home">
-                                <button type="button" class="btn btn-outline-secondary me-2">Annulla</button>
+                                <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
                             </router-link>                        
-                        <button type="submit" class="btn btn-primary" @click="prenotaRipetizione">Prenota</button>
+                        <button type="submit" class="btn btn-primary" @click="prenotaRipetizione">Book</button>
                     </div>
                 </div>
             </div>

@@ -20,9 +20,9 @@ export var coursesView = {
     template: `
         <navbar logged></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Lista Corsi</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">Course List</h1>
             <div class="form-group">
-                <input type="text" class="form-control shadow" v-model="search" placeholder="Cerca corsi" @input="filterCourses">
+                <input type="text" class="form-control shadow" v-model="search" placeholder="Search courses" @input="filterCourses">
             </div>
             <hr>
             <div class="row">
@@ -32,7 +32,7 @@ export var coursesView = {
     `,
     created: function() {
         var self = this;
-        document.title = "Corsi | Booksy";
+        document.title = "Course List | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "studente") {
             self.$router.push("/");
         }

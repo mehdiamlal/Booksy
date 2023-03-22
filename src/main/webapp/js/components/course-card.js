@@ -15,7 +15,7 @@ export var courseCard = {
                 <h3 class="text-center">{{title}}</h3>
                 <p></p>
                 <div class="text-center">
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" :data-bs-target="modalID">Lista Docenti</button>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" :data-bs-target="modalID">Tutor List</button>
                 </div>
             </div>
             <!-- Modal -->
@@ -23,7 +23,7 @@ export var courseCard = {
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" :id="modalLabel">Docenti che insegnano {{title}}</h1>
+                        <h1 class="modal-title fs-5" :id="modalLabel">Tutors that teach {{title}}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -32,9 +32,9 @@ export var courseCard = {
                         </ul>   
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <router-link to="/book">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Prenota ripetizione</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Book a slot</button>
                         </router-link>
                     </div>
                     </div>

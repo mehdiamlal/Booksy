@@ -38,22 +38,22 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/book" class="nav-link">Prenota</router-link>
+                            <router-link to="/book" class="nav-link">Book</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/active_bookings" class="nav-link">Prenotazioni Attive</router-link>
+                            <router-link to="/active_bookings" class="nav-link">Active Bookings</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/bookings" class="nav-link">Storico Prenotazioni</router-link>
+                            <router-link to="/bookings" class="nav-link">Booking History</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/courses" class="nav-link">Lista Corsi</router-link>
+                            <router-link to="/courses" class="nav-link">Course List</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -70,17 +70,17 @@ export var navbar = {
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/admin_courses" class="nav-link">Corsi</router-link>
+                            <router-link to="/admin_courses" class="nav-link">Course List</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/admin_bookings" class="nav-link">Prenotazioni</router-link>
+                            <router-link to="/admin_bookings" class="nav-link">Booking List</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/add_tutor" class="nav-link">Aggiungi Docente</router-link>
+                            <router-link to="/add_tutor" class="nav-link">Add Tutor</router-link>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -97,7 +97,7 @@ export var navbar = {
                     </li>
                     <li>
                         <div class="nav-link">
-                            <a href="./register.html" class="nav-link">Registrati</a>
+                            <a href="./register.html" class="nav-link">Sign up</a>
                         </div>
                     </li>
                 </ul>

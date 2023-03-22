@@ -47,11 +47,11 @@ export var adminBookingCard = {
                 <div class="d-flex justify-content-between mb-4">
                     <div class="user-info">
                         <div class="user-info__basic">
-                            <h4 class="mb-0">Studente:</h4> 
+                            <h4 class="mb-0">Student:</h4> 
                             <h6 class="text-muted mb-0">{{userData}}</h6>
                         </div>
                         <div class="user-info__basic">
-                            <h4 class="mb-0">Docente:</h4> 
+                            <h4 class="mb-0">Tutor:</h4> 
                             <h6 class="text-muted mb-0">{{tutorData}}</h6>
                         </div>
                     </div>
@@ -62,7 +62,7 @@ export var adminBookingCard = {
                         </a>
                         <div class="dropdown-menu" aria-labelledby="triggerId1">
                             <a class="dropdown-item text-danger" @click="deleteBooking"><i
-                                class="fa fa-trash mr-1"></i> Cancella</a>
+                                class="fa fa-trash mr-1"></i> Cancel</a>
                         </div>
                     </div>
                 </div>
@@ -73,9 +73,9 @@ export var adminBookingCard = {
                             <small class="ml-1 text-muted">{{dayData}}</small>
                         </h5>
                     </div>
-                    <span class="text-primary fw-bold" v-if="!completedData && activeData">Attiva</span>
-                    <span class="text-success fw-bold" v-else-if="completedData">Effettuata</span>
-                    <span class="text-danger fw-bold" v-else>Cancellata</span> 
+                    <span class="text-primary fw-bold" v-if="!completedData && activeData">Active</span>
+                    <span class="text-success fw-bold" v-else-if="completedData">Completed</span>
+                    <span class="text-danger fw-bold" v-else>Canceled</span> 
                 </div>
             </div>
         </div>

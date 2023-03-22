@@ -108,24 +108,24 @@ export var newTutorForm = {
                             <div class="col-12">
                                     <!-- nome docente -->
                                     <div class="form-outline mb-4" v-if="!nomeMissing">
-                                        <label class="text-secondary" for="nome">Nome</label>
+                                        <label class="text-secondary" for="nome">First Name</label>
                                         <input v-model="nome" type="text" id="nome" name="nome" class="form-control"/>
                                     </div>
                                     <div class="form-outline mb-4" v-else>
-                                        <label class="text-secondary" for="nome">Nome</label>
+                                        <label class="text-secondary" for="nome">First Name</label>
                                         <input v-model="nome" type="text" id="nome" name="nome" class="form-control is-invalid"/>
-                                        <div id="invalidNomeFeedback" class="invalid-feedback">Il campo nome non può essere vuoto.</div>
+                                        <div id="invalidNomeFeedback" class="invalid-feedback">This field cannot be empty.</div>
                                     </div>
 
                                     <!-- cognome docente -->
                                     <div class="form-outline mb-4" v-if="!cognomeMissing">
-                                        <label class="text-secondary" for="cognome">Cognome</label>
+                                        <label class="text-secondary" for="cognome">Last Name</label>
                                         <input v-model="cognome" type="text" id="cognome" name="cognome" class="form-control"/>
                                     </div>
                                     <div class="form-outline mb-4" v-else>
-                                        <label class="text-secondary" for="cognome">Cognome</label>
+                                        <label class="text-secondary" for="cognome">Last Name</label>
                                         <input v-model="cognome" type="text" id="cognome" name="cognome" class="form-control is-invalid"/>
-                                        <div id="invalidCognomeFeedback" class="invalid-feedback">Il campo cognome non può essere vuoto.</div>
+                                        <div id="invalidCognomeFeedback" class="invalid-feedback">This field cannot be empty.</div>
                                     </div>
 
                                     <!-- email docente -->
@@ -136,31 +136,31 @@ export var newTutorForm = {
                                     <div class="form-outline mb-4" v-if="emailMissing">
                                         <label class="text-secondary" for="cognome">Email</label>
                                         <input v-model="email" type="email" id="email" name="email" class="form-control is-invalid"/>
-                                        <div id="invalidEmailFeedback" class="invalid-feedback">Il campo email non può essere vuoto.</div>
+                                        <div id="invalidEmailFeedback" class="invalid-feedback">This field cannot be empty.</div>
                                     </div>
                                     <div class="form-outline mb-4" v-if="emailNotValid">
                                         <label class="text-secondary" for="cognome">Email</label>
                                         <input v-model="email" type="email" id="email" name="email" class="form-control is-invalid"/>
-                                        <div id="invalidEmailFeedback" class="invalid-feedback">L'email inserita non è valida</div>
+                                        <div id="invalidEmailFeedback" class="invalid-feedback">The email is not valid.</div>
                                     </div>
 
                                     <!-- warning docente duplicato -->
                                     <div v-if="docenteExists" class="text-secondary text-danger text-center">
                                         <p></p>
-                                        Attenzione! Un docente con la stessa email è già esistente.
+                                        Warning! A tutor with the same email already exists.
                                         <p></p>
                                     </div>
 
                                     <!-- messaggio docente aggiunto con successo -->
                                     <div v-if="addedSuccess" class="text-secondary text-success text-center">
                                         <p></p>
-                                        Docente aggiunto con successo.
+                                        Tutor added successfully.
                                         <p></p>
                                     </div>
                                 
                                     <!-- Submit button -->
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="add_tutor_event" style="width: 10em">Aggiungi Docente</button>
+                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="add_tutor_event" style="width: 10em">Add Tutor</button>
                                     </div>
                             </div>
                         </div>

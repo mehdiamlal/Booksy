@@ -7,13 +7,13 @@ export var addTutorView = {
     template: `
         <navbar logged admin></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Aggiungi un docente</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">Add a Tutor</h1>
             <new-tutor-form :listaDocenti="listaDocenti"></new-tutor-form>
         </div>
     `,
     created() {
         var self = this;
-        document.title = "(Admin) Aggiungi docente | Booksy";
+        document.title = "(Admin) Add Tutor | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

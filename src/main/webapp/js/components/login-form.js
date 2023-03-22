@@ -94,7 +94,7 @@ export var loginForm = {
                                     <div class="form-outline mb-4" v-else>
                                         <label class="text-secondary" for="username">Username</label>
                                         <input v-model="username" type="text" id="username" name="username" class="form-control is-invalid"/>
-                                        <div id="invalidUsernameFeedback" class="invalid-feedback">Il campo username non può essere vuoto.</div>
+                                        <div id="invalidUsernameFeedback" class="invalid-feedback">The username field cannot be empty.</div>
                                     </div>
                                 
                                     <!-- Password input -->
@@ -105,23 +105,23 @@ export var loginForm = {
                                     <div class="form-outline mb-4" v-else>
                                         <label class="text-secondary" for="password">Password</label>
                                         <input v-model="password" type="password" id="password" name="password" class="form-control is-invalid"/>
-                                        <div id="invalidUsernameFeedback" class="invalid-feedback">Il campo password non può essere vuoto.</div>
+                                        <div id="invalidUsernameFeedback" class="invalid-feedback">The password field cannot be empty.</div>
                                     </div>
                                     <div class="form-check" style="margin-bottom: 2em; margin-top: -1em">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @click="showPassword">
-                                        <label class="form-check-label" for="flexCheckDefault">Mostra password</label>
+                                        <label class="form-check-label" for="flexCheckDefault">Show Password</label>
                                     </div>
                                     
                                     <div v-if="userNotFound" class="text-secondary text-danger text-center">
                                         <p></p>
-                                        Spiacenti, il tuo username o password non sono corretti. Ricontrollali.
+                                        The username or password is incorrect. Please, try again.
                                         <p></p>
                                     </div>
                                 
                                     <!-- Submit button -->
                                     <div class="text-center">
-                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Accedi</button> 
-                                        <p class="small fw-bold mt-2 pt-1 mb-0">Non hai un account? <router-link to="/register" style="color: #5E17EB">Registrati</router-link></p>
+                                        <button type="button" class="btn btn-primary btn-block mb-4" @click="login_event" style="width: 10em">Login</button> 
+                                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <router-link to="/register" style="color: #5E17EB">Sign up</router-link></p>
                                     </div>
                             </div>
                         </div>

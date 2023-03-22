@@ -13,7 +13,7 @@ export var loginView = {
         </div>
     `,
     mounted() {
-        document.title = "Accedi | Booksy";
+        document.title = "Login | Booksy";
         if(localStorage.getItem("role") === "studente") {
             this.$router.push("/home");
         } else if(localStorage.getItem("role") === "amministratore") {

@@ -19,7 +19,7 @@ export var adminSlotCard = {
                 <div class="d-flex justify-content-between mb-4">
                     <div class="user-info">
                         <div class="user-info__basic">
-                            <h5 class="mb-0">Docente: <br><span class="text-muted">{{tutorData}}</span></h5>
+                            <h5 class="mb-0">Tutor: <br><span class="text-muted">{{tutorData}}</span></h5>
                         </div>
                     </div>
                 </div>

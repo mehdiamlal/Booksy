@@ -38,11 +38,11 @@ export var adminBookingListView = {
     template: `
         <navbar logged admin></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Lista prenotazioni</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">Booking List</h1>
             <div class="form-group row">
                 <div class="col"></div>
                 <div class="col-6 text-center">
-                    <label for="dateFilter" class="form-label text-muted">Filtra per data:</label>
+                    <label for="dateFilter" class="form-label text-muted">Filter by date:</label>
                     <div class="input-group">
                         <input type="date" class="form-control" v-model="searchDate" id="dateFilter" @change="filterBookings">
                         <button class="btn btn-primary" type="button" @click="clearFilter"><i class="far fa-times"></i></button>
@@ -61,12 +61,12 @@ export var adminBookingListView = {
                 :active="prenotazione.attiva"
                 :completed="prenotazione.effettuata" v-show="prenotazione.show"></admin-booking-card>
             </div>
-            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">Nessuna prenotazione trovata.</h5>
+            <h5 class="text-center text-muted" v-if="nessunaPrenotazione" style="margin-top: 2em">No booking found.</h5>
         </div>
     `,
     created: function() {
         var self = this;
-        document.title = "(Admin) Storico prenotazioni | Booksy";
+        document.title = "(Admin) Booking List | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

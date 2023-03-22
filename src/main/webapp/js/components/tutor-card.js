@@ -18,8 +18,8 @@ export var tutorCard = {
             <h5 class="card-title">{{name}} {{surname}}</h5>
             <h6 class="card-subtitle">{{mail}}</h6>
             <div class="row justify-content-end">
-                <p class="badge badge-success" v-if="active">Attivo</p>
-                <p class="badge badge-danger" v-else>Inattivo</p>
+                <p class="badge badge-success" v-if="active">Active</p>
+                <p class="badge badge-danger" v-else>Inactive</p>
             </div>
         </div>
      </div>

@@ -54,12 +54,12 @@ export var adminCoursesView = {
             var self = this;
             var ris = true;
             if(self.newCourse.length === 0) {
-                self.errorMessage = "Nome corso non valido"
+                self.errorMessage = "Invalid course name"
                 ris = false;
             } else {
                 self.listaCorsi.forEach((corso) => {
                     if(corso.nome.toLowerCase() === self.newCourse.toLowerCase()) {
-                        self.errorMessage = "Il corso " + self.newCourse + " è già esistente."
+                        self.errorMessage = "The course " + self.newCourse + " already exists."
                         ris = false;
                     }
                 });
@@ -76,9 +76,9 @@ export var adminCoursesView = {
     template: `
         <navbar logged admin></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Lista Corsi</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">Course List</h1>
             <div class="form-group">
-                <input type="text" class="form-control shadow" v-model="search" placeholder="Cerca corsi" @input="filterCourses" @click="addedSuccess = false">
+                <input type="text" class="form-control shadow" v-model="search" placeholder="Search course" @input="filterCourses" @click="addedSuccess = false">
             </div>
             <hr>
             <div class="row">
@@ -90,18 +90,18 @@ export var adminCoursesView = {
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="aggiungiCorsoLabel">Aggiungi un nuovo corso</h1>
+                        <h1 class="modal-title fs-5" id="aggiungiCorsoLabel">Add a new course</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control" placeholder="Nome del corso" v-model="newCourse" v-if="!notValidInput">
-                        <input type="text" class="form-control is-invalid" placeholder="Nome del corso" v-model="newCourse" v-if="notValidInput"/>
+                        <input type="text" class="form-control" placeholder="Course name" v-model="newCourse" v-if="!notValidInput">
+                        <input type="text" class="form-control is-invalid" placeholder="Course name" v-model="newCourse" v-if="notValidInput"/>
                         <div class="invalid-feedback" v-if="notValidInput">{{errorMessage}}</div>
-                        <div class="text-success" v-if="addedSuccess" style="margin-top: 1.5em">Il corso è stato aggiunto con successo.</div>
+                        <div class="text-success" v-if="addedSuccess" style="margin-top: 1.5em">Course was added successfully.</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary" @click="aggiungiCorso">Salva</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" @click="aggiungiCorso">Save</button>
                     </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@ export var adminCoursesView = {
     `,
     created: function() {
         var self = this;
-        document.title = "(Admin) Corsi | Booksy";
+        document.title = "(Admin) Course List | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

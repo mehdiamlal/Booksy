@@ -63,15 +63,15 @@ export var adminAvailableSlotsView = {
     template: `
         <navbar logged admin></navbar>
         <div class="container">
-            <h1 class="text-center" style="margin-bottom: 1.5em">Slot Disponibili</h1>
+            <h1 class="text-center" style="margin-bottom: 1.5em">Available Slots</h1>
             <div class="input-group">
                 <select id="courseFilter" class="form-select" name="corso" v-model="selectedCorso" @change="fetchSlots">
-                    <option value="" disabled selected hidden>Seleziona corso</option>
+                    <option value="" disabled selected hidden>Select a course</option>
                     <option v-for="corso in listaCorsi" :value="corso">{{corso}}</option>
                 </select>
                 <input type="date" class="form-control" v-model="selectedData" id="dateFilter" @change="fetchSlots">
                 <select id="tutorFilter" class="form-select" name="docente" v-model="selectedTutor" @change="filterByTutor">
-                    <option value="" disabled selected hidden>Filtra per docente</option>
+                    <option value="" disabled selected hidden>Filter by tutor</option>
                     <option v-for="docente in listaDocenti" :value="docente">{{docente}}</option>
                 </select>
             </div>
@@ -79,12 +79,12 @@ export var adminAvailableSlotsView = {
             <div class="row">
                 <admin-slot-card v-for="slot in listaSlot" :tutor="slot.docente" :day="slot.data" :timeSlot="slot.slot" :course="selectedCorso" v-show="slot.show"></admin-slot-card>
             </div>         
-            <h5 class="text-center text-muted" style="margin-top: 2em" v-if="numeroSlot === 0 && selectedCorso !== '' && selectedData !== ''">Nessuno slot disponibile in data {{formattedData}}.</h5>
+            <h5 class="text-center text-muted" style="margin-top: 2em" v-if="numeroSlot === 0 && selectedCorso !== '' && selectedData !== ''">No slots available on {{formattedData}}.</h5>
         </div>
     `,
     created: function() {
         var self = this;
-        document.title = "(Admin) Slot Disponibili | Booksy";
+        document.title = "(Admin) Available Slots | Booksy";
         if(localStorage.getItem("role") === null || localStorage.getItem("role") !== "amministratore") {
             self.$router.push("/");
         }

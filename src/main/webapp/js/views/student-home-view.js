@@ -8,9 +8,9 @@ export var studentHomeView = {
     template: `
         <navbar logged></navbar>
         <div class="container">
-            <h1 class="text-center">Benvenuto, {{nomeStudente}}. &#128075;</h1>
+            <h1 class="text-center">Welcome Back, {{nomeStudente}}. &#128075;</h1>
             <hr>
-            <h3 class="text-center" style="margin: 1em">Le tue prenotazioni più imminenti</h3>
+            <h3 class="text-center" style="margin: 1em">Upcoming Bookings</h3>
             <div class="row">
                 <appointment-card v-for="prenotazione in prenotImminenti" 
                     :user="prenotazione.utente" 
@@ -21,26 +21,26 @@ export var studentHomeView = {
                     :active="prenotazione.attiva"
                     :completed="prenotazione.effettuata"
                      v-if="prenotImminenti.length > 0"></appointment-card>
-                <h5 class="text-center text-muted" v-else >Nessuna prenotazione imminente.</h5>
+                <h5 class="text-center text-muted" v-else >No upcoming bookings.</h5>
             </div>
             <hr>
             <div class="row text-center" style="margin-top: 2em">
                 <div class="col"></div>
                 <div class="col">
                     <router-link to="/available_slots">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Consulta gli slot disponibili</button>
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Browse Available Slots</button>
                     </router-link>
                     <router-link to="/book">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Prenota una ripetizione</button>
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Book a Slot</button>
                     </router-link>
                     <router-link to="/active_bookings">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Le tue prenotazioni attive</button>
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Your Active Bookings</button>
                     </router-link>
                     <router-link to="/bookings">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Storico prenotazioni</button>
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Booking History</button>
                     </router-link>
                     <router-link to="/courses">
-                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Lista corsi</button>
+                        <button class="btn btn-primary shadow home-btn" style="margin: 1em; width: 15em">Course List</button>
                     </router-link>
                 </div>
                 <div class="col"></div>

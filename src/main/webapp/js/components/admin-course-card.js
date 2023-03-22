@@ -139,26 +139,26 @@ export var adminCourseCard = {
                         <i class="fa fa-ellipsis-v" style="color: #5E17EB !important;"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="triggerId1">
-                        <a class="dropdown-item text-danger" @click="disattivaCorso" v-if="activeData"><i class="fas fa-times-circle"></i> Disattiva</a>
-                        <a class="dropdown-item text-success" @click="attivaCorso" v-else><i class="fas fa-check-circle"></i> Attiva</a>
+                        <a class="dropdown-item text-danger" @click="disattivaCorso" v-if="activeData"><i class="fas fa-times-circle"></i> Disable</a>
+                        <a class="dropdown-item text-success" @click="attivaCorso" v-else><i class="fas fa-check-circle"></i> Enable</a>
                     </div>
                 </div>
                 <h3 class="text-center">{{title}}</h3>
                 <p></p>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-primary" type="button" @click="displayList" data-bs-toggle="modal" :data-bs-target="modalIDHash1">Lista Docenti</button>
-                    <button class="btn btn-primary" type="button" @click="getDocentiDisponibili" data-bs-toggle="modal" :data-bs-target="modalIDHash2">Aggiungi Docente</button>
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" :data-bs-target="modalIDHash3">Rimuovi Docente</button>
+                    <button class="btn btn-primary" type="button" @click="displayList" data-bs-toggle="modal" :data-bs-target="modalIDHash1">Tutor List</button>
+                    <button class="btn btn-primary" type="button" @click="getDocentiDisponibili" data-bs-toggle="modal" :data-bs-target="modalIDHash2">Add Tutor</button>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" :data-bs-target="modalIDHash3">Remove Tutor</button>
                 </div>
-                <span class="text-success fw-bold text-end" v-if="activeData">Attivo</span>
-                <span class="text-danger fw-bold text-end" v-else>Non attivo</span>
+                <span class="text-success fw-bold text-end" v-if="activeData">Active</span>
+                <span class="text-danger fw-bold text-end" v-else>Inactive</span>
             </div>
             <!-- Lista Docenti Modal -->
             <div class="modal fade" :id="modalID1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" :aria-labelledby="modalLabel1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" :id="modalLabel1">Docenti che insegnano {{title}}</h1>
+                        <h1 class="modal-title fs-5" :id="modalLabel1">Tutors that teach {{title}}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -168,7 +168,7 @@ export var adminCourseCard = {
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ export var adminCourseCard = {
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" :id="modalLabel2">Aggiungi un docente per {{title}}</h1>
+                        <h1 class="modal-title fs-5" :id="modalLabel2">Add a tutor for {{title}}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -188,8 +188,8 @@ export var adminCourseCard = {
                         </select>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary" @click="aggiungiDocente" data-bs-dismiss="modal">Salva</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" @click="aggiungiDocente" data-bs-dismiss="modal">Save</button>
                     </div>
                     </div>
                 </div>
@@ -199,7 +199,7 @@ export var adminCourseCard = {
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" :id="modalLabel3">Rimuovi un docente per {{title}}</h1>
+                        <h1 class="modal-title fs-5" :id="modalLabel3">Remove a tutor for {{title}}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -208,8 +208,8 @@ export var adminCourseCard = {
                         </select>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                        <button type="button" class="btn btn-primary" @click="rimuoviDocente" data-bs-dismiss="modal">Salva</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" @click="rimuoviDocente" data-bs-dismiss="modal">Save</button>
                     </div>
                     </div>
                 </div>
